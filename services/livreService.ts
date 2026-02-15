@@ -4,40 +4,66 @@ import { Livre } from "../models/Livre";
 export const getTousLesLivres = async (
   db: SQLiteDatabase,
 ): Promise<Livre[]> => {
-  const livres = await db.getAllAsync<any>(`
-    SELECT * FROM livre
-    ORDER BY date_debut_lecture DESC
+  const lignes = await db.getAllAsync<any>(`
+    SELECT
+      l.*,
+      a.nomination AS auteur_nomination,
+      g.nom AS genre_nom
+    FROM livre l
+    LEFT JOIN livre_auteur la ON la.livre_id = l.id
+    LEFT JOIN auteur a ON a.id = la.auteur_id
+    LEFT JOIN livre_genre lg ON lg.livre_id = l.id
+    LEFT JOIN genre g ON g.id = lg.genre_id
+    ORDER BY 
+      CASE l.etat_lecture
+        WHEN 'en cours' THEN 1
+        WHEN 'à lire' THEN 2
+        WHEN 'abandonné' THEN 3
+        WHEN 'lu' THEN 4
+        ELSE 5
+      END,
+      l.date_ajout DESC
   `);
 
-  const livresComplets: Livre[] = [];
+  const livres = new Map<number, Livre>();
 
-  for (const livre of livres) {
-    const auteurs = await db.getAllAsync<{ nomination: string }>(
-      `
-      SELECT a.nomination
-      FROM auteur a
-      JOIN livre_auteur la ON la.auteur_id = a.id
-      WHERE la.livre_id = ?
-      `,
-      livre.id,
-    );
+  for (const ligne of lignes) {
+    if (!livres.has(ligne.id)) {
+      livres.set(ligne.id, {
+        id: ligne.id,
+        titre: ligne.titre,
+        isbn: ligne.isbn,
+        resume: ligne.resume,
+        nombre_pages: ligne.nombre_pages,
+        edition: ligne.edition,
+        date_publication: ligne.date_publication,
+        couverture: ligne.couverture,
+        type: ligne.type,
+        etat_lecture: ligne.etat_lecture,
+        note: ligne.note,
+        avis: ligne.avis,
+        date_debut_lecture: ligne.date_debut_lecture,
+        date_fin_lecture: ligne.date_fin_lecture,
+        statut_possession: ligne.statut_possession,
+        prix: ligne.prix,
+        auteurs: [],
+        genres: [],
+      });
+    }
 
-    const genres = await db.getAllAsync<{ nom: string }>(
-      `
-      SELECT g.nom
-      FROM genre g
-      JOIN livre_genre lg ON lg.genre_id = g.id
-      WHERE lg.livre_id = ?
-      `,
-      livre.id,
-    );
+    const livre = livres.get(ligne.id)!;
 
-    livresComplets.push({
-      ...livre,
-      auteurs: auteurs.map((a) => a.nomination),
-      genres: genres.map((g) => g.nom),
-    });
+    if (
+      ligne.auteur_nomination &&
+      !livre.auteurs.includes(ligne.auteur_nomination)
+    ) {
+      livre.auteurs.push(ligne.auteur_nomination);
+    }
+
+    if (ligne.genre_nom && !livre.genres.includes(ligne.genre_nom)) {
+      livre.genres.push(ligne.genre_nom);
+    }
   }
 
-  return livresComplets;
+  return Array.from(livres.values());
 };
