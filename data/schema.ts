@@ -26,11 +26,11 @@ export const migrerBaseSiNecessaire = async (db: SQLiteDatabase) => {
         date_publication TEXT,
         couverture TEXT,
 
-        type TEXT CHECK(type IN ('broche', 'poche', 'numerique', 'audio')),
+        type TEXT CHECK(type IN ('broché', 'poche', 'numérique', 'audio')),
 
         etat_lecture TEXT NOT NULL
           DEFAULT 'a_lire'
-          CHECK(etat_lecture IN ('a_lire', 'en_cours', 'lu', 'abandonne')),
+          CHECK(etat_lecture IN ('à lire', 'en cours', 'lu', 'abandonné')),
 
         note INTEGER
           DEFAULT 0
@@ -39,7 +39,7 @@ export const migrerBaseSiNecessaire = async (db: SQLiteDatabase) => {
         avis TEXT,
 
         statut_possession TEXT
-          CHECK(statut_possession IN ('achete', 'emprunte')),
+          CHECK(statut_possession IN ('acheté', 'emprunté')),
 
         date_debut_lecture TEXT,
         date_fin_lecture TEXT,
