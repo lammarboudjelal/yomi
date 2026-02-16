@@ -1,22 +1,14 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button, View, Text } from "react-native";
-import { RootStackParamList } from "../navigation/types";
+import { Text, View, FlatList } from "react-native";
 import { useEffect, useState } from "react";
-import { Livre } from "../models/Livre";
 import { ouvrirBaseDeDonnees } from "../data/database";
 import { getTousLesLivres } from "../services/livreService";
+import BoutonCarteLivre from "../components/BoutonCarteLivre";
+import BarreNavigation from "../components/BarreNavigation";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type BibliothequeNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Bibliotheque"
->;
-
-type Props = {
-  navigation: BibliothequeNavigationProp;
-};
-
-export default function BibliothequeScreen({ navigation }: Props) {
-  const [livres, setLivres] = useState<Livre[]>([]);
+export default function BibliothequeScreen() {
+  const [livres, setLivres] = useState<any[]>([]);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const chargerLivres = async () => {
@@ -29,19 +21,24 @@ export default function BibliothequeScreen({ navigation }: Props) {
   }, []);
 
   return (
-    <View>
-      {livres.map((livre) => (
-        <View key={livre.id}>
-          <Button
-            title={livre.titre}
-            onPress={() =>
-              navigation.navigate("LivreDetail", { livreId: livre.id })
-            }
-          />
-        </View>
-      ))}
+    <View
+      style={{
+        flex: 1,
+        gap: 20,
+        paddingTop: insets.top + 10,
+        paddingHorizontal: 20,
+      }}
+    >
+      <Text style={{ fontSize: 25, fontWeight: "bold" }}>Bibliothèque</Text>
 
-      {livres.length === 0 && <Text>Aucun livre trouvé</Text>}
+      <FlatList
+        data={livres}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <BoutonCarteLivre livre={item} />}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      />
+
+      <BarreNavigation pageActive="Bibliotheque" />
     </View>
   );
 }
