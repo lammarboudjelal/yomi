@@ -3,6 +3,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
   couverture?: string | null;
+  width?: number;
+  height?: number;
 };
 
 const imagesLocales: Record<string, any> = {
@@ -14,7 +16,11 @@ const imagesLocales: Record<string, any> = {
   "un-printemps-au-gout-de-mochi.jpg": require("../assets/cover/un-printemps-au-gout-de-mochi.jpg"),
 };
 
-export default function CouvertureLivre({ couverture }: Props) {
+export default function CouvertureLivre({
+  couverture,
+  width = 70,
+  height = 100,
+}: Props) {
   const getSource = () => {
     if (!couverture) return null;
 
@@ -38,8 +44,8 @@ export default function CouvertureLivre({ couverture }: Props) {
       <Image
         source={source}
         style={{
-          width: 70,
-          height: 100,
+          width: width,
+          height: height,
           borderRadius: 5,
         }}
       />
@@ -49,8 +55,8 @@ export default function CouvertureLivre({ couverture }: Props) {
   return (
     <View
       style={{
-        width: 70,
-        height: 100,
+        width: width,
+        height: height,
         borderRadius: 5,
         backgroundColor: "#E0E0E0",
         justifyContent: "center",
