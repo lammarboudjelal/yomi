@@ -56,9 +56,11 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: null,
       statut_possession: "emprunté",
       prix: null,
+      date_pret: "2026-02-10",
+      preteur: "Charline",
+      date_ajout: null,
       genres: ["littérature japonaise", "fiction", "feel good"],
       auteurs: ["Toshikazu Kawaguchi"],
-      date_ajout: null,
     },
     {
       id: 2,
@@ -78,9 +80,11 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: null,
       statut_possession: "acheté",
       prix: 16.95,
+      date_pret: null,
+      preteur: null,
+      date_ajout: null,
       genres: ["feel good", "littérature japonaise", "fiction"],
       auteurs: ["Noriko Onuma"],
-      date_ajout: null,
     },
     {
       id: 3,
@@ -100,9 +104,11 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: "2026-01-10",
       statut_possession: "acheté",
       prix: 22,
+      date_pret: null,
+      preteur: null,
+      date_ajout: null,
       genres: ["fantastique", "fiction", "littérature coréenne"],
       auteurs: ["Mi-ye Lee"],
-      date_ajout: null,
     },
     {
       id: 4,
@@ -122,9 +128,11 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: null,
       statut_possession: "acheté",
       prix: 19.9,
+      date_pret: null,
+      preteur: null,
+      date_ajout: null,
       genres: ["littérature japonaise", "feel good", "fiction"],
       auteurs: ["Sawako Natori"],
-      date_ajout: null,
     },
     {
       id: 5,
@@ -144,9 +152,11 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: "2026-02-05",
       statut_possession: "acheté",
       prix: 22,
+      date_pret: null,
+      preteur: null,
+      date_ajout: null,
       genres: ["fantastique", "fiction", "littérature coréenne"],
       auteurs: ["Mi-ye Lee"],
-      date_ajout: null,
     },
     {
       id: 6,
@@ -166,9 +176,11 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: "2026-03-08",
       statut_possession: "acheté",
       prix: 8.8,
+      date_pret: null,
+      preteur: null,
+      date_ajout: null,
       genres: ["thriller", "policier"],
       auteurs: ["Leslie Wolfe"],
-      date_ajout: null,
     },
     {
       id: 7,
@@ -187,10 +199,12 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_debut_lecture: "2026-02-14",
       statut_possession: "acheté",
       prix: 19,
+      date_pret: null,
+      preteur: null,
+      date_ajout: null,
       date_fin_lecture: null,
       genres: ["fiction", "littérature japonaise"],
       auteurs: ["Haruki Murakami"],
-      date_ajout: null,
     },
   ];
 
@@ -199,8 +213,8 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       `INSERT INTO livre
       (titre, isbn, resume, nombre_pages, edition, date_publication, 
        couverture, type, etat_lecture, note, avis, date_debut_lecture, 
-       date_fin_lecture, statut_possession, prix)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       date_fin_lecture, statut_possession, prix, date_pret, preteur)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       livre.titre,
       livre.isbn,
       livre.resume,
@@ -216,6 +230,8 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       livre.date_fin_lecture,
       livre.statut_possession,
       livre.prix,
+      livre.date_pret,
+      livre.preteur,
     );
 
     const livreId = resultInsert.lastInsertRowId;

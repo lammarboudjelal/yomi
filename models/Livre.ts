@@ -15,6 +15,8 @@ export interface Livre {
   date_fin_lecture: string | null;
   statut_possession: string;
   prix: number | null;
+  date_pret: string | null;
+  preteur: string | null;
   date_ajout: string;
   auteurs: string[];
   genres: string[];

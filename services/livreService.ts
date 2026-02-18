@@ -34,10 +34,12 @@ function construireLivresDepuisLignes(lignes: any[]): Livre[] {
         date_debut_lecture: ligne.date_debut_lecture,
         date_fin_lecture: ligne.date_fin_lecture,
         statut_possession: ligne.statut_possession,
+        date_pret: ligne.date_pret,
+        preteur: ligne.preteur,
+        date_ajout: ligne.date_ajout,
         prix: ligne.prix,
         auteurs: [],
         genres: [],
-        date_ajout: ligne.date_ajout,
       });
     }
 
