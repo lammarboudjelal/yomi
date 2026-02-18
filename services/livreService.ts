@@ -37,6 +37,7 @@ function construireLivresDepuisLignes(lignes: any[]): Livre[] {
         prix: ligne.prix,
         auteurs: [],
         genres: [],
+        date_ajout: ligne.date_ajout,
       });
     }
 

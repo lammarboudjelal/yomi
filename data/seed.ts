@@ -58,6 +58,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       prix: null,
       genres: ["littérature japonaise", "fiction", "feel good"],
       auteurs: ["Toshikazu Kawaguchi"],
+      date_ajout: null,
     },
     {
       id: 2,
@@ -79,6 +80,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       prix: 16.95,
       genres: ["feel good", "littérature japonaise", "fiction"],
       auteurs: ["Noriko Onuma"],
+      date_ajout: null,
     },
     {
       id: 3,
@@ -100,6 +102,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       prix: 22,
       genres: ["fantastique", "fiction", "littérature coréenne"],
       auteurs: ["Mi-ye Lee"],
+      date_ajout: null,
     },
     {
       id: 4,
@@ -121,6 +124,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       prix: 19.9,
       genres: ["littérature japonaise", "feel good", "fiction"],
       auteurs: ["Sawako Natori"],
+      date_ajout: null,
     },
     {
       id: 5,
@@ -142,6 +146,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       prix: 22,
       genres: ["fantastique", "fiction", "littérature coréenne"],
       auteurs: ["Mi-ye Lee"],
+      date_ajout: null,
     },
     {
       id: 6,
@@ -163,6 +168,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       prix: 8.8,
       genres: ["thriller", "policier"],
       auteurs: ["Leslie Wolfe"],
+      date_ajout: null,
     },
     {
       id: 7,
@@ -184,6 +190,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_fin_lecture: null,
       genres: ["fiction", "littérature japonaise"],
       auteurs: ["Haruki Murakami"],
+      date_ajout: null,
     },
   ];
 
