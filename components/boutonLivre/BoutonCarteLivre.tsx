@@ -1,9 +1,9 @@
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import NoteEtoiles from "./NoteEtoiles";
-import EtiquetteEtatLecture from "./EtiquetteEtatLecture";
+import NoteEtoiles from "../shared/NoteEtoiles";
+import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
 import { FontAwesome5 } from "@expo/vector-icons";
-import CouvertureLivre from "./CouvertureLivre";
+import CouvertureLivre from "../shared/CouvertureLivre";
 
 type Props = {
   livre: any;

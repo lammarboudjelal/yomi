@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import NoteEtoiles from "./NoteEtoiles";
+import NoteEtoiles from "../shared/NoteEtoiles";
 import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {

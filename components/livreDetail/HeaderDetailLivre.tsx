@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import CouvertureLivre from "./CouvertureLivre";
+import CouvertureLivre from "../shared/CouvertureLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {

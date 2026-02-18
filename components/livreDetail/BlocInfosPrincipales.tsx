@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import EtiquetteEtatLecture from "./EtiquetteEtatLecture";
+import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
 
 type Props = {
   livre: any;

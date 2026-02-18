@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { Livre } from "../models/Livre";
 import { ouvrirBaseDeDonnees } from "../data/database";
 import { getLivreParId } from "../services/livreService";
-import BlocInfosPrincipales from "../components/BlocInfosPrincipales";
-import CarteNoteAvis from "../components/CarteNoteAvis";
-import SectionAccordion from "../components/SectionAccordion";
-import BoutonRetour from "../components/BoutonRetour";
-import HeaderDetailLivre from "../components/HeaderDetailLivre";
+import BlocInfosPrincipales from "../components/livreDetail/BlocInfosPrincipales";
+import CarteNoteAvis from "../components/livreDetail/CarteNoteAvis";
+import SectionAccordion from "../components/livreDetail/SectionAccordion";
+import BoutonRetour from "../components/navigation/BoutonRetour";
+import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { formaterDate } from "../utils/formaterDate";
 

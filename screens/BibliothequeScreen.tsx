@@ -2,8 +2,8 @@ import { Text, View, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { ouvrirBaseDeDonnees } from "../data/database";
 import { getTousLesLivres } from "../services/livreService";
-import BoutonCarteLivre from "../components/BoutonCarteLivre";
-import BarreNavigation from "../components/BarreNavigation";
+import BoutonCarteLivre from "../components/boutonLivre/BoutonCarteLivre";
+import BarreNavigation from "../components/navigation/BarreNavigation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function BibliothequeScreen() {
