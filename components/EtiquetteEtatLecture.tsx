@@ -30,7 +30,6 @@ export default function EtiquetteEtatLecture({ etat }: Props) {
         paddingVertical: 2,
         borderWidth: 2,
         borderRadius: 5,
-        alignSelf: "flex-start",
         fontWeight: "bold",
         fontSize: 12,
       }}

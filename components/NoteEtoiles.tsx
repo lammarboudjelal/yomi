@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
-  note: number;
+  note?: number;
 };
 
 export default function NoteEtoiles({ note }: Props) {
@@ -12,7 +12,7 @@ export default function NoteEtoiles({ note }: Props) {
         <MaterialIcons
           key={etoile}
           name={etoile <= note ? "star" : "star-border"}
-          size={22}
+          size={24}
           color="#F2B705"
         />
       ))}
