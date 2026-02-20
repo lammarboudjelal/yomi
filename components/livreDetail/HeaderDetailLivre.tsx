@@ -1,6 +1,8 @@
 import { View } from "react-native";
 import CouvertureLivre from "../shared/CouvertureLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useEffect, useState } from "react";
+import { recupererCouleurDominante } from "../../utils/couleurDominante";
 
 type Props = {
   couverture?: string | null;
@@ -8,11 +10,22 @@ type Props = {
 
 export default function HeaderDetailLivre({ couverture }: Props) {
   const insets = useSafeAreaInsets();
+  const [couleurFond, setCouleurFond] = useState("#A0A0A0");
+
+  useEffect(() => {
+    const chargerCouleur = async () => {
+      const couleur = await recupererCouleurDominante(couverture);
+      setCouleurFond(couleur);
+    };
+
+    chargerCouleur();
+  }, [couverture]);
+
   return (
     <View
       style={{
         height: 200,
-        backgroundColor: "#6C7BD0",
+        backgroundColor: couleurFond,
         alignItems: "center",
         justifyContent: "flex-end",
         position: "relative",

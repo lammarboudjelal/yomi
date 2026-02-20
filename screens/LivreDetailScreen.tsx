@@ -12,6 +12,7 @@ import BoutonRetour from "../components/navigation/BoutonRetour";
 import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { formaterDate } from "../utils/formaterDate";
+import { recupererCouleurDominante } from "../utils/couleurDominante";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -29,6 +30,7 @@ export default function LivreDetailScreen({ route }: Props) {
   const { livreId } = route.params;
   const [livre, setLivre] = useState<Livre | null>(null);
   const [loading, setLoading] = useState(true);
+  const [couleurFond, setCouleurFond] = useState("#A0A0A0");
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
@@ -41,6 +43,15 @@ export default function LivreDetailScreen({ route }: Props) {
 
     chargerLivre();
   }, [livreId]);
+
+  useEffect(() => {
+    const chargerCouleur = async () => {
+      const couleur = await recupererCouleurDominante(livre.couverture);
+      setCouleurFond(couleur);
+    };
+
+    chargerCouleur();
+  }, [livre]);
 
   if (loading) {
     return (
@@ -59,7 +70,7 @@ export default function LivreDetailScreen({ route }: Props) {
   }
 
   return (
-    <View style={{ backgroundColor: "#6C7BD0" }}>
+    <View style={{ backgroundColor: couleurFond }}>
       <BoutonRetour />
 
       <ScrollView>
