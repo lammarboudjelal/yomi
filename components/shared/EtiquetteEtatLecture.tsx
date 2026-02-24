@@ -1,26 +1,20 @@
 import { Text } from "react-native";
+import {
+  COULEURS_ETAT_LECTURE,
+  EtatLecture,
+  ETATS_LECTURE,
+} from "../../utils/constantesLecture";
 
 type EtiquetteEtatLectureProps = {
-  etat: string;
+  etat: EtatLecture;
 };
 
 export default function EtiquetteEtatLecture({
   etat,
 }: EtiquetteEtatLectureProps) {
-  const getCouleurs = () => {
-    switch (etat) {
-      case "en cours":
-        return { background: "#F5D7B7", text: "#B56917", border: "#B56917" };
-      case "à lire":
-        return { background: "#BDE3EF", text: "#2C92B5", border: "#2C92B5" };
-      case "lu":
-        return { background: "#E3E9C3", text: "#778731", border: "#778731" };
-      default:
-        return { background: "#D6D6D6", text: "#666666", border: "#666666" };
-    }
-  };
-
-  const couleurs = getCouleurs();
+  const couleurs =
+    COULEURS_ETAT_LECTURE[etat as keyof typeof COULEURS_ETAT_LECTURE] ||
+    COULEURS_ETAT_LECTURE[ETATS_LECTURE.ABANDONNE];
 
   return (
     <Text

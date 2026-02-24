@@ -1,3 +1,5 @@
+import { EtatLecture } from "../utils/constantesLecture";
+
 export interface Livre {
   id: number;
   titre: string;
@@ -8,7 +10,7 @@ export interface Livre {
   date_publication: string | null;
   couverture: string | null;
   type: string;
-  etat_lecture: string;
+  etat_lecture: EtatLecture;
   note: number;
   avis: string | null;
   date_debut_lecture: string | null;
