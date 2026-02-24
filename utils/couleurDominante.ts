@@ -2,7 +2,7 @@ import { getColors } from "react-native-image-colors";
 import { Image } from "react-native";
 import { imagesLocales } from "./imagesLocales";
 
-const COULEUR_PAR_DEFAUT = "#A0A0A0";
+const couleurParDefaut = "#A0A0A0";
 
 async function normaliserSourceImage(
   couverture: string,
@@ -57,15 +57,15 @@ function ajusterCouleurPourFond(couleur: string): string {
 export async function recupererCouleurDominante(
   couverture?: string,
 ): Promise<string> {
-  if (!couverture) return COULEUR_PAR_DEFAUT;
+  if (!couverture) return couleurParDefaut;
 
   try {
     const uri = await normaliserSourceImage(couverture);
 
-    if (!uri) return COULEUR_PAR_DEFAUT;
+    if (!uri) return couleurParDefaut;
 
     const resultat = await getColors(uri, {
-      fallback: COULEUR_PAR_DEFAUT,
+      fallback: couleurParDefaut,
       cache: true,
       key: uri,
     });
@@ -75,13 +75,13 @@ export async function recupererCouleurDominante(
         ? resultat.dominant || resultat.vibrant || resultat.average
         : resultat.platform === "ios"
           ? resultat.background || resultat.primary
-          : COULEUR_PAR_DEFAUT;
+          : couleurParDefaut;
 
-    if (!couleurBase) return COULEUR_PAR_DEFAUT;
+    if (!couleurBase) return couleurParDefaut;
 
     return ajusterCouleurPourFond(couleurBase);
   } catch (erreur) {
     console.log("Erreur récupération couleur :", erreur);
-    return COULEUR_PAR_DEFAUT;
+    return couleurParDefaut;
   }
 }

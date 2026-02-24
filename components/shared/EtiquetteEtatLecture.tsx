@@ -1,8 +1,8 @@
 import { Text } from "react-native";
 import {
-  COULEURS_ETAT_LECTURE,
+  CouleursEtatLecture,
   EtatLecture,
-  ETATS_LECTURE,
+  EtatsLecture,
 } from "../../utils/constantesLecture";
 
 type EtiquetteEtatLectureProps = {
@@ -13,8 +13,8 @@ export default function EtiquetteEtatLecture({
   etat,
 }: EtiquetteEtatLectureProps) {
   const couleurs =
-    COULEURS_ETAT_LECTURE[etat as keyof typeof COULEURS_ETAT_LECTURE] ||
-    COULEURS_ETAT_LECTURE[ETATS_LECTURE.ABANDONNE];
+    CouleursEtatLecture[etat as keyof typeof CouleursEtatLecture] ||
+    CouleursEtatLecture[EtatsLecture.abandonne];
 
   return (
     <Text

@@ -1,7 +1,7 @@
-export const STATUT_POSSESSION = {
-  ACHETE: "acheté",
-  EMPRUNTE: "emprunté",
+export const StatutPossession = {
+  achete: "acheté",
+  emprunte: "emprunté",
 } as const;
 
 export type StatutPossession =
-  (typeof STATUT_POSSESSION)[keyof typeof STATUT_POSSESSION];
+  (typeof StatutPossession)[keyof typeof StatutPossession];

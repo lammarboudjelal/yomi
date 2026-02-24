@@ -1,4 +1,4 @@
 export const Routes = {
-  Accueil: "Accueil",
-  LivreDetail: "LivreDetail",
+  accueil: "Accueil",
+  livreDetail: "LivreDetail",
 } as const;
