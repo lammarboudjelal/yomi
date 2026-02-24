@@ -1,11 +1,11 @@
 import { View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-type Props = {
+type NoteEtoilesProps = {
   note?: number;
 };
 
-export default function NoteEtoiles({ note }: Props) {
+export default function NoteEtoiles({ note }: NoteEtoilesProps) {
   return (
     <View style={{ display: "flex", flexDirection: "row", gap: 1 }}>
       {[1, 2, 3, 4, 5].map((etoile) => (

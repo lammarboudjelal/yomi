@@ -55,7 +55,7 @@ function ajusterCouleurPourFond(couleur: string): string {
 }
 
 export async function recupererCouleurDominante(
-  couverture?: string | null,
+  couverture?: string,
 ): Promise<string> {
   if (!couverture) return COULEUR_PAR_DEFAUT;
 

@@ -1,11 +1,14 @@
 import { View, Text } from "react-native";
 import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
+import { Livre } from "../../models/Livre";
 
-type Props = {
-  livre: any;
+type BlocInfosPrincipalesProps = {
+  livre: Livre;
 };
 
-export default function BlocInfosPrincipales({ livre }: Props) {
+export default function BlocInfosPrincipales({
+  livre,
+}: BlocInfosPrincipalesProps) {
   return (
     <View style={{ alignItems: "center", gap: 20, paddingHorizontal: 20 }}>
       {/* Titre et auteur(s) */}

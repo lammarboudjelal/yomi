@@ -16,7 +16,7 @@ import { recupererCouleurDominante } from "../utils/couleurDominante";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
-type Props = {
+type LivreDetailScreenProps = {
   route: LivreDetailRouteProp;
 };
 
@@ -26,7 +26,7 @@ const LigneInfo = ({ label, value }: { label: string; value: any }) => (
   </Text>
 );
 
-export default function LivreDetailScreen({ route }: Props) {
+export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   const { livreId } = route.params;
   const [livre, setLivre] = useState<Livre | null>(null);
   const [loading, setLoading] = useState(true);

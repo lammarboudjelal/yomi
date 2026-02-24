@@ -1,4 +1,4 @@
-export const formaterDate = (dateString?: string | null) => {
+export const formaterDate = (dateString?: string) => {
   if (!dateString) return "-";
 
   const datePart = dateString.split(" ")[0];

@@ -2,8 +2,8 @@ import { View, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { imagesLocales } from "../../utils/imagesLocales";
 
-type Props = {
-  couverture?: string | null;
+type CouvertureLivreProps = {
+  couverture?: string;
   width?: number;
   height?: number;
 };
@@ -12,7 +12,7 @@ export default function CouvertureLivre({
   couverture,
   width = 70,
   height = 100,
-}: Props) {
+}: CouvertureLivreProps) {
   const getSource = () => {
     if (!couverture) return null;
 

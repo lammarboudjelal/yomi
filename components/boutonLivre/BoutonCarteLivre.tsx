@@ -4,12 +4,13 @@ import NoteEtoiles from "../shared/NoteEtoiles";
 import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CouvertureLivre from "../shared/CouvertureLivre";
+import { Livre } from "../../models/Livre";
 
-type Props = {
-  livre: any;
+type BoutonCarteLivreProps = {
+  livre: Livre;
 };
 
-export default function BoutonCarteLivre({ livre }: Props) {
+export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
   const navigation = useNavigation<any>();
 
   const iconeStatut =

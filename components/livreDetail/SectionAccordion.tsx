@@ -3,12 +3,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import Collapsible from "react-native-collapsible";
 
-type Props = {
+type SectionAccordionProps = {
   titre: string;
   children: React.ReactNode;
 };
 
-export default function SectionAccordion({ titre, children }: Props) {
+export default function SectionAccordion({
+  titre,
+  children,
+}: SectionAccordionProps) {
   const [ouvert, setOuvert] = useState(false);
 
   return (

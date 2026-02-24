@@ -4,11 +4,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { recupererCouleurDominante } from "../../utils/couleurDominante";
 
-type Props = {
-  couverture?: string | null;
+type HeaderDetailLivreProps = {
+  couverture?: string;
 };
 
-export default function HeaderDetailLivre({ couverture }: Props) {
+export default function HeaderDetailLivre({
+  couverture,
+}: HeaderDetailLivreProps) {
   const insets = useSafeAreaInsets();
   const [couleurFond, setCouleurFond] = useState("#A0A0A0");
 

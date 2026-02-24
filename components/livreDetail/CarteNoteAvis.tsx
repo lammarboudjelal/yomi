@@ -1,12 +1,13 @@
 import { View, Text } from "react-native";
 import NoteEtoiles from "../shared/NoteEtoiles";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Livre } from "../../models/Livre";
 
-type Props = {
-  livre: any;
+type CarteNoteAvisProps = {
+  livre: Livre;
 };
 
-export default function CarteNoteAvis({ livre }: Props) {
+export default function CarteNoteAvis({ livre }: CarteNoteAvisProps) {
   return (
     <View
       style={{

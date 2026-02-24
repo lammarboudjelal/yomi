@@ -3,11 +3,11 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type Props = {
+type BarreNavigationProps = {
   pageActive: string;
 };
 
-export default function BarreNavigation({ pageActive }: Props) {
+export default function BarreNavigation({ pageActive }: BarreNavigationProps) {
   const navigation = useNavigation<any>();
   const insets = useSafeAreaInsets();
 

@@ -1,10 +1,12 @@
 import { Text } from "react-native";
 
-type Props = {
+type EtiquetteEtatLectureProps = {
   etat: string;
 };
 
-export default function EtiquetteEtatLecture({ etat }: Props) {
+export default function EtiquetteEtatLecture({
+  etat,
+}: EtiquetteEtatLectureProps) {
   const getCouleurs = () => {
     switch (etat) {
       case "en cours":
