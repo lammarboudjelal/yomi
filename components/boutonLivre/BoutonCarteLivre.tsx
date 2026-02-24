@@ -6,6 +6,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import CouvertureLivre from "../shared/CouvertureLivre";
 import { Livre } from "../../models/Livre";
 import { Routes } from "../../navigation/routes";
+import { STATUT_POSSESSION } from "../../utils/constantesStatutPosession";
 
 type BoutonCarteLivreProps = {
   livre: Livre;
@@ -15,7 +16,9 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
   const navigation = useNavigation<any>();
 
   const iconeStatut =
-    livre.statut_possession === "acheté" ? "shopping-basket" : "exchange-alt";
+    livre.statut_possession === STATUT_POSSESSION.ACHETE
+      ? "shopping-basket"
+      : "exchange-alt";
 
   return (
     <TouchableOpacity

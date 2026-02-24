@@ -1,4 +1,5 @@
 import { EtatLecture } from "../utils/constantesLecture";
+import { StatutPossession } from "../utils/constantesStatutPosession";
 
 export interface Livre {
   id: number;
@@ -15,7 +16,7 @@ export interface Livre {
   avis: string | null;
   date_debut_lecture: string | null;
   date_fin_lecture: string | null;
-  statut_possession: string;
+  statut_possession: StatutPossession;
   prix: number | null;
   date_pret: string | null;
   preteur: string | null;

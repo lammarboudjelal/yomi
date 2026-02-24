@@ -13,6 +13,7 @@ import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { formaterDate } from "../utils/formaterDate";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
+import { STATUT_POSSESSION } from "../utils/constantesStatutPosession";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -120,13 +121,13 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
               />
             </SectionAccordion>
 
-            {livre.statut_possession === "acheté" && (
+            {livre.statut_possession === STATUT_POSSESSION.ACHETE && (
               <SectionAccordion titre="Informations d’achat">
                 <LigneInfo label="Prix" value={livre.prix + " €"} />
               </SectionAccordion>
             )}
 
-            {livre.statut_possession === "emprunté" && (
+            {livre.statut_possession === STATUT_POSSESSION.EMPRUNTE && (
               <SectionAccordion titre="Informations d’emprunt">
                 <LigneInfo label="Prêté par" value={livre.preteur} />
                 <LigneInfo
