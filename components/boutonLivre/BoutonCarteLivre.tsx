@@ -5,6 +5,7 @@ import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CouvertureLivre from "../shared/CouvertureLivre";
 import { Livre } from "../../models/Livre";
+import { Routes } from "../../navigation/routes";
 
 type BoutonCarteLivreProps = {
   livre: Livre;
@@ -18,7 +19,9 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("LivreDetail", { livreId: livre.id })}
+      onPress={() =>
+        navigation.navigate(Routes.LivreDetail, { livreId: livre.id })
+      }
       style={{
         backgroundColor: "white",
         borderRadius: 5,
