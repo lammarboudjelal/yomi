@@ -4,12 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ouvrirBaseDeDonnees } from "./data/database";
 import { migrerBaseSiNecessaire } from "./data/schema";
 import { insererDonneesDeTestSiVide } from "./data/seed";
-import BibliothequeScreen from "./screens/BibliothequeScreen";
 import LivreDetailScreen from "./screens/LivreDetailScreen";
 import { RootStackParamList } from "./navigation/types";
 import { navigationTheme } from "./theme/theme";
 import { Routes } from "./navigation/routes";
-import AjouterLivreScreen from "./screens/AjouterLivreScreen";
+import BarreNavigation from "./components/navigation/BarreNavigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,20 +25,9 @@ export default function App() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Stack.Navigator
-        id="RootStack"
-        initialRouteName="Bibliotheque"
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen
-          name={Routes.bibliotheque}
-          component={BibliothequeScreen}
-        />
+      <Stack.Navigator id="RootStack" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="MainTabs" component={BarreNavigation} />
         <Stack.Screen name={Routes.livreDetail} component={LivreDetailScreen} />
-        <Stack.Screen
-          name={Routes.ajouterLivre}
-          component={AjouterLivreScreen}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );

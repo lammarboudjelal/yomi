@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { ouvrirBaseDeDonnees } from "../data/database";
 import { getTousLesLivres } from "../services/livreService";
 import BoutonCarteLivre from "../components/boutonLivre/BoutonCarteLivre";
-import BarreNavigation from "../components/navigation/BarreNavigation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Routes } from "../navigation/routes";
 
 export default function BibliothequeScreen() {
   const [livres, setLivres] = useState<any[]>([]);
@@ -38,8 +36,6 @@ export default function BibliothequeScreen() {
         renderItem={({ item }) => <BoutonCarteLivre livre={item} />}
         contentContainerStyle={{ paddingBottom: 100 }}
       />
-
-      <BarreNavigation pageActive={Routes.bibliotheque} />
     </View>
   );
 }

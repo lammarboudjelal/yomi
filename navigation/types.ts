@@ -1,5 +1,9 @@
 export type RootStackParamList = {
+  MainTabs: undefined;
+  LivreDetail: { livreId: number };
+};
+
+export type RootTabParamList = {
   Bibliotheque: undefined;
-  LivreDetail: { livreId: number } | undefined;
-  AjouterLivre: undefined;
+  Ajouter: undefined;
 };

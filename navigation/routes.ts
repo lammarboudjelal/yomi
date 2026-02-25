@@ -1,5 +1,5 @@
 export const Routes = {
   bibliotheque: "Bibliotheque",
   livreDetail: "LivreDetail",
-  ajouterLivre: "AjouterLivre",
+  ajouterLivre: "Ajouter",
 } as const;
