@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Routes } from "../../navigation/routes";
 
 type BarreNavigationProps = {
   pageActive: string;
@@ -12,10 +13,10 @@ export default function BarreNavigation({ pageActive }: BarreNavigationProps) {
   const insets = useSafeAreaInsets();
 
   const pages = [
-    { label: "Accueil", icon: "home", route: "Accueil" },
-    { label: "Ajouter", icon: "add-to-list", route: "AjouterLivre" },
-    { label: "Bibliothèque", icon: "book", route: "Bibliotheque" },
-    { label: "Calendrier", icon: "calendar", route: "Calendrier" },
+    // { label: "Accueil", icon: "home", route: "Accueil" },
+    { label: "Ajouter", icon: "add-to-list", route: Routes.ajouterLivre },
+    { label: "Bibliothèque", icon: "book", route: Routes.bibliotheque },
+    // { label: "Calendrier", icon: "calendar", route: "Calendrier" },
   ];
 
   return (

@@ -5,6 +5,7 @@ import { getTousLesLivres } from "../services/livreService";
 import BoutonCarteLivre from "../components/boutonLivre/BoutonCarteLivre";
 import BarreNavigation from "../components/navigation/BarreNavigation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Routes } from "../navigation/routes";
 
 export default function BibliothequeScreen() {
   const [livres, setLivres] = useState<any[]>([]);
@@ -38,7 +39,7 @@ export default function BibliothequeScreen() {
         contentContainerStyle={{ paddingBottom: 100 }}
       />
 
-      <BarreNavigation pageActive="Bibliotheque" />
+      <BarreNavigation pageActive={Routes.bibliotheque} />
     </View>
   );
 }

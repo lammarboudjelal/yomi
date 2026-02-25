@@ -8,6 +8,8 @@ import BibliothequeScreen from "./screens/BibliothequeScreen";
 import LivreDetailScreen from "./screens/LivreDetailScreen";
 import { RootStackParamList } from "./navigation/types";
 import { navigationTheme } from "./theme/theme";
+import { Routes } from "./navigation/routes";
+import AjouterLivreScreen from "./screens/AjouterLivreScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -29,8 +31,15 @@ export default function App() {
         initialRouteName="Bibliotheque"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="Bibliotheque" component={BibliothequeScreen} />
-        <Stack.Screen name="LivreDetail" component={LivreDetailScreen} />
+        <Stack.Screen
+          name={Routes.bibliotheque}
+          component={BibliothequeScreen}
+        />
+        <Stack.Screen name={Routes.livreDetail} component={LivreDetailScreen} />
+        <Stack.Screen
+          name={Routes.ajouterLivre}
+          component={AjouterLivreScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
