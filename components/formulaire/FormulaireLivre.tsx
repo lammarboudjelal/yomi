@@ -18,6 +18,7 @@ import { StatutPossession } from "../../utils/constantesStatutPosession";
 import ChampRadioStatut from "./champs/ChampRadioStatut";
 import ChampListeDynamique from "./champs/ChampListeDynamique";
 import ChampDate from "./champs/ChampDate";
+import ChampImage from "./champs/ChampImage";
 
 type Props = {
   mode: "ajout" | "modification";
@@ -27,6 +28,9 @@ type Props = {
 export default function FormulaireLivre({ mode, livreInitial }: Props) {
   const insets = useSafeAreaInsets();
 
+  const [couverture, setCouverture] = useState<string | null>(
+    livreInitial?.couverture ?? null,
+  );
   const [titre, setTitre] = useState(livreInitial?.titre ?? "");
   const [isbn, setIsbn] = useState(livreInitial?.isbn ?? "");
   const [nombrePages, setNombrePages] = useState(
@@ -240,6 +244,12 @@ export default function FormulaireLivre({ mode, livreInitial }: Props) {
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
           {mode === "ajout" ? "Ajouter un livre" : "Modifier un livre"}
         </Text>
+
+        <ChampImage
+          label="Couverture"
+          valeur={couverture}
+          onChange={setCouverture}
+        />
 
         {renderSectionInformationsDeBase()}
         {renderSectionAuteurs()}
