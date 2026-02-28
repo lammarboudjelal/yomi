@@ -9,6 +9,7 @@ import { RootStackParamList } from "./navigation/types";
 import { navigationTheme } from "./theme/theme";
 import { Routes } from "./navigation/routes";
 import BarreNavigation from "./components/navigation/BarreNavigation";
+import FormulaireLivreScreen from "./screens/FormulaireLivreScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,6 +29,10 @@ export default function App() {
       <Stack.Navigator id="RootStack" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MainTabs" component={BarreNavigation} />
         <Stack.Screen name={Routes.livreDetail} component={LivreDetailScreen} />
+        <Stack.Screen
+          name={Routes.formulaireLivre}
+          component={FormulaireLivreScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,10 +1,16 @@
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Routes } from "../navigation/routes";
 
 function BoutonSaisieManuelle() {
+  const navigation = useNavigation<any>();
   return (
     <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(Routes.formulaireLivre, { mode: "ajout" })
+      }
       style={{
         backgroundColor: "white",
         shadowColor: "black",
