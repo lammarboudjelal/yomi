@@ -1,6 +1,6 @@
 import { SQLiteDatabase } from "expo-sqlite";
 import { Livre } from "../models/Livre";
-import { EtatsLecture } from "../utils/constantesLecture";
+import { EtatLecture } from "../utils/constantesLecture";
 import { StatutPossession } from "../utils/constantesStatutPosession";
 
 const obtenirOuCreerGenre = async (db: SQLiteDatabase, nom: string) => {
@@ -51,7 +51,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2021-09-29",
       couverture: null,
       type: "broché",
-      etat_lecture: EtatsLecture.aLire,
+      etat_lecture: EtatLecture.aLire,
       note: 0,
       avis: null,
       date_debut_lecture: null,
@@ -75,7 +75,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2025-06-04",
       couverture: "la-boulangerie-de-minuit.jpg",
       type: "broché",
-      etat_lecture: EtatsLecture.enCours,
+      etat_lecture: EtatLecture.enCours,
       note: 0,
       avis: null,
       date_debut_lecture: "2026-02-14",
@@ -99,7 +99,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2024-01-05",
       couverture: "le-grand-magasin-des-reves.jpg",
       type: "broché",
-      etat_lecture: EtatsLecture.lu,
+      etat_lecture: EtatLecture.lu,
       note: 4,
       avis: "Parfaite lecture pour l’hiver. L’autrice aborde le thème des rêves de façon très douce et on s’identifie assez facilement dans plusieurs parties de l’histoire.",
       date_debut_lecture: "2026-01-04",
@@ -123,7 +123,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2025-10-02",
       couverture: "un-printemps-au-gout-de-mochi.jpg",
       type: "broché",
-      etat_lecture: EtatsLecture.aLire,
+      etat_lecture: EtatLecture.aLire,
       note: 0,
       avis: null,
       date_debut_lecture: null,
@@ -147,7 +147,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2025-08-22",
       couverture: "le-grand-magasin-des-reves-2.jpg",
       type: "broché",
-      etat_lecture: EtatsLecture.abandonne,
+      etat_lecture: EtatLecture.abandonne,
       note: 2,
       avis: "Moins captivant que le premier. Je pense que c'est un livre qu'il faut plutôt lire quand on a le temps et assez vite, donc je le reprendrai quand ça sera le cas pour moi.",
       date_debut_lecture: "2026-02-01",
@@ -171,7 +171,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2025-04-09",
       couverture: "la-chirurgienne.jpg",
       type: "poche",
-      etat_lecture: EtatsLecture.lu,
+      etat_lecture: EtatLecture.lu,
       note: 3,
       avis: "Thriller efficace.",
       date_debut_lecture: "2026-03-01",
@@ -195,7 +195,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_publication: "2024-11-07",
       couverture: "galette-au-miel.jpg",
       type: "broché",
-      etat_lecture: EtatsLecture.enCours,
+      etat_lecture: EtatLecture.enCours,
       note: 0,
       avis: null,
       date_debut_lecture: "2026-02-14",
