@@ -47,7 +47,6 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
       <View
         style={{
           flex: 1,
-          flexDirection: "column",
           justifyContent: "space-between",
           gap: 10,
         }}
@@ -63,7 +62,6 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
           <View
             style={{
               flex: 1,
-              flexDirection: "column",
               gap: 5,
               marginRight: 10,
             }}
