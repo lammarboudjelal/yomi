@@ -2,13 +2,17 @@ import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 
-type Props = {
+type ChampImageProps = {
   label?: string;
-  valeur: string | null;
+  valeur?: string;
   onChange: (uri: string | null) => void;
 };
 
-export default function ChampImage({ label, valeur, onChange }: Props) {
+export default function ChampImage({
+  label,
+  valeur,
+  onChange,
+}: ChampImageProps) {
   const choisirImage = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
