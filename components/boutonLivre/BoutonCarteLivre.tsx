@@ -70,12 +70,14 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
               {livre.titre}
             </Text>
 
-            <Text
-              style={{ fontSize: 12, textTransform: "capitalize" }}
-              numberOfLines={1}
-            >
-              {livre.auteurs?.join(", ")}
-            </Text>
+            {livre.auteurs && livre.auteurs.length > 0 && (
+              <Text
+                style={{ fontSize: 12, textTransform: "capitalize" }}
+                numberOfLines={1}
+              >
+                {livre.auteurs.join(", ")}
+              </Text>
+            )}
           </View>
 
           {/* État de lecture */}
@@ -83,12 +85,14 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
         </View>
 
         {/* Genre(s) */}
-        <Text
-          style={{ fontSize: 12, textTransform: "capitalize" }}
-          numberOfLines={1}
-        >
-          {livre.genres?.join(", ")}
-        </Text>
+        {livre.genres && livre.genres.length > 0 && (
+          <Text
+            style={{ fontSize: 12, textTransform: "capitalize" }}
+            numberOfLines={1}
+          >
+            {livre.genres.join(", ")}
+          </Text>
+        )}
 
         {/* Note et statut (achat ou emprunt) */}
         <View

@@ -17,21 +17,25 @@ export default function BlocInfosPrincipales({
           {livre.titre}
         </Text>
 
-        <Text style={{ textTransform: "capitalize" }}>
-          {livre.auteurs?.join(", ")}
-        </Text>
+        {livre.auteurs && livre.auteurs.length > 0 && (
+          <Text style={{ textTransform: "capitalize" }}>
+            {livre.auteurs.join(", ")}
+          </Text>
+        )}
       </View>
 
       {/* Genres */}
-      <Text
-        style={{
-          textAlign: "center",
-          textTransform: "capitalize",
-          width: "100%",
-        }}
-      >
-        {livre.genres?.join(", ")}
-      </Text>
+      {livre.genres && livre.genres.length > 0 && (
+        <Text
+          style={{
+            textAlign: "center",
+            textTransform: "capitalize",
+            width: "100%",
+          }}
+        >
+          {livre.genres.join(", ")}
+        </Text>
+      )}
 
       {/* Bloc infos pages, état de lecture et statut possession */}
       <View
