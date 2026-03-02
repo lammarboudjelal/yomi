@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
+import { File, Paths } from "expo-file-system";
 
 type ChampImageProps = {
   label?: string;
@@ -28,7 +29,21 @@ export default function ChampImage({
     });
 
     if (!result.canceled) {
-      onChange(result.assets[0].uri);
+      try {
+        const uriTemporaire = result.assets[0].uri;
+
+        const nomFichier = `couverture_${Date.now()}.jpg`;
+
+        const fichierSource = new File(uriTemporaire);
+        const fichierDestination = new File(Paths.document, nomFichier);
+
+        fichierSource.copy(fichierDestination);
+
+        onChange(fichierDestination.uri);
+      } catch (error) {
+        console.error("Erreur copie image :", error);
+        Alert.alert("Erreur", "Impossible d'enregistrer l'image.");
+      }
     }
   };
 
