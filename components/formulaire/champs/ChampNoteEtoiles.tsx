@@ -27,6 +27,7 @@ export default function ChampNoteEtoiles({
               name={etoile <= note ? "star" : "star-border"}
               size={24}
               color="#F2B705"
+              key={etoile}
             />
           );
 
