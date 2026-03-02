@@ -17,7 +17,9 @@ export default function BlocInfosPrincipales({
           {livre.titre}
         </Text>
 
-        <Text>{livre.auteurs?.join(", ")}</Text>
+        <Text style={{ textTransform: "capitalize" }}>
+          {livre.auteurs?.join(", ")}
+        </Text>
       </View>
 
       {/* Genres */}

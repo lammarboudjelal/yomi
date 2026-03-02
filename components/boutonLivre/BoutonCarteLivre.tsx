@@ -70,7 +70,10 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
               {livre.titre}
             </Text>
 
-            <Text style={{ fontSize: 12 }} numberOfLines={1}>
+            <Text
+              style={{ fontSize: 12, textTransform: "capitalize" }}
+              numberOfLines={1}
+            >
               {livre.auteurs?.join(", ")}
             </Text>
           </View>
