@@ -1,6 +1,7 @@
 import { View, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { imagesLocales } from "../../utils/imagesLocales";
+import { useState } from "react";
 
 type CouvertureLivreProps = {
   couverture?: string;
@@ -13,6 +14,8 @@ export default function CouvertureLivre({
   width = 70,
   height = 100,
 }: CouvertureLivreProps) {
+  const [erreurImage, setErreurImage] = useState(false);
+
   const getSource = () => {
     if (!couverture) return null;
 
@@ -31,10 +34,11 @@ export default function CouvertureLivre({
 
   const source = getSource();
 
-  if (source) {
+  if (source && !erreurImage) {
     return (
       <Image
         source={source}
+        onError={() => setErreurImage(true)}
         style={{
           width: width,
           height: height,
