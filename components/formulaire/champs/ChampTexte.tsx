@@ -6,6 +6,7 @@ type ChampTexteProps = {
   onChange: (texte: string) => void;
   placeholder?: string;
   multiline?: boolean;
+  erreur?: string;
 };
 
 export default function ChampTexte({
@@ -14,6 +15,7 @@ export default function ChampTexte({
   onChange,
   placeholder,
   multiline = false,
+  erreur,
 }: ChampTexteProps) {
   return (
     <View style={{ gap: 5 }}>
@@ -29,7 +31,7 @@ export default function ChampTexte({
         multiline={multiline}
         style={{
           borderWidth: 1,
-          borderColor: "#DBC2A9",
+          borderColor: erreur ? "#9d0208" : "#DBC2A9",
           backgroundColor: "white",
           borderRadius: 5,
           padding: 10,
@@ -37,6 +39,10 @@ export default function ChampTexte({
           textAlignVertical: multiline ? "top" : "center",
         }}
       />
+
+      {erreur && (
+        <Text style={{ color: "#9d0208", fontSize: 12 }}>{erreur}</Text>
+      )}
     </View>
   );
 }

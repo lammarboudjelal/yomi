@@ -95,3 +95,98 @@ export const getLivreParId = async (
 
   return construireLivresDepuisLignes(lignes)[0];
 };
+
+const getOrCreateAuteur = async (
+  db: SQLiteDatabase,
+  nomination: string,
+): Promise<number> => {
+  const existant = await db.getFirstAsync<{ id: number }>(
+    "SELECT id FROM auteur WHERE nomination = ?",
+    nomination,
+  );
+
+  if (existant) return existant.id;
+
+  const result = await db.runAsync(
+    "INSERT INTO auteur (nomination) VALUES (?)",
+    nomination,
+  );
+
+  return result.lastInsertRowId!;
+};
+
+const getOrCreateGenre = async (
+  db: SQLiteDatabase,
+  nom: string,
+): Promise<number> => {
+  const existant = await db.getFirstAsync<{ id: number }>(
+    "SELECT id FROM genre WHERE nom = ?",
+    nom,
+  );
+
+  if (existant) return existant.id;
+
+  const result = await db.runAsync("INSERT INTO genre (nom) VALUES (?)", nom);
+
+  return result.lastInsertRowId!;
+};
+
+export const insertLivre = async (
+  db: SQLiteDatabase,
+  livre: Livre,
+): Promise<void> => {
+  await db.withTransactionAsync(async () => {
+    const result = await db.runAsync(
+      `
+      INSERT INTO livre (
+        titre, isbn, resume, nombre_pages, edition,
+        date_publication, couverture, type,
+        etat_lecture, note, avis,
+        date_debut_lecture, date_fin_lecture,
+        statut_possession, date_pret, preteur,
+        date_ajout, prix
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), ?)
+      `,
+      livre.titre,
+      livre.isbn,
+      livre.resume,
+      livre.nombre_pages,
+      livre.edition,
+      livre.date_publication,
+      livre.couverture,
+      livre.type,
+      livre.etat_lecture,
+      livre.note,
+      livre.avis,
+      livre.date_debut_lecture,
+      livre.date_fin_lecture,
+      livre.statut_possession,
+      livre.date_pret,
+      livre.preteur,
+      livre.prix,
+    );
+
+    const livreId = result.lastInsertRowId!;
+
+    for (const auteurNom of livre.auteurs) {
+      const auteurId = await getOrCreateAuteur(db, auteurNom);
+
+      await db.runAsync(
+        "INSERT INTO livre_auteur (livre_id, auteur_id) VALUES (?, ?)",
+        livreId,
+        auteurId,
+      );
+    }
+
+    for (const genreNom of livre.genres) {
+      const genreId = await getOrCreateGenre(db, genreNom);
+
+      await db.runAsync(
+        "INSERT INTO livre_genre (livre_id, genre_id) VALUES (?, ?)",
+        livreId,
+        genreId,
+      );
+    }
+  });
+};

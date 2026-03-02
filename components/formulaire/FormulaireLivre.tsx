@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { Livre } from "../../models/Livre";
 import ChampTexte from "./champs/ChampTexte";
@@ -19,14 +20,23 @@ import ChampRadioStatut from "./champs/ChampRadioStatut";
 import ChampListeDynamique from "./champs/ChampListeDynamique";
 import ChampDate from "./champs/ChampDate";
 import ChampImage from "./champs/ChampImage";
+import { insertLivre } from "../../services/livreService";
+import BoutonEnregistrer from "./BoutonEnregistrer";
+import { useNavigation } from "@react-navigation/native";
+import { ouvrirBaseDeDonnees } from "../../data/database";
+import { Keyboard } from "react-native";
 
-type Props = {
+type FormulaireLivreProps = {
   mode: "ajout" | "modification";
   livreInitial?: Livre;
 };
 
-export default function FormulaireLivre({ mode, livreInitial }: Props) {
+export default function FormulaireLivre({
+  mode,
+  livreInitial,
+}: FormulaireLivreProps) {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation<any>();
 
   const [couverture, setCouverture] = useState<string | null>(
     livreInitial?.couverture ?? null,
@@ -64,6 +74,8 @@ export default function FormulaireLivre({ mode, livreInitial }: Props) {
   const [note, setNote] = useState(livreInitial?.note ?? 0);
   const [avis, setAvis] = useState(livreInitial?.avis ?? "");
 
+  const [erreurTitre, setErreurTitre] = useState<string | null>(null);
+
   const optionsEtatLecture = Object.values(EtatLecture).map((val) => ({
     label: val,
     value: val,
@@ -72,6 +84,52 @@ export default function FormulaireLivre({ mode, livreInitial }: Props) {
     label: val,
     value: val,
   }));
+
+  const validerFormulaire = () => {
+    if (!titre.trim()) {
+      setErreurTitre("Le titre est obligatoire.");
+      return false;
+    }
+
+    setErreurTitre(null);
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (!validerFormulaire()) return;
+
+    try {
+      const db = await ouvrirBaseDeDonnees();
+
+      await insertLivre(db, {
+        titre,
+        isbn,
+        resume,
+        nombre_pages: Number(nombrePages) || null,
+        edition,
+        date_publication: datePublication,
+        couverture,
+        type: typeLivre,
+        etat_lecture: etatLecture,
+        note,
+        avis,
+        date_debut_lecture: dateDebutLecture,
+        date_fin_lecture: dateFinLecture,
+        statut_possession: statut,
+        date_pret: datePret,
+        preteur,
+        prix: Number(prix) || null,
+        auteurs,
+        genres,
+      } as Livre);
+
+      Keyboard.dismiss();
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert("Erreur", "Une erreur est survenue lors de l'ajout.");
+      console.error(error);
+    }
+  };
 
   const renderSectionTitre = (titre: string) => (
     <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>
@@ -85,7 +143,11 @@ export default function FormulaireLivre({ mode, livreInitial }: Props) {
         label="Titre *"
         valeur={titre}
         placeholder="Titre"
-        onChange={setTitre}
+        onChange={(texte) => {
+          setTitre(texte);
+          if (erreurTitre) setErreurTitre(null);
+        }}
+        erreur={erreurTitre}
       />
 
       <ChampTexte
@@ -229,36 +291,40 @@ export default function FormulaireLivre({ mode, livreInitial }: Props) {
   );
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: 20,
-          marginTop: insets.top + 80,
-          paddingBottom: 200,
-          gap: 30,
-        }}
-        keyboardShouldPersistTaps="handled"
+    <>
+      <BoutonEnregistrer onPress={handleSubmit} />
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          {mode === "ajout" ? "Ajouter un livre" : "Modifier un livre"}
-        </Text>
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+            marginTop: insets.top + 80,
+            paddingBottom: 200,
+            gap: 30,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            {mode === "ajout" ? "Ajouter un livre" : "Modifier un livre"}
+          </Text>
 
-        <ChampImage
-          label="Couverture"
-          valeur={couverture}
-          onChange={setCouverture}
-        />
+          <ChampImage
+            label="Couverture"
+            valeur={couverture}
+            onChange={setCouverture}
+          />
 
-        {renderSectionInformationsDeBase()}
-        {renderSectionAuteurs()}
-        {renderSectionGenres()}
-        {renderSectionInformationsDePublication()}
-        {renderSectionResume()}
-        {renderSectionInformationsAchatEmprunt()}
-        {renderSectionInformationsDeLecture()}
-      </ScrollView>
-    </KeyboardAvoidingView>
+          {renderSectionInformationsDeBase()}
+          {renderSectionAuteurs()}
+          {renderSectionGenres()}
+          {renderSectionInformationsDePublication()}
+          {renderSectionResume()}
+          {renderSectionInformationsAchatEmprunt()}
+          {renderSectionInformationsDeLecture()}
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </>
   );
 }
