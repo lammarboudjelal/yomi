@@ -62,7 +62,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       preteur: "Charline",
       date_ajout: null,
       genres: ["littérature japonaise", "fiction", "feel good"],
-      auteurs: ["Toshikazu Kawaguchi"],
+      auteurs: ["toshikazu kawaguchi"],
     },
     {
       id: 2,
@@ -86,7 +86,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       preteur: null,
       date_ajout: null,
       genres: ["feel good", "littérature japonaise", "fiction"],
-      auteurs: ["Noriko Onuma"],
+      auteurs: ["noriko onuma"],
     },
     {
       id: 3,
@@ -110,7 +110,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       preteur: null,
       date_ajout: null,
       genres: ["fantastique", "fiction", "littérature coréenne"],
-      auteurs: ["Mi-ye Lee"],
+      auteurs: ["mi-ye lee"],
     },
     {
       id: 4,
@@ -134,7 +134,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       preteur: null,
       date_ajout: null,
       genres: ["littérature japonaise", "feel good", "fiction"],
-      auteurs: ["Sawako Natori"],
+      auteurs: ["sawako natori"],
     },
     {
       id: 5,
@@ -158,7 +158,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       preteur: null,
       date_ajout: null,
       genres: ["fantastique", "fiction", "littérature coréenne"],
-      auteurs: ["Mi-ye Lee"],
+      auteurs: ["mi-ye lee"],
     },
     {
       id: 6,
@@ -182,7 +182,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       preteur: null,
       date_ajout: null,
       genres: ["thriller", "policier"],
-      auteurs: ["Leslie Wolfe"],
+      auteurs: ["leslie wolfe"],
     },
     {
       id: 7,
@@ -206,7 +206,7 @@ export const insererDonneesDeTestSiVide = async (db: SQLiteDatabase) => {
       date_ajout: null,
       date_fin_lecture: null,
       genres: ["fiction", "littérature japonaise"],
-      auteurs: ["Haruki Murakami"],
+      auteurs: ["haruki murakami"],
     },
   ];
 

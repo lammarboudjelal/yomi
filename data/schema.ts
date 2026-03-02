@@ -53,7 +53,7 @@ export const migrerBaseSiNecessaire = async (db: SQLiteDatabase) => {
 
       CREATE TABLE IF NOT EXISTS auteur (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nomination TEXT NOT NULL
+        nomination TEXT NOT NULL UNIQUE
       );
 
       CREATE TABLE IF NOT EXISTS genre (

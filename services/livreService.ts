@@ -100,16 +100,18 @@ const getOrCreateAuteur = async (
   db: SQLiteDatabase,
   nomination: string,
 ): Promise<number> => {
+  const normalise = nomination.trim().toLowerCase();
+
   const existant = await db.getFirstAsync<{ id: number }>(
     "SELECT id FROM auteur WHERE nomination = ?",
-    nomination,
+    normalise,
   );
 
   if (existant) return existant.id;
 
   const result = await db.runAsync(
     "INSERT INTO auteur (nomination) VALUES (?)",
-    nomination,
+    normalise,
   );
 
   return result.lastInsertRowId!;
@@ -119,14 +121,19 @@ const getOrCreateGenre = async (
   db: SQLiteDatabase,
   nom: string,
 ): Promise<number> => {
+  const normalise = nom.trim().toLowerCase();
+
   const existant = await db.getFirstAsync<{ id: number }>(
     "SELECT id FROM genre WHERE nom = ?",
-    nom,
+    normalise,
   );
 
   if (existant) return existant.id;
 
-  const result = await db.runAsync("INSERT INTO genre (nom) VALUES (?)", nom);
+  const result = await db.runAsync(
+    "INSERT INTO genre (nom) VALUES (?)",
+    normalise,
+  );
 
   return result.lastInsertRowId!;
 };
