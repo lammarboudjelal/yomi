@@ -3,7 +3,6 @@ import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { RootStackParamList } from "../navigation/types";
 import { useEffect, useState } from "react";
 import { Livre } from "../models/Livre";
-import { ouvrirBaseDeDonnees } from "../data/database";
 import { getLivreParId } from "../services/livreService";
 import BlocInfosPrincipales from "../components/livreDetail/BlocInfosPrincipales";
 import CarteNoteAvis from "../components/livreDetail/CarteNoteAvis";
@@ -14,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { formaterDate } from "../utils/formaterDate";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
 import { StatutPossession } from "../utils/constantesStatutPosession";
+import { useSQLiteContext } from "expo-sqlite";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -33,10 +33,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   const [loading, setLoading] = useState(true);
   const [couleurFond, setCouleurFond] = useState("#A0A0A0");
   const insets = useSafeAreaInsets();
+  const db = useSQLiteContext();
 
   useEffect(() => {
     const chargerLivre = async () => {
-      const db = await ouvrirBaseDeDonnees();
       const data = await getLivreParId(db, livreId);
       setLivre(data);
       setLoading(false);

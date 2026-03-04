@@ -1,19 +1,19 @@
 import { Text, View, FlatList } from "react-native";
 import { useCallback, useState } from "react";
-import { ouvrirBaseDeDonnees } from "../data/database";
 import { getTousLesLivres } from "../services/livreService";
 import BoutonCarteLivre from "../components/boutonLivre/BoutonCarteLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
+import { useSQLiteContext } from "expo-sqlite";
 
 export default function BibliothequeScreen() {
   const [livres, setLivres] = useState<any[]>([]);
   const insets = useSafeAreaInsets();
+  const db = useSQLiteContext();
 
   useFocusEffect(
     useCallback(() => {
       const chargerLivres = async () => {
-        const db = await ouvrirBaseDeDonnees();
         const data = await getTousLesLivres(db);
         setLivres(data);
       };

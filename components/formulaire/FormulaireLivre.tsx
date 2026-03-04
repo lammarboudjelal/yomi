@@ -23,8 +23,8 @@ import ChampImage from "./champs/ChampImage";
 import { insertLivre } from "../../services/livreService";
 import BoutonEnregistrer from "./BoutonEnregistrer";
 import { useNavigation } from "@react-navigation/native";
-import { ouvrirBaseDeDonnees } from "../../data/database";
 import { Keyboard } from "react-native";
+import { useSQLiteContext } from "expo-sqlite";
 
 type FormulaireLivreProps = {
   mode: "ajout" | "modification";
@@ -37,6 +37,7 @@ export default function FormulaireLivre({
 }: FormulaireLivreProps) {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<any>();
+  const db = useSQLiteContext();
 
   const [couverture, setCouverture] = useState<string | null>(
     livreInitial?.couverture ?? null,
@@ -99,8 +100,6 @@ export default function FormulaireLivre({
     if (!validerFormulaire()) return;
 
     try {
-      const db = await ouvrirBaseDeDonnees();
-
       await insertLivre(db, {
         titre,
         isbn,
