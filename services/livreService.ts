@@ -138,6 +138,43 @@ const getOrCreateGenre = async (
   return result.lastInsertRowId!;
 };
 
+async function lierAuteurs(
+  db: SQLiteDatabase,
+  livreId: number,
+  auteurs: string[],
+) {
+  for (const auteurNom of auteurs) {
+    const auteurId = await getOrCreateAuteur(db, auteurNom);
+
+    await db.runAsync(
+      "INSERT INTO livre_auteur (livre_id, auteur_id) VALUES (?, ?)",
+      livreId,
+      auteurId,
+    );
+  }
+}
+
+async function lierGenres(
+  db: SQLiteDatabase,
+  livreId: number,
+  genres: string[],
+) {
+  for (const genreNom of genres) {
+    const genreId = await getOrCreateGenre(db, genreNom);
+
+    await db.runAsync(
+      "INSERT INTO livre_genre (livre_id, genre_id) VALUES (?, ?)",
+      livreId,
+      genreId,
+    );
+  }
+}
+
+async function supprimerRelationsLivre(db: SQLiteDatabase, livreId: number) {
+  await db.runAsync("DELETE FROM livre_auteur WHERE livre_id = ?", livreId);
+  await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livreId);
+}
+
 export const insertLivre = async (
   db: SQLiteDatabase,
   livre: Livre,
@@ -176,25 +213,8 @@ export const insertLivre = async (
 
     const livreId = result.lastInsertRowId!;
 
-    for (const auteurNom of livre.auteurs) {
-      const auteurId = await getOrCreateAuteur(db, auteurNom);
-
-      await db.runAsync(
-        "INSERT INTO livre_auteur (livre_id, auteur_id) VALUES (?, ?)",
-        livreId,
-        auteurId,
-      );
-    }
-
-    for (const genreNom of livre.genres) {
-      const genreId = await getOrCreateGenre(db, genreNom);
-
-      await db.runAsync(
-        "INSERT INTO livre_genre (livre_id, genre_id) VALUES (?, ?)",
-        livreId,
-        genreId,
-      );
-    }
+    await lierAuteurs(db, livreId, livre.auteurs);
+    await lierGenres(db, livreId, livre.genres);
   });
 };
 
@@ -247,29 +267,10 @@ export const updateLivre = async (
       livre.id,
     );
 
-    // Suppression des anciennes relations
-    await db.runAsync("DELETE FROM livre_auteur WHERE livre_id = ?", livre.id);
-    await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livre.id);
+    await supprimerRelationsLivre(db, livre.id);
 
-    for (const auteurNom of livre.auteurs) {
-      const auteurId = await getOrCreateAuteur(db, auteurNom);
-
-      await db.runAsync(
-        "INSERT INTO livre_auteur (livre_id, auteur_id) VALUES (?, ?)",
-        livre.id,
-        auteurId,
-      );
-    }
-
-    for (const genreNom of livre.genres) {
-      const genreId = await getOrCreateGenre(db, genreNom);
-
-      await db.runAsync(
-        "INSERT INTO livre_genre (livre_id, genre_id) VALUES (?, ?)",
-        livre.id,
-        genreId,
-      );
-    }
+    await lierAuteurs(db, livre.id, livre.auteurs);
+    await lierGenres(db, livre.id, livre.genres);
   });
 };
 
@@ -278,8 +279,7 @@ export const deleteLivre = async (
   livreId: number,
 ): Promise<void> => {
   await db.withTransactionAsync(async () => {
-    await db.runAsync("DELETE FROM livre_auteur WHERE livre_id = ?", livreId);
-    await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livreId);
+    await supprimerRelationsLivre(db, livreId);
     await db.runAsync("DELETE FROM livre WHERE id = ?", livreId);
   });
 };
