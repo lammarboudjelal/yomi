@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { File, Paths } from "expo-file-system";
+import { imagesLocales } from "../../../utils/imagesLocales";
 
 type ChampImageProps = {
   label?: string;
@@ -72,7 +73,7 @@ export default function ChampImage({
       ) : (
         <View style={{ alignItems: "center", gap: 10 }}>
           <Image
-            source={{ uri: valeur }}
+            source={imagesLocales[valeur] ?? { uri: valeur }}
             style={{
               width: 140,
               height: 200,

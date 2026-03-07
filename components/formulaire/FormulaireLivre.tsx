@@ -20,7 +20,7 @@ import ChampRadioStatut from "./champs/ChampRadioStatut";
 import ChampListeDynamique from "./champs/ChampListeDynamique";
 import ChampDate from "./champs/ChampDate";
 import ChampImage from "./champs/ChampImage";
-import { insertLivre } from "../../services/livreService";
+import { insertLivre, updateLivre } from "../../services/livreService";
 import BoutonEnregistrer from "./BoutonEnregistrer";
 import { useNavigation } from "@react-navigation/native";
 import { Keyboard } from "react-native";
@@ -100,7 +100,8 @@ export default function FormulaireLivre({
     if (!validerFormulaire()) return;
 
     try {
-      await insertLivre(db, {
+      const livreFinal: Livre = {
+        id: livreInitial?.id,
         titre,
         isbn,
         resume,
@@ -120,7 +121,14 @@ export default function FormulaireLivre({
         prix: Number(prix) || null,
         auteurs,
         genres,
-      } as Livre);
+        date_ajout: livreInitial?.date_ajout || null,
+      };
+
+      if (mode === "ajout") {
+        await insertLivre(db, livreFinal);
+      } else {
+        await updateLivre(db, livreFinal);
+      }
 
       Keyboard.dismiss();
       navigation.goBack();

@@ -197,3 +197,78 @@ export const insertLivre = async (
     }
   });
 };
+
+export const updateLivre = async (
+  db: SQLiteDatabase,
+  livre: Livre,
+): Promise<void> => {
+  if (!livre.id) throw new Error("ID du livre manquant pour update.");
+
+  await db.withTransactionAsync(async () => {
+    await db.runAsync(
+      `
+      UPDATE livre SET
+        titre = ?,
+        isbn = ?,
+        resume = ?,
+        nombre_pages = ?,
+        edition = ?,
+        date_publication = ?,
+        couverture = ?,
+        type = ?,
+        etat_lecture = ?,
+        note = ?,
+        avis = ?,
+        date_debut_lecture = ?,
+        date_fin_lecture = ?,
+        statut_possession = ?,
+        date_pret = ?,
+        preteur = ?,
+        prix = ?
+      WHERE id = ?
+      `,
+      livre.titre,
+      livre.isbn,
+      livre.resume,
+      livre.nombre_pages,
+      livre.edition,
+      livre.date_publication,
+      livre.couverture,
+      livre.type,
+      livre.etat_lecture,
+      livre.note,
+      livre.avis,
+      livre.date_debut_lecture,
+      livre.date_fin_lecture,
+      livre.statut_possession,
+      livre.date_pret,
+      livre.preteur,
+      livre.prix,
+      livre.id,
+    );
+
+    // Suppression des anciennes relations
+    await db.runAsync("DELETE FROM livre_auteur WHERE livre_id = ?", livre.id);
+    await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livre.id);
+
+    for (const auteurNom of livre.auteurs) {
+      const auteurId = await getOrCreateAuteur(db, auteurNom);
+
+      await db.runAsync(
+        "INSERT INTO livre_auteur (livre_id, auteur_id) VALUES (?, ?)",
+        livre.id,
+        auteurId,
+      );
+    }
+
+    for (const genreNom of livre.genres) {
+      const genreId = await getOrCreateGenre(db, genreNom);
+
+      await db.runAsync(
+        "INSERT INTO livre_genre (livre_id, genre_id) VALUES (?, ?)",
+        livre.id,
+        genreId,
+      );
+    }
+  });
+};

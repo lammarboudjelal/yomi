@@ -1,7 +1,11 @@
-import { RouteProp } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+} from "@react-navigation/native";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { RootStackParamList } from "../navigation/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Livre } from "../models/Livre";
 import { getLivreParId } from "../services/livreService";
 import BlocInfosPrincipales from "../components/livreDetail/BlocInfosPrincipales";
@@ -14,6 +18,9 @@ import { formaterDate } from "../utils/formaterDate";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
 import { StatutPossession } from "../utils/constantesStatutPosession";
 import { useSQLiteContext } from "expo-sqlite";
+import BoutonOptions from "../components/livreDetail/BoutonOptions";
+import Modale from "../components/shared/Modale";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -34,18 +41,25 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   const [couleurFond, setCouleurFond] = useState("#A0A0A0");
   const insets = useSafeAreaInsets();
   const db = useSQLiteContext();
+  const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation<any>();
+
+  useFocusEffect(
+    useCallback(() => {
+      const chargerLivre = async () => {
+        setLoading(true);
+        const data = await getLivreParId(db, livreId);
+        setLivre(data);
+        setLoading(false);
+      };
+
+      chargerLivre();
+    }, [livreId]),
+  );
 
   useEffect(() => {
-    const chargerLivre = async () => {
-      const data = await getLivreParId(db, livreId);
-      setLivre(data);
-      setLoading(false);
-    };
+    if (!livre) return;
 
-    chargerLivre();
-  }, [livreId]);
-
-  useEffect(() => {
     const chargerCouleur = async () => {
       const couleur = await recupererCouleurDominante(livre.couverture);
       setCouleurFond(couleur);
@@ -71,8 +85,27 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   }
 
   return (
-    <View style={{ backgroundColor: couleurFond }}>
+    <View style={{ flex: 1, backgroundColor: couleurFond }}>
       <BoutonRetour />
+
+      <BoutonOptions onPress={() => setModalVisible(true)} />
+
+      <Modale
+        visible={modalVisible}
+        title="Actions sur le livre"
+        onClose={() => setModalVisible(false)}
+        actions={[
+          {
+            label: "Modifier le livre",
+            icon: <MaterialIcons name="edit" size={24} color={"#705C5C"} />,
+            onPress: () =>
+              navigation.navigate("FormulaireLivre", {
+                mode: "modification",
+                livreInitial: livre,
+              }),
+          },
+        ]}
+      />
 
       <ScrollView>
         <HeaderDetailLivre couverture={livre.couverture} />
