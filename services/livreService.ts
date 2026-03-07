@@ -272,3 +272,14 @@ export const updateLivre = async (
     }
   });
 };
+
+export const deleteLivre = async (
+  db: SQLiteDatabase,
+  livreId: number,
+): Promise<void> => {
+  await db.withTransactionAsync(async () => {
+    await db.runAsync("DELETE FROM livre_auteur WHERE livre_id = ?", livreId);
+    await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livreId);
+    await db.runAsync("DELETE FROM livre WHERE id = ?", livreId);
+  });
+};

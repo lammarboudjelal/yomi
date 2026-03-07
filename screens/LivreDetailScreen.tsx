@@ -3,11 +3,11 @@ import {
   useFocusEffect,
   useNavigation,
 } from "@react-navigation/native";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator, Alert } from "react-native";
 import { RootStackParamList } from "../navigation/types";
 import { useCallback, useEffect, useState } from "react";
 import { Livre } from "../models/Livre";
-import { getLivreParId } from "../services/livreService";
+import { deleteLivre, getLivreParId } from "../services/livreService";
 import BlocInfosPrincipales from "../components/livreDetail/BlocInfosPrincipales";
 import CarteNoteAvis from "../components/livreDetail/CarteNoteAvis";
 import SectionAccordion from "../components/livreDetail/SectionAccordion";
@@ -76,11 +76,44 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
     );
   }
 
+  const handleDelete = () => {
+    if (!livre) return;
+
+    Alert.alert(
+      "Supprimer le livre",
+      `Voulez-vous vraiment supprimer "${livre.titre}" ?`,
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Supprimer",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteLivre(db, livre.id!);
+
+              navigation.goBack();
+            } catch (error) {
+              Alert.alert("Erreur", "Impossible de supprimer le livre.");
+            }
+          },
+        },
+      ],
+    );
+  };
+
   if (!livre) {
     return (
-      <View>
-        <Text>Livre introuvable</Text>
-      </View>
+      <>
+        <BoutonRetour />
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ fontSize: 20 }}>Livre introuvable</Text>
+        </View>
+      </>
     );
   }
 
@@ -103,6 +136,12 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
                 mode: "modification",
                 livreInitial: livre,
               }),
+          },
+          {
+            label: "Supprimer le livre",
+            icon: <MaterialIcons name="delete" size={24} color="#705C5C" />,
+            destructive: true,
+            onPress: handleDelete,
           },
         ]}
       />
