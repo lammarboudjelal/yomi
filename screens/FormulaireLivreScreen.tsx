@@ -15,8 +15,6 @@ export default function FormulaireLivreScreen({
   const { mode, livreInitial } = route.params;
   const insets = useSafeAreaInsets();
 
-  console.log(livreInitial);
-
   return (
     <View style={{ marginBottom: insets.bottom }}>
       <BoutonRetour />
