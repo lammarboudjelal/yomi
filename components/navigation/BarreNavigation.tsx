@@ -41,7 +41,13 @@ export default function BarreNavigation() {
     >
       <Tab.Screen name={Routes.ajouterLivre} component={AjouterLivreScreen} />
 
-      <Tab.Screen name={Routes.bibliotheque} component={BibliothequeScreen} />
+      <Tab.Screen
+        name={Routes.bibliotheque}
+        component={BibliothequeScreen}
+        options={{
+          tabBarLabel: "Bibliothèque",
+        }}
+      />
     </Tab.Navigator>
   );
 }

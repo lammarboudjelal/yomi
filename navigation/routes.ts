@@ -1,5 +1,5 @@
 export const Routes = {
-  bibliotheque: "Bibliothèque",
+  bibliotheque: "Bibliotheque",
   livreDetail: "LivreDetail",
   ajouterLivre: "Ajouter",
   formulaireLivre: "FormulaireLivre",
