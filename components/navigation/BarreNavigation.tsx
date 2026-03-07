@@ -19,7 +19,6 @@ export default function BarreNavigation() {
           borderTopRightRadius: 30,
           height: 80,
           paddingTop: 5,
-          shadowColor: "black",
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.2,
           shadowRadius: 10,

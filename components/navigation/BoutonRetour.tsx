@@ -20,7 +20,6 @@ export default function BoutonRetour() {
         borderTopRightRadius: 40,
         borderBottomRightRadius: 40,
         backgroundColor: "white",
-        shadowColor: "black",
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
         shadowRadius: 5,

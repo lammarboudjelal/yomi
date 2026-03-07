@@ -32,11 +32,10 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
         flexDirection: "row",
         gap: 10,
 
-        shadowColor: "black",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
         shadowRadius: 5,
-        elevation: 4,
+        elevation: 6,
 
         marginBottom: 16,
       }}
