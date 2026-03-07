@@ -1,7 +1,7 @@
 import SelectDropdown from "react-native-select-dropdown";
 import { View, Text } from "react-native";
 import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
-import { EtatLecture } from "../../utils/constantesLecture";
+import { EtatLecture } from "../../models/EtatLecture";
 
 type Props = {
   valeur: EtatLecture;

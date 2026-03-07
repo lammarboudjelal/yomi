@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { StatutPossession } from "../../../utils/constantesStatutPosession";
+import { StatutPossession } from "../../../models/StatutPosession";
 
 type ChampRadioStatutProps = {
   valeur: string;

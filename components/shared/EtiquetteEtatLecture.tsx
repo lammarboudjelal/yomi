@@ -1,8 +1,5 @@
 import { Text, View } from "react-native";
-import {
-  CouleursEtatLecture,
-  EtatLecture,
-} from "../../utils/constantesLecture";
+import { CouleursEtatLecture, EtatLecture } from "../../models/EtatLecture";
 import { MaterialIcons } from "@expo/vector-icons";
 
 type EtiquetteEtatLectureProps = {

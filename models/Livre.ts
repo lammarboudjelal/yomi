@@ -1,5 +1,5 @@
-import { EtatLecture } from "../utils/constantesLecture";
-import { StatutPossession } from "../utils/constantesStatutPosession";
+import { EtatLecture } from "./EtatLecture";
+import { StatutPossession } from "./StatutPosession";
 
 export interface Livre {
   id: number;

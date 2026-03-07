@@ -19,12 +19,12 @@ import BoutonRetour from "../components/navigation/BoutonRetour";
 import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
-import { StatutPossession } from "../utils/constantesStatutPosession";
+import { StatutPossession } from "../models/StatutPosession";
 import { useSQLiteContext } from "expo-sqlite";
 import BoutonOptions from "../components/livreDetail/BoutonOptions";
 import Modale from "../components/shared/Modale";
 import { MaterialIcons } from "@expo/vector-icons";
-import { EtatLecture } from "../utils/constantesLecture";
+import { EtatLecture } from "../models/EtatLecture";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 

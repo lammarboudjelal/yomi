@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { Livre } from "../../models/Livre";
 import EtatLectureEditable from "./EtatLectureEditable";
-import { EtatLecture } from "../../utils/constantesLecture";
+import { EtatLecture } from "../../models/EtatLecture";
 
 type BlocInfosPrincipalesProps = {
   livre: Livre;

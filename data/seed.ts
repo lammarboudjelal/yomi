@@ -1,7 +1,7 @@
 import { SQLiteDatabase } from "expo-sqlite";
 import { Livre } from "../models/Livre";
-import { EtatLecture } from "../utils/constantesLecture";
-import { StatutPossession } from "../utils/constantesStatutPosession";
+import { EtatLecture } from "../models/EtatLecture";
+import { StatutPossession } from "../models/StatutPosession";
 
 const obtenirOuCreerGenre = async (db: SQLiteDatabase, nom: string) => {
   const genreExistant = await db.getFirstAsync<{ id: number }>(

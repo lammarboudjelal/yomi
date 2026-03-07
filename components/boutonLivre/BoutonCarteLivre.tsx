@@ -6,7 +6,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import CouvertureLivre from "../shared/CouvertureLivre";
 import { Livre } from "../../models/Livre";
 import { Routes } from "../../navigation/routes";
-import { StatutPossession } from "../../utils/constantesStatutPosession";
+import { StatutPossession } from "../../models/StatutPosession";
 
 type BoutonCarteLivreProps = {
   livre: Livre;
