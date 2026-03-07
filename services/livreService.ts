@@ -175,10 +175,40 @@ async function supprimerRelationsLivre(db: SQLiteDatabase, livreId: number) {
   await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livreId);
 }
 
+function ajusterDatesLecture(livre: Livre): Livre {
+  const maintenant = new Date().toLocaleDateString();
+
+  switch (livre.etat_lecture) {
+    case "à lire":
+      livre.date_debut_lecture = null;
+      livre.date_fin_lecture = null;
+      break;
+
+    case "en cours":
+      if (!livre.date_debut_lecture) {
+        livre.date_debut_lecture = maintenant;
+      }
+      livre.date_fin_lecture = null;
+      break;
+
+    case "lu":
+    case "abandonné":
+      if (!livre.date_debut_lecture) {
+        livre.date_debut_lecture = maintenant;
+      }
+      livre.date_fin_lecture = maintenant;
+      break;
+  }
+
+  return livre;
+}
+
 export const insertLivre = async (
   db: SQLiteDatabase,
   livre: Livre,
 ): Promise<void> => {
+  livre = ajusterDatesLecture(livre);
+
   await db.withTransactionAsync(async () => {
     const result = await db.runAsync(
       `
@@ -223,6 +253,8 @@ export const updateLivre = async (
   livre: Livre,
 ): Promise<void> => {
   if (!livre.id) throw new Error("ID du livre manquant pour update.");
+
+  livre = ajusterDatesLecture(livre);
 
   await db.withTransactionAsync(async () => {
     await db.runAsync(

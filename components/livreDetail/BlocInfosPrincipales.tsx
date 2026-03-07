@@ -1,13 +1,16 @@
 import { View, Text } from "react-native";
-import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
 import { Livre } from "../../models/Livre";
+import EtatLectureEditable from "./EtatLectureEditable";
+import { EtatLecture } from "../../utils/constantesLecture";
 
 type BlocInfosPrincipalesProps = {
   livre: Livre;
+  onChangeEtatLecture: (etat: EtatLecture) => void;
 };
 
 export default function BlocInfosPrincipales({
   livre,
+  onChangeEtatLecture,
 }: BlocInfosPrincipalesProps) {
   return (
     <View style={{ alignItems: "center", gap: 20, paddingHorizontal: 20 }}>
@@ -37,16 +40,17 @@ export default function BlocInfosPrincipales({
         </Text>
       )}
 
-      {/* Bloc infos pages, état de lecture et statut possession */}
+      {/* Bloc infos */}
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "space-between",
           width: "100%",
         }}
       >
         {/* Pages */}
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={{ alignItems: "center", width: "30%" }}>
           <Text>{livre.nombre_pages || "-"} pages</Text>
         </View>
 
@@ -56,14 +60,15 @@ export default function BlocInfosPrincipales({
             width: 2,
             height: "100%",
             backgroundColor: "#7B6565",
-            position: "absolute",
-            left: "33.33%",
           }}
         />
 
         {/* Etat */}
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <EtiquetteEtatLecture etat={livre.etat_lecture} />
+        <View style={{ alignItems: "center", width: "40%" }}>
+          <EtatLectureEditable
+            valeur={livre.etat_lecture}
+            onChange={onChangeEtatLecture}
+          />
         </View>
 
         {/* Trait */}
@@ -72,13 +77,11 @@ export default function BlocInfosPrincipales({
             width: 2,
             height: "100%",
             backgroundColor: "#7B6565",
-            position: "absolute",
-            left: "66.66%",
           }}
         />
 
         {/* Statut */}
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={{ alignItems: "center", width: "30%" }}>
           <Text style={{ textTransform: "capitalize" }}>
             {livre.statut_possession}
           </Text>

@@ -27,7 +27,7 @@ export default function Modale({
     <Modal
       visible={visible}
       transparent
-      animationType="slide"
+      animationType="none"
       onRequestClose={onClose}
     >
       <TouchableOpacity

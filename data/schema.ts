@@ -48,7 +48,7 @@ export const migrerBaseSiNecessaire = async (db: SQLiteDatabase) => {
         date_pret TEXT,
         preteur TEXT,
 
-        date_ajout TEXT NOT NULL DEFAULT (datetime('now'))
+        date_ajout TEXT NOT NULL DEFAULT (strftime('%d/%m/%Y', 'now'))
       );
 
       CREATE TABLE IF NOT EXISTS auteur (

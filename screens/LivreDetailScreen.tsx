@@ -7,20 +7,24 @@ import { View, Text, ScrollView, ActivityIndicator, Alert } from "react-native";
 import { RootStackParamList } from "../navigation/types";
 import { useCallback, useEffect, useState } from "react";
 import { Livre } from "../models/Livre";
-import { deleteLivre, getLivreParId } from "../services/livreService";
+import {
+  deleteLivre,
+  getLivreParId,
+  updateLivre,
+} from "../services/livreService";
 import BlocInfosPrincipales from "../components/livreDetail/BlocInfosPrincipales";
 import CarteNoteAvis from "../components/livreDetail/CarteNoteAvis";
 import SectionAccordion from "../components/livreDetail/SectionAccordion";
 import BoutonRetour from "../components/navigation/BoutonRetour";
 import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { formaterDate } from "../utils/formaterDate";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
 import { StatutPossession } from "../utils/constantesStatutPosession";
 import { useSQLiteContext } from "expo-sqlite";
 import BoutonOptions from "../components/livreDetail/BoutonOptions";
 import Modale from "../components/shared/Modale";
 import { MaterialIcons } from "@expo/vector-icons";
+import { EtatLecture } from "../utils/constantesLecture";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -75,6 +79,22 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
       </View>
     );
   }
+
+  const handleChangeEtatLecture = async (etat: EtatLecture) => {
+    if (!livre) return;
+
+    const livreModifie = {
+      ...livre,
+      etat_lecture: etat,
+    };
+
+    try {
+      await updateLivre(db, livreModifie);
+      setLivre(livreModifie);
+    } catch {
+      Alert.alert("Erreur", "Impossible de modifier l'état de lecture.");
+    }
+  };
 
   const handleDelete = () => {
     if (!livre) return;
@@ -159,7 +179,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             gap: 20,
           }}
         >
-          <BlocInfosPrincipales livre={livre} />
+          <BlocInfosPrincipales
+            livre={livre}
+            onChangeEtatLecture={handleChangeEtatLecture}
+          />
 
           <CarteNoteAvis livre={livre} />
 
@@ -172,7 +195,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
               <LigneInfo label="Éditeur" value={livre.edition} />
               <LigneInfo
                 label="Date de publication"
-                value={formaterDate(livre.date_publication)}
+                value={livre.date_publication}
               />
               <LigneInfo label="ISBN" value={livre.isbn} />
               <LigneInfo label="Type" value={livre.type} />
@@ -181,15 +204,15 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             <SectionAccordion titre="Informations de lecture">
               <LigneInfo
                 label="Date d'enregistrement"
-                value={formaterDate(livre.date_ajout)}
+                value={livre.date_ajout}
               />
               <LigneInfo
                 label="Date de début de lecture"
-                value={formaterDate(livre.date_debut_lecture)}
+                value={livre.date_debut_lecture}
               />
               <LigneInfo
                 label="Date de fin de lecture"
-                value={formaterDate(livre.date_fin_lecture)}
+                value={livre.date_fin_lecture}
               />
             </SectionAccordion>
 
@@ -202,10 +225,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             {livre.statut_possession === StatutPossession.emprunte && (
               <SectionAccordion titre="Informations d’emprunt">
                 <LigneInfo label="Prêté par" value={livre.preteur} />
-                <LigneInfo
-                  label="Date d'emprunt"
-                  value={formaterDate(livre.date_pret)}
-                />
+                <LigneInfo label="Date d'emprunt" value={livre.date_pret} />
               </SectionAccordion>
             )}
           </View>
