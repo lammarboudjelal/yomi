@@ -315,3 +315,23 @@ export const deleteLivre = async (
     await db.runAsync("DELETE FROM livre WHERE id = ?", livreId);
   });
 };
+
+export const getStatistiquesLecture = async (db: SQLiteDatabase) => {
+  const result = await db.getFirstAsync<{
+    total: number;
+    aLire: number;
+    lu: number;
+  }>(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN etat_lecture = 'à lire' THEN 1 ELSE 0 END) as aLire,
+      SUM(CASE WHEN etat_lecture = 'lu' THEN 1 ELSE 0 END) as lu
+    FROM livre
+  `);
+
+  return {
+    total: result?.total ?? 0,
+    aLire: result?.aLire ?? 0,
+    lu: result?.lu ?? 0,
+  };
+};
