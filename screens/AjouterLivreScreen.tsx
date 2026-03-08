@@ -3,13 +3,16 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Routes } from "../navigation/routes";
+import { ModeFormulaire } from "../utils/modeFormulaire";
 
 function BoutonSaisieManuelle() {
   const navigation = useNavigation<any>();
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate(Routes.formulaireLivre, { mode: "ajout" })
+        navigation.navigate(Routes.formulaireLivre, {
+          mode: ModeFormulaire.ajouter,
+        })
       }
       style={{
         backgroundColor: "white",

@@ -27,13 +27,14 @@ import { Keyboard } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import { useForm, Controller } from "react-hook-form";
 import { isValidDate } from "../../utils/validationDate";
+import { ModeFormulaire } from "../../utils/modeFormulaire";
 
 function SectionTitre({ titre }: { titre: string }) {
   return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
 }
 
 type FormulaireLivreProps = {
-  mode: "ajout" | "modification";
+  mode: ModeFormulaire;
   livreInitial?: Livre;
 };
 
@@ -89,7 +90,7 @@ export default function FormulaireLivre({
 
   const onSubmit = async (data: Livre) => {
     try {
-      if (mode === "ajout") {
+      if (mode === ModeFormulaire.ajouter) {
         await insertLivre(db, data);
       } else {
         await updateLivre(db, { ...data, id: livreInitial?.id });
@@ -371,7 +372,10 @@ export default function FormulaireLivre({
           keyboardShouldPersistTaps="handled"
         >
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            {mode === "ajout" ? "Ajouter un livre" : "Modifier un livre"}
+            {mode === ModeFormulaire.ajouter
+              ? ModeFormulaire.ajouter
+              : ModeFormulaire.modifier}{" "}
+            un livre
           </Text>
 
           <Controller

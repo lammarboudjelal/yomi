@@ -1,10 +1,11 @@
 import { Livre } from "../models/Livre";
+import { ModeFormulaire } from "../utils/modeFormulaire";
 
 export type RootStackParamList = {
   MainTabs: undefined;
   LivreDetail: { livreId: number };
   FormulaireLivre: {
-    mode: "ajout" | "modification";
+    mode: ModeFormulaire;
     livreInitial?: Livre;
   };
 };

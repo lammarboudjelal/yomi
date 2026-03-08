@@ -25,6 +25,8 @@ import BoutonOptions from "../components/livreDetail/BoutonOptions";
 import Modale from "../components/shared/Modale";
 import { MaterialIcons } from "@expo/vector-icons";
 import { EtatLecture } from "../models/EtatLecture";
+import { ModeFormulaire } from "../utils/modeFormulaire";
+import { Routes } from "../navigation/routes";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -152,8 +154,8 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             label: "Modifier le livre",
             icon: <MaterialIcons name="edit" size={24} color={"#705C5C"} />,
             onPress: () =>
-              navigation.navigate("FormulaireLivre", {
-                mode: "modification",
+              navigation.navigate(Routes.formulaireLivre, {
+                mode: ModeFormulaire.modifier,
                 livreInitial: livre,
               }),
           },
