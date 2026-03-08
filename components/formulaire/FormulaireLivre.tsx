@@ -26,6 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Keyboard } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import { useForm, Controller } from "react-hook-form";
+import { isValidDate } from "../../utils/validationDate";
 
 function SectionTitre({ titre }: { titre: string }) {
   return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
@@ -50,6 +51,7 @@ export default function FormulaireLivre({
     watch,
     formState: { errors },
   } = useForm<Livre>({
+    mode: "onChange",
     defaultValues: {
       couverture: livreInitial?.couverture ?? null,
       titre: livreInitial?.titre ?? "",
@@ -162,11 +164,16 @@ export default function FormulaireLivre({
       <Controller
         control={control}
         name="date_publication"
+        rules={{
+          validate: (value) =>
+            isValidDate(value) || "Veuillez saisir une date valide.",
+        }}
         render={({ field: { onChange, value } }) => (
           <CustomDateField
             label="Date de publication"
             valeur={value}
             onChange={onChange}
+            erreur={errors.date_publication?.message}
           />
         )}
       />
@@ -249,11 +256,16 @@ export default function FormulaireLivre({
           <Controller
             control={control}
             name="date_pret"
+            rules={{
+              validate: (value) =>
+                isValidDate(value) || "Veuillez saisir une date valide.",
+            }}
             render={({ field: { onChange, value } }) => (
               <CustomDateField
                 label="Date d'emprunt"
                 valeur={value}
                 onChange={onChange}
+                erreur={errors.date_pret?.message}
               />
             )}
           />
@@ -282,11 +294,16 @@ export default function FormulaireLivre({
       <Controller
         control={control}
         name="date_debut_lecture"
+        rules={{
+          validate: (value) =>
+            isValidDate(value) || "Veuillez saisir une date valide.",
+        }}
         render={({ field: { onChange, value } }) => (
           <CustomDateField
             label="Date de début de lecture"
             valeur={value}
             onChange={onChange}
+            erreur={errors.date_debut_lecture?.message}
           />
         )}
       />
@@ -294,11 +311,16 @@ export default function FormulaireLivre({
       <Controller
         control={control}
         name="date_fin_lecture"
+        rules={{
+          validate: (value) =>
+            isValidDate(value) || "Veuillez saisir une date valide.",
+        }}
         render={({ field: { onChange, value } }) => (
           <CustomDateField
             label="Date de fin de lecture"
             valeur={value}
             onChange={onChange}
+            erreur={errors.date_fin_lecture?.message}
           />
         )}
       />
