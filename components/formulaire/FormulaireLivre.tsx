@@ -25,6 +25,7 @@ import BoutonEnregistrer from "./BoutonEnregistrer";
 import { useNavigation } from "@react-navigation/native";
 import { Keyboard } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
+import { useForm, Controller } from "react-hook-form";
 
 function SectionTitre({ titre }: { titre: string }) {
   return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
@@ -43,43 +44,37 @@ export default function FormulaireLivre({
   const navigation = useNavigation<any>();
   const db = useSQLiteContext();
 
-  const [couverture, setCouverture] = useState<string | null>(
-    livreInitial?.couverture ?? null,
-  );
-  const [titre, setTitre] = useState(livreInitial?.titre ?? "");
-  const [isbn, setIsbn] = useState(livreInitial?.isbn ?? "");
-  const [nombrePages, setNombrePages] = useState(
-    livreInitial?.nombre_pages?.toString() ?? "",
-  );
-  const [auteurs, setAuteurs] = useState<string[]>(livreInitial?.auteurs ?? []);
-  const [genres, setGenres] = useState<string[]>(livreInitial?.genres ?? []);
-  const [edition, setEdition] = useState(livreInitial?.edition ?? "");
-  const [datePublication, setDatePublication] = useState(
-    livreInitial?.date_publication ?? "",
-  );
-  const [typeLivre, setTypeLivre] = useState(
-    livreInitial?.type ?? TypeLivre.broche,
-  );
-  const [resume, setResume] = useState(livreInitial?.resume ?? "");
-  const [statut, setStatut] = useState<StatutPossession>(
-    livreInitial?.statut_possession ?? StatutPossession.achete,
-  );
-  const [prix, setPrix] = useState(livreInitial?.prix?.toString() ?? "");
-  const [datePret, setDatePret] = useState(livreInitial?.date_pret ?? "");
-  const [preteur, setPreteur] = useState(livreInitial?.preteur ?? "");
-  const [etatLecture, setEtatLecture] = useState<EtatLecture>(
-    livreInitial?.etat_lecture ?? EtatLecture.aLire,
-  );
-  const [dateDebutLecture, setDateDebutLecture] = useState(
-    livreInitial?.date_debut_lecture ?? "",
-  );
-  const [dateFinLecture, setDateFinLecture] = useState(
-    livreInitial?.date_fin_lecture ?? "",
-  );
-  const [note, setNote] = useState(livreInitial?.note ?? 0);
-  const [avis, setAvis] = useState(livreInitial?.avis ?? "");
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Livre>({
+    defaultValues: {
+      couverture: livreInitial?.couverture ?? null,
+      titre: livreInitial?.titre ?? "",
+      isbn: livreInitial?.isbn ?? "",
+      nombre_pages: livreInitial?.nombre_pages ?? null,
+      auteurs: livreInitial?.auteurs ?? [],
+      genres: livreInitial?.genres ?? [],
+      edition: livreInitial?.edition ?? "",
+      date_publication: livreInitial?.date_publication ?? "",
+      type: livreInitial?.type ?? TypeLivre.broche,
+      resume: livreInitial?.resume ?? "",
+      statut_possession:
+        livreInitial?.statut_possession ?? StatutPossession.achete,
+      prix: livreInitial?.prix ?? null,
+      date_pret: livreInitial?.date_pret ?? "",
+      preteur: livreInitial?.preteur ?? "",
+      etat_lecture: livreInitial?.etat_lecture ?? EtatLecture.aLire,
+      date_debut_lecture: livreInitial?.date_debut_lecture ?? "",
+      date_fin_lecture: livreInitial?.date_fin_lecture ?? "",
+      note: livreInitial?.note ?? 0,
+      avis: livreInitial?.avis ?? "",
+    },
+  });
 
-  const [erreurTitre, setErreurTitre] = useState<string | null>(null);
+  const statutPossession = watch("statut_possession");
 
   const optionsEtatLecture = Object.values(EtatLecture).map((val) => ({
     label: val,
@@ -90,55 +85,18 @@ export default function FormulaireLivre({
     value: val,
   }));
 
-  const isFormValid = () => {
-    if (!titre.trim()) {
-      setErreurTitre("Le titre est obligatoire.");
-      return false;
-    }
-
-    setErreurTitre(null);
-    return true;
-  };
-
-  const handleSubmit = async () => {
-    if (!isFormValid()) return;
-
+  const onSubmit = async (data: Livre) => {
     try {
-      const livreFinal: Livre = {
-        id: livreInitial?.id,
-        titre,
-        isbn,
-        resume,
-        nombre_pages: Number(nombrePages) || null,
-        edition,
-        date_publication: datePublication,
-        couverture,
-        type: typeLivre,
-        etat_lecture: etatLecture,
-        note,
-        avis,
-        date_debut_lecture: dateDebutLecture,
-        date_fin_lecture: dateFinLecture,
-        statut_possession: statut,
-        date_pret: datePret,
-        preteur,
-        prix: Number(prix) || null,
-        auteurs,
-        genres,
-        date_ajout: livreInitial?.date_ajout || null,
-      };
-
       if (mode === "ajout") {
-        await insertLivre(db, livreFinal);
+        await insertLivre(db, data);
       } else {
-        await updateLivre(db, livreFinal);
+        await updateLivre(db, { ...data, id: livreInitial?.id });
       }
 
       Keyboard.dismiss();
       navigation.goBack();
     } catch (error) {
-      Alert.alert("Erreur", "Une erreur est survenue lors de l'ajout.");
-      console.error(error);
+      Alert.alert("Erreur", "Une erreur est survenue.");
     }
   };
 
@@ -146,71 +104,84 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de base" />
 
-      <CustomTextInput
-        label="Titre *"
-        valeur={titre}
-        placeholder="Titre"
-        onChange={(texte) => {
-          setTitre(texte);
-          if (erreurTitre) setErreurTitre(null);
-        }}
-        erreur={erreurTitre}
+      <Controller
+        control={control}
+        name="titre"
+        rules={{ required: "Le titre est obligatoire." }}
+        render={({ field: { onChange, value } }) => (
+          <CustomTextInput
+            label="Titre *"
+            valeur={value}
+            placeholder="Titre"
+            onChange={onChange}
+            erreur={errors.titre?.message}
+          />
+        )}
       />
 
-      <CustomTextInput
-        label="ISBN"
-        valeur={isbn ?? ""}
-        placeholder="ISBN"
-        onChange={setIsbn}
+      <Controller
+        control={control}
+        name="isbn"
+        render={({ field: { onChange, value } }) => (
+          <CustomTextInput
+            label="ISBN"
+            valeur={value}
+            placeholder="ISBN"
+            onChange={onChange}
+          />
+        )}
       />
 
-      <CustomNumberInput
-        label="Nombre de pages"
-        valeur={nombrePages}
-        placeholder="0"
-        onChange={setNombrePages}
+      <Controller
+        control={control}
+        name="nombre_pages"
+        render={({ field: { onChange, value } }) => (
+          <CustomNumberInput
+            label="Nombre de pages"
+            valeur={value ? value.toString() : ""}
+            placeholder="0"
+            onChange={(text) => onChange(Number(text))}
+          />
+        )}
       />
     </View>
-  );
-
-  const renderSectionAuteurs = (
-    <MultipleValueTextField
-      label="Auteur(s)"
-      valeurs={auteurs}
-      onChange={setAuteurs}
-    />
-  );
-
-  const renderSectionGenres = (
-    <MultipleValueTextField
-      label="Genre(s)"
-      valeurs={genres}
-      onChange={setGenres}
-    />
   );
 
   const renderSectionInformationsDePublication = (
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de publication" />
 
-      <CustomTextInput
-        label="Édition"
-        valeur={edition}
-        placeholder="Édition"
-        onChange={setEdition}
+      <Controller
+        control={control}
+        name="edition"
+        render={({ field: { onChange, value } }) => (
+          <CustomTextInput label="Édition" valeur={value} onChange={onChange} />
+        )}
       />
 
-      <CustomDateField
-        label="Date de publication"
-        valeur={datePublication}
-        onChange={setDatePublication}
+      <Controller
+        control={control}
+        name="date_publication"
+        render={({ field: { onChange, value } }) => (
+          <CustomDateField
+            label="Date de publication"
+            valeur={value}
+            onChange={onChange}
+          />
+        )}
       />
 
-      <CustomSelect
-        label="Type"
-        valeur={typeLivre}
-        options={optionsTypeLivre}
-        onChange={setTypeLivre}
+      <Controller
+        control={control}
+        name="type"
+        render={({ field: { onChange, value } }) => (
+          <CustomSelect
+            label="Type"
+            valeur={value}
+            options={optionsTypeLivre}
+            onChange={onChange}
+          />
+        )}
       />
     </View>
   );
@@ -219,11 +190,17 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Résumé" />
 
-      <CustomTextInput
-        valeur={resume}
-        placeholder="Résumé"
-        multiline
-        onChange={setResume}
+      <Controller
+        control={control}
+        name="resume"
+        render={({ field: { onChange, value } }) => (
+          <CustomTextInput
+            valeur={value}
+            placeholder="Résumé"
+            multiline
+            onChange={onChange}
+          />
+        )}
       />
     </View>
   );
@@ -232,30 +209,53 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations d'achat/d'emprunt" />
 
-      <CustomRadioStatus valeur={statut} onChange={setStatut} />
+      <Controller
+        control={control}
+        name="statut_possession"
+        render={({ field: { onChange, value } }) => (
+          <CustomRadioStatus valeur={value} onChange={onChange} />
+        )}
+      />
 
-      {statut === "acheté" && (
-        <CustomNumberInput
-          label="Prix d'achat"
-          valeur={prix}
-          placeholder="0"
-          onChange={setPrix}
+      {statutPossession === "acheté" && (
+        <Controller
+          control={control}
+          name="prix"
+          render={({ field: { onChange, value } }) => (
+            <CustomNumberInput
+              label="Prix d'achat"
+              valeur={value ? value.toString() : ""}
+              placeholder="0"
+              onChange={(text) => onChange(Number(text))}
+            />
+          )}
         />
       )}
 
-      {statut === "emprunté" && (
+      {statutPossession === "emprunté" && (
         <>
-          <CustomTextInput
-            label="Prêteur"
-            valeur={preteur}
-            placeholder="Nom du prêteur"
-            onChange={setPreteur}
+          <Controller
+            control={control}
+            name="preteur"
+            render={({ field: { onChange, value } }) => (
+              <CustomTextInput
+                label="Prêteur"
+                valeur={value}
+                onChange={onChange}
+              />
+            )}
           />
 
-          <CustomDateField
-            label="Date d'emprunt"
-            valeur={datePret}
-            onChange={setDatePret}
+          <Controller
+            control={control}
+            name="date_pret"
+            render={({ field: { onChange, value } }) => (
+              <CustomDateField
+                label="Date d'emprunt"
+                valeur={value}
+                onChange={onChange}
+              />
+            )}
           />
         </>
       )}
@@ -266,40 +266,75 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de lecture" />
 
-      <CustomSelect
-        label="État de lecture"
-        valeur={etatLecture}
-        options={optionsEtatLecture}
-        onChange={(val) => setEtatLecture(val as EtatLecture)}
+      <Controller
+        control={control}
+        name="etat_lecture"
+        render={({ field: { onChange, value } }) => (
+          <CustomSelect
+            label="État de lecture"
+            valeur={value}
+            options={optionsEtatLecture}
+            onChange={onChange}
+          />
+        )}
       />
 
-      <CustomDateField
-        label="Date de début de lecture"
-        valeur={dateDebutLecture}
-        onChange={setDateDebutLecture}
+      <Controller
+        control={control}
+        name="date_debut_lecture"
+        render={({ field: { onChange, value } }) => (
+          <CustomDateField
+            label="Date de début de lecture"
+            valeur={value}
+            onChange={onChange}
+          />
+        )}
       />
 
-      <CustomDateField
-        label="Date de fin de lecture"
-        valeur={dateFinLecture}
-        onChange={setDateFinLecture}
+      <Controller
+        control={control}
+        name="date_fin_lecture"
+        render={({ field: { onChange, value } }) => (
+          <CustomDateField
+            label="Date de fin de lecture"
+            valeur={value}
+            onChange={onChange}
+          />
+        )}
       />
 
-      <CustomRanking label="Note" note={note} editable onChange={setNote} />
+      <Controller
+        control={control}
+        name="note"
+        render={({ field: { onChange, value } }) => (
+          <CustomRanking
+            label="Note"
+            editable
+            note={value}
+            onChange={onChange}
+          />
+        )}
+      />
 
-      <CustomTextInput
-        label="Avis"
-        valeur={avis}
-        placeholder="Avis"
-        multiline
-        onChange={setAvis}
+      <Controller
+        control={control}
+        name="avis"
+        render={({ field: { onChange, value } }) => (
+          <CustomTextInput
+            label="Avis"
+            valeur={value}
+            placeholder="Avis"
+            multiline
+            onChange={onChange}
+          />
+        )}
       />
     </View>
   );
 
   return (
     <>
-      <BoutonEnregistrer onPress={handleSubmit} />
+      <BoutonEnregistrer onPress={handleSubmit(onSubmit)} />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -317,15 +352,44 @@ export default function FormulaireLivre({
             {mode === "ajout" ? "Ajouter un livre" : "Modifier un livre"}
           </Text>
 
-          <CustomImagePicker
-            label="Couverture"
-            valeur={couverture}
-            onChange={setCouverture}
+          <Controller
+            control={control}
+            name="couverture"
+            render={({ field: { onChange, value } }) => (
+              <CustomImagePicker
+                label="Couverture"
+                valeur={value}
+                onChange={onChange}
+              />
+            )}
           />
 
           {renderSectionInformationsDeBase}
-          {renderSectionAuteurs}
-          {renderSectionGenres}
+
+          <Controller
+            control={control}
+            name="auteurs"
+            render={({ field: { onChange, value } }) => (
+              <MultipleValueTextField
+                label="Auteur(s)"
+                valeurs={value}
+                onChange={onChange}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="genres"
+            render={({ field: { onChange, value } }) => (
+              <MultipleValueTextField
+                label="Genre(s)"
+                valeurs={value}
+                onChange={onChange}
+              />
+            )}
+          />
+
           {renderSectionInformationsDePublication}
           {renderSectionResume}
           {renderSectionInformationsAchatEmprunt}

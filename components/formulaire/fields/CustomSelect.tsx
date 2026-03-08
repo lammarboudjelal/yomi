@@ -59,7 +59,6 @@ export default function CustomSelect({
             style={{
               paddingVertical: 12,
               paddingHorizontal: 15,
-              backgroundColor: isSelected ? "#F5F5F5" : "white",
             }}
           >
             <Text>{item.label}</Text>
