@@ -4,17 +4,17 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { File, Paths } from "expo-file-system";
 import { imagesLocales } from "../../../utils/imagesLocales";
 
-type ChampImageProps = {
+type CustomImagePickerProps = {
   label?: string;
   valeur?: string;
   onChange: (uri: string | null) => void;
 };
 
-export default function ChampImage({
+export default function CustomImagePicker({
   label,
   valeur,
   onChange,
-}: ChampImageProps) {
+}: CustomImagePickerProps) {
   const choisirImage = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 

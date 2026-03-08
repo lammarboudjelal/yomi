@@ -8,18 +8,18 @@ import {
   Alert,
 } from "react-native";
 import { Livre } from "../../models/Livre";
-import ChampTexte from "./champs/ChampTexte";
+import CustomTextInput from "./fields/CustomTextInput";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ChampNombre from "./champs/ChampNombre";
-import ChampNoteEtoiles from "./champs/ChampNoteEtoiles";
+import CustomNumberInput from "./fields/CustomNumberInput";
+import CustomRanking from "./fields/CustomRanking";
 import { TypeLivre } from "../../models/TypeLivre";
 import { EtatLecture } from "../../models/EtatLecture";
-import ChampSelect from "./champs/ChampSelect";
+import CustomSelect from "./fields/CustomSelect";
 import { StatutPossession } from "../../models/StatutPosession";
-import ChampRadioStatut from "./champs/ChampRadioStatut";
-import ChampListeDynamique from "./champs/ChampListeDynamique";
-import ChampDate from "./champs/ChampDate";
-import ChampImage from "./champs/ChampImage";
+import CustomRadioStatus from "./fields/CustomRadioStatus";
+import MultipleValueTextField from "./fields/MultipleValueTextField";
+import CustomDateField from "./fields/CustomDateField";
+import CustomImagePicker from "./fields/CustomImagePicker";
 import { insertLivre, updateLivre } from "../../services/livreService";
 import BoutonEnregistrer from "./BoutonEnregistrer";
 import { useNavigation } from "@react-navigation/native";
@@ -146,7 +146,7 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de base" />
 
-      <ChampTexte
+      <CustomTextInput
         label="Titre *"
         valeur={titre}
         placeholder="Titre"
@@ -157,14 +157,14 @@ export default function FormulaireLivre({
         erreur={erreurTitre}
       />
 
-      <ChampTexte
+      <CustomTextInput
         label="ISBN"
         valeur={isbn ?? ""}
         placeholder="ISBN"
         onChange={setIsbn}
       />
 
-      <ChampNombre
+      <CustomNumberInput
         label="Nombre de pages"
         valeur={nombrePages}
         placeholder="0"
@@ -174,7 +174,7 @@ export default function FormulaireLivre({
   );
 
   const renderSectionAuteurs = (
-    <ChampListeDynamique
+    <MultipleValueTextField
       label="Auteur(s)"
       valeurs={auteurs}
       onChange={setAuteurs}
@@ -182,7 +182,7 @@ export default function FormulaireLivre({
   );
 
   const renderSectionGenres = (
-    <ChampListeDynamique
+    <MultipleValueTextField
       label="Genre(s)"
       valeurs={genres}
       onChange={setGenres}
@@ -193,20 +193,20 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de publication" />
 
-      <ChampTexte
+      <CustomTextInput
         label="Édition"
         valeur={edition}
         placeholder="Édition"
         onChange={setEdition}
       />
 
-      <ChampDate
+      <CustomDateField
         label="Date de publication"
         valeur={datePublication}
         onChange={setDatePublication}
       />
 
-      <ChampSelect
+      <CustomSelect
         label="Type"
         valeur={typeLivre}
         options={optionsTypeLivre}
@@ -219,7 +219,7 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Résumé" />
 
-      <ChampTexte
+      <CustomTextInput
         valeur={resume}
         placeholder="Résumé"
         multiline
@@ -232,10 +232,10 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations d'achat/d'emprunt" />
 
-      <ChampRadioStatut valeur={statut} onChange={setStatut} />
+      <CustomRadioStatus valeur={statut} onChange={setStatut} />
 
       {statut === "acheté" && (
-        <ChampNombre
+        <CustomNumberInput
           label="Prix d'achat"
           valeur={prix}
           placeholder="0"
@@ -245,14 +245,14 @@ export default function FormulaireLivre({
 
       {statut === "emprunté" && (
         <>
-          <ChampTexte
+          <CustomTextInput
             label="Prêteur"
             valeur={preteur}
             placeholder="Nom du prêteur"
             onChange={setPreteur}
           />
 
-          <ChampDate
+          <CustomDateField
             label="Date d'emprunt"
             valeur={datePret}
             onChange={setDatePret}
@@ -266,28 +266,28 @@ export default function FormulaireLivre({
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de lecture" />
 
-      <ChampSelect
+      <CustomSelect
         label="État de lecture"
         valeur={etatLecture}
         options={optionsEtatLecture}
         onChange={(val) => setEtatLecture(val as EtatLecture)}
       />
 
-      <ChampDate
+      <CustomDateField
         label="Date de début de lecture"
         valeur={dateDebutLecture}
         onChange={setDateDebutLecture}
       />
 
-      <ChampDate
+      <CustomDateField
         label="Date de fin de lecture"
         valeur={dateFinLecture}
         onChange={setDateFinLecture}
       />
 
-      <ChampNoteEtoiles label="Note" note={note} editable onChange={setNote} />
+      <CustomRanking label="Note" note={note} editable onChange={setNote} />
 
-      <ChampTexte
+      <CustomTextInput
         label="Avis"
         valeur={avis}
         placeholder="Avis"
@@ -317,7 +317,7 @@ export default function FormulaireLivre({
             {mode === "ajout" ? "Ajouter un livre" : "Modifier un livre"}
           </Text>
 
-          <ChampImage
+          <CustomImagePicker
             label="Couverture"
             valeur={couverture}
             onChange={setCouverture}

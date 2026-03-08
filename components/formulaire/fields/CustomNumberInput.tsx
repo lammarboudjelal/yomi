@@ -1,18 +1,18 @@
 import { View, Text, TextInput } from "react-native";
 
-type ChampNombreProps = {
+type CustomNumberInputProps = {
   label: string;
   valeur: string;
   onChange: (texte: string) => void;
   placeholder?: string;
 };
 
-export default function ChampNombre({
+export default function CustomNumberInput({
   label,
   valeur,
   onChange,
   placeholder,
-}: ChampNombreProps) {
+}: CustomNumberInputProps) {
   const handleChange = (texte: string) => {
     const filtre = texte.replace(/[^0-9.]/g, "");
     onChange(filtre);

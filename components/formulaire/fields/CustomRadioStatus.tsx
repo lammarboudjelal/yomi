@@ -1,17 +1,17 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { StatutPossession } from "../../../models/StatutPosession";
 
-type ChampRadioStatutProps = {
+type CustomRadioStatusProps = {
   valeur: string;
   onChange: (value: StatutPossession) => void;
 };
 
 const options: StatutPossession[] = ["acheté", "emprunté"];
 
-export default function ChampRadioStatut({
+export default function CustomRadioStatus({
   valeur,
   onChange,
-}: ChampRadioStatutProps) {
+}: CustomRadioStatusProps) {
   return (
     <View style={{ flexDirection: "row", gap: 30 }}>
       {options.map((statut) => (

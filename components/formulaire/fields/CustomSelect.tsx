@@ -7,19 +7,19 @@ type Option = {
   value: string;
 };
 
-type ChampSelectProps = {
+type CustomSelectProps = {
   label?: string;
   valeur: string;
   options: Option[];
   onChange: (value: string) => void;
 };
 
-export default function ChampSelect({
+export default function CustomSelect({
   label,
   valeur,
   options,
   onChange,
-}: ChampSelectProps) {
+}: CustomSelectProps) {
   const selectedOption = options.find((o) => o.value === valeur);
 
   return (

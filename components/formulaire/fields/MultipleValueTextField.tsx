@@ -1,17 +1,17 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-type ChampListeDynamiqueProps = {
+type MultipleValueTextFieldProps = {
   label: string;
   valeurs: string[];
   onChange: (valeurs: string[]) => void;
 };
 
-export default function ChampListeDynamique({
+export default function MultipleValueTextField({
   label,
   valeurs,
   onChange,
-}: ChampListeDynamiqueProps) {
+}: MultipleValueTextFieldProps) {
   const addValue = () => {
     onChange([...valeurs, ""]);
   };

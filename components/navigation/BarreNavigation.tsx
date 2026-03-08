@@ -39,9 +39,13 @@ export default function BarreNavigation() {
         },
       })}
     >
-      <Tab.Screen name={Routes.ajouterLivre} component={AjouterLivreScreen} options={{
+      <Tab.Screen
+        name={Routes.ajouterLivre}
+        component={AjouterLivreScreen}
+        options={{
           tabBarLabel: "Ajouter",
-        }} />
+        }}
+      />
 
       <Tab.Screen
         name={Routes.bibliotheque}

@@ -1,12 +1,16 @@
 import { View, Text, TextInput } from "react-native";
 
-type ChampDateProps = {
+type CustomDateFieldProps = {
   label?: string;
   valeur: string;
   onChange: (value: string) => void;
 };
 
-export default function ChampDate({ label, valeur, onChange }: ChampDateProps) {
+export default function CustomDateField({
+  label,
+  valeur,
+  onChange,
+}: CustomDateFieldProps) {
   const handleChange = (text: string) => {
     const digits = text.replace(/\D/g, "").slice(0, 8);
 

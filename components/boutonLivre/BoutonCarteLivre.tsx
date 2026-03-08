@@ -1,6 +1,6 @@
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import ChampNoteEtoiles from "../formulaire/champs/ChampNoteEtoiles";
+import CustomRanking from "../formulaire/fields/CustomRanking";
 import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CouvertureLivre from "../shared/CouvertureLivre";
@@ -100,7 +100,7 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
             justifyContent: "space-between",
           }}
         >
-          <ChampNoteEtoiles note={livre.note} />
+          <CustomRanking note={livre.note} />
 
           <FontAwesome5 name={iconeStatut as any} size={20} color="#C2C2C2" />
         </View>

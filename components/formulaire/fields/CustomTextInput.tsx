@@ -1,6 +1,6 @@
 import { View, Text, TextInput } from "react-native";
 
-type ChampTexteProps = {
+type CustomTextInputProps = {
   label?: string;
   valeur: string;
   onChange: (texte: string) => void;
@@ -9,14 +9,14 @@ type ChampTexteProps = {
   erreur?: string;
 };
 
-export default function ChampTexte({
+export default function CustomTextInput({
   label,
   valeur,
   onChange,
   placeholder,
   multiline = false,
   erreur,
-}: ChampTexteProps) {
+}: CustomTextInputProps) {
   return (
     <View style={{ gap: 5 }}>
       {label ? (

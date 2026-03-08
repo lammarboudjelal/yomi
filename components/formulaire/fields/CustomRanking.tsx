@@ -1,19 +1,19 @@
 import { TouchableOpacity, View, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-type ChampNoteEtoilesProps = {
+type CustomRankingProps = {
   note?: number;
   editable?: boolean;
   label?: string;
   onChange?: (note: number) => void;
 };
 
-export default function ChampNoteEtoiles({
+export default function CustomRanking({
   note = 0,
   editable = false,
   label,
   onChange,
-}: ChampNoteEtoilesProps) {
+}: CustomRankingProps) {
   return (
     <View style={{ gap: 5 }}>
       {label ? (

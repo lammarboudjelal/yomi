@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import ChampNoteEtoiles from "../formulaire/champs/ChampNoteEtoiles";
+import CustomRanking from "../formulaire/fields/CustomRanking";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Livre } from "../../models/Livre";
 
@@ -19,7 +19,7 @@ export default function CarteNoteAvis({ livre }: CarteNoteAvisProps) {
       }}
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <ChampNoteEtoiles note={livre.note} />
+        <CustomRanking note={livre.note} />
 
         <MaterialIcons name="edit-note" size={24} color="#705C5C" />
       </View>
