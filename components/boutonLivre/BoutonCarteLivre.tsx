@@ -100,7 +100,7 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
             justifyContent: "space-between",
           }}
         >
-          <ChampNoteEtoiles note={livre.note || 0} />
+          <ChampNoteEtoiles note={livre.note} />
 
           <FontAwesome5 name={iconeStatut as any} size={20} color="#C2C2C2" />
         </View>

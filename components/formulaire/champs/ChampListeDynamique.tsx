@@ -12,18 +12,18 @@ export default function ChampListeDynamique({
   valeurs,
   onChange,
 }: ChampListeDynamiqueProps) {
-  const ajouter = () => {
+  const addValue = () => {
     onChange([...valeurs, ""]);
   };
 
-  const modifier = (index: number, texte: string) => {
+  const editValue = (indexToUpdate: number, texte: string) => {
     const copie = [...valeurs];
-    copie[index] = texte;
+    copie[indexToUpdate] = texte;
     onChange(copie);
   };
 
-  const supprimer = (index: number) => {
-    onChange(valeurs.filter((_, i) => i !== index));
+  const deleteValue = (indexToDelete: number) => {
+    onChange(valeurs.filter((_, indexValeur) => indexValeur !== indexToDelete));
   };
 
   return (
@@ -37,7 +37,7 @@ export default function ChampListeDynamique({
       >
         <Text style={{ fontWeight: "600", fontSize: 16 }}>{label}</Text>
 
-        <TouchableOpacity onPress={ajouter}>
+        <TouchableOpacity onPress={addValue}>
           <Entypo name="plus" size={24} color="#705C5C" />
         </TouchableOpacity>
       </View>
@@ -53,7 +53,7 @@ export default function ChampListeDynamique({
         >
           <TextInput
             value={valeur}
-            onChangeText={(text) => modifier(index, text)}
+            onChangeText={(text) => editValue(index, text)}
             placeholder="Nomination"
             placeholderTextColor="#A1A1AA"
             style={{
@@ -66,7 +66,7 @@ export default function ChampListeDynamique({
             }}
           />
 
-          <TouchableOpacity onPress={() => supprimer(index)}>
+          <TouchableOpacity onPress={() => deleteValue(index)}>
             <Entypo name="minus" size={24} color="#705C5C" />
           </TouchableOpacity>
         </View>

@@ -9,7 +9,7 @@ type ChampNoteEtoilesProps = {
 };
 
 export default function ChampNoteEtoiles({
-  note,
+  note = 0,
   editable = false,
   label,
   onChange,
@@ -31,10 +31,10 @@ export default function ChampNoteEtoiles({
             />
           );
 
-          if (!editable) return icon;
+          if (!editable || !onChange) return icon;
 
           return (
-            <TouchableOpacity key={etoile} onPress={() => onChange?.(etoile)}>
+            <TouchableOpacity key={etoile} onPress={() => onChange(etoile)}>
               {icon}
             </TouchableOpacity>
           );

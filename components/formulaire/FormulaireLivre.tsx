@@ -26,6 +26,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Keyboard } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 
+function SectionTitre({ titre }: { titre: string }) {
+  return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
+}
+
 type FormulaireLivreProps = {
   mode: "ajout" | "modification";
   livreInitial?: Livre;
@@ -58,7 +62,7 @@ export default function FormulaireLivre({
   );
   const [resume, setResume] = useState(livreInitial?.resume ?? "");
   const [statut, setStatut] = useState<StatutPossession>(
-    livreInitial?.statut_possession ?? "acheté",
+    livreInitial?.statut_possession ?? StatutPossession.achete,
   );
   const [prix, setPrix] = useState(livreInitial?.prix?.toString() ?? "");
   const [datePret, setDatePret] = useState(livreInitial?.date_pret ?? "");
@@ -86,7 +90,7 @@ export default function FormulaireLivre({
     value: val,
   }));
 
-  const validerFormulaire = () => {
+  const isFormValid = () => {
     if (!titre.trim()) {
       setErreurTitre("Le titre est obligatoire.");
       return false;
@@ -97,7 +101,7 @@ export default function FormulaireLivre({
   };
 
   const handleSubmit = async () => {
-    if (!validerFormulaire()) return;
+    if (!isFormValid()) return;
 
     try {
       const livreFinal: Livre = {
@@ -138,13 +142,9 @@ export default function FormulaireLivre({
     }
   };
 
-  const renderSectionTitre = (titre: string) => (
-    <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>
-  );
-
-  const renderSectionInformationsDeBase = () => (
+  const renderSectionInformationsDeBase = (
     <View style={{ gap: 15 }}>
-      {renderSectionTitre("Informations de base")}
+      <SectionTitre titre="Informations de base" />
 
       <ChampTexte
         label="Titre *"
@@ -173,7 +173,7 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionAuteurs = () => (
+  const renderSectionAuteurs = (
     <ChampListeDynamique
       label="Auteur(s)"
       valeurs={auteurs}
@@ -181,7 +181,7 @@ export default function FormulaireLivre({
     />
   );
 
-  const renderSectionGenres = () => (
+  const renderSectionGenres = (
     <ChampListeDynamique
       label="Genre(s)"
       valeurs={genres}
@@ -189,9 +189,9 @@ export default function FormulaireLivre({
     />
   );
 
-  const renderSectionInformationsDePublication = () => (
+  const renderSectionInformationsDePublication = (
     <View style={{ gap: 15 }}>
-      {renderSectionTitre("Informations de publication")}
+      <SectionTitre titre="Informations de publication" />
 
       <ChampTexte
         label="Édition"
@@ -215,9 +215,9 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionResume = () => (
+  const renderSectionResume = (
     <View style={{ gap: 15 }}>
-      {renderSectionTitre("Résumé")}
+      <SectionTitre titre="Résumé" />
 
       <ChampTexte
         valeur={resume}
@@ -228,9 +228,9 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionInformationsAchatEmprunt = () => (
+  const renderSectionInformationsAchatEmprunt = (
     <View style={{ gap: 15 }}>
-      {renderSectionTitre("Informations d'achat/d'emprunt")}
+      <SectionTitre titre="Informations d'achat/d'emprunt" />
 
       <ChampRadioStatut valeur={statut} onChange={setStatut} />
 
@@ -262,9 +262,9 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionInformationsDeLecture = () => (
+  const renderSectionInformationsDeLecture = (
     <View style={{ gap: 15 }}>
-      {renderSectionTitre("Informations de lecture")}
+      <SectionTitre titre="Informations de lecture" />
 
       <ChampSelect
         label="État de lecture"
@@ -323,13 +323,13 @@ export default function FormulaireLivre({
             onChange={setCouverture}
           />
 
-          {renderSectionInformationsDeBase()}
-          {renderSectionAuteurs()}
-          {renderSectionGenres()}
-          {renderSectionInformationsDePublication()}
-          {renderSectionResume()}
-          {renderSectionInformationsAchatEmprunt()}
-          {renderSectionInformationsDeLecture()}
+          {renderSectionInformationsDeBase}
+          {renderSectionAuteurs}
+          {renderSectionGenres}
+          {renderSectionInformationsDePublication}
+          {renderSectionResume}
+          {renderSectionInformationsAchatEmprunt}
+          {renderSectionInformationsDeLecture}
         </ScrollView>
       </KeyboardAvoidingView>
     </>

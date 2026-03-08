@@ -19,7 +19,7 @@ export default function FormulaireLivreScreen({
     <View style={{ marginBottom: insets.bottom }}>
       <BoutonRetour />
 
-      <FormulaireLivre mode={mode} livreInitial={livreInitial ?? undefined} />
+      <FormulaireLivre mode={mode} livreInitial={livreInitial} />
     </View>
   );
 }
