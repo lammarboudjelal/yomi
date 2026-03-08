@@ -217,10 +217,9 @@ export const insertLivre = async (
         date_publication, couverture, type,
         etat_lecture, note, avis,
         date_debut_lecture, date_fin_lecture,
-        statut_possession, date_pret, preteur,
-        date_ajout, prix
+        statut_possession, date_pret, preteur, prix
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,
       livre.titre,
       livre.isbn,
