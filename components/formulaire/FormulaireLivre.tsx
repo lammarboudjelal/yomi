@@ -28,6 +28,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useForm, Controller } from "react-hook-form";
 import { isValidDate } from "../../utils/validationDate";
 import { ModeFormulaire } from "../../utils/modeFormulaire";
+import { toastError, toastSuccess } from "../../utils/toast";
 
 function SectionTitre({ titre }: { titre: string }) {
   return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
@@ -92,14 +93,16 @@ export default function FormulaireLivre({
     try {
       if (mode === ModeFormulaire.ajouter) {
         await insertLivre(db, data);
+        toastSuccess(`${data.titre} a été ajouté à votre bibliothèque.`);
       } else {
         await updateLivre(db, { ...data, id: livreInitial?.id });
+        toastSuccess(`${data.titre} a été modifié.`);
       }
 
       Keyboard.dismiss();
       navigation.goBack();
     } catch (error) {
-      Alert.alert("Erreur", "Une erreur est survenue.");
+      toastError("Une erreur est survenue.");
     }
   };
 

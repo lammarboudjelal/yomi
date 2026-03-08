@@ -9,6 +9,7 @@ import { Routes } from "./navigation/routes";
 import BarreNavigation from "./components/navigation/BarreNavigation";
 import FormulaireLivreScreen from "./screens/FormulaireLivreScreen";
 import { SQLiteProvider } from "expo-sqlite";
+import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -41,6 +42,8 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+
+      <Toast />
     </SQLiteProvider>
   );
 }

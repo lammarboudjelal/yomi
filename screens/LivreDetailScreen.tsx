@@ -27,6 +27,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { EtatLecture } from "../models/EtatLecture";
 import { ModeFormulaire } from "../utils/modeFormulaire";
 import { Routes } from "../navigation/routes";
+import { toastError, toastSuccess } from "../utils/toast";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -116,9 +117,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             try {
               await deleteLivre(db, livre.id!);
 
+              toastSuccess(`${livre.titre} a été supprimé.`);
               navigation.goBack();
-            } catch (error) {
-              Alert.alert("Erreur", "Impossible de supprimer le livre.");
+            } catch {
+              toastError("Impossible de supprimer le livre.");
             }
           },
         },
