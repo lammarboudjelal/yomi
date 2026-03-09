@@ -117,7 +117,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             try {
               await deleteLivre(db, livre.id!);
 
-              toastSuccess(`${livre.titre} a été supprimé.`);
+              toastSuccess(
+                "Livre supprimé",
+                `${livre.titre} a été supprimé de votre bibliothèque.`,
+              );
               navigation.goBack();
             } catch {
               toastError("Impossible de supprimer le livre.");
