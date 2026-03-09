@@ -10,6 +10,7 @@ import BarreNavigation from "./components/navigation/BarreNavigation";
 import FormulaireLivreScreen from "./screens/FormulaireLivreScreen";
 import { SQLiteProvider } from "expo-sqlite";
 import Toast from "react-native-toast-message";
+import { toastConfig } from "./utils/toastConfig";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,7 +44,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
 
-      <Toast />
+      <Toast config={toastConfig} />
     </SQLiteProvider>
   );
 }

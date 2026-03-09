@@ -46,7 +46,7 @@ export default function CustomDateField({
         maxLength={10}
         style={{
           borderWidth: 1,
-          borderColor: erreur ? "#9d0208" : "#DBC2A9",
+          borderColor: erreur ? "#bf0603" : "#DBC2A9",
           backgroundColor: "white",
           borderRadius: 5,
           padding: 10,
@@ -55,7 +55,7 @@ export default function CustomDateField({
       />
 
       {erreur && (
-        <Text style={{ color: "#9d0208", fontSize: 12 }}>{erreur}</Text>
+        <Text style={{ color: "#bf0603", fontSize: 12 }}>{erreur}</Text>
       )}
     </View>
   );

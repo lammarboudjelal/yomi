@@ -90,9 +90,9 @@ export default function CustomImagePicker({
               gap: 6,
             }}
           >
-            <MaterialIcons name="delete" size={20} color="#9d0208" />
+            <MaterialIcons name="delete" size={20} color="#bf0603" />
 
-            <Text style={{ color: "#9d0208" }}>Supprimer</Text>
+            <Text style={{ color: "#bf0603" }}>Supprimer</Text>
           </TouchableOpacity>
         </View>
       )}

@@ -93,10 +93,16 @@ export default function FormulaireLivre({
     try {
       if (mode === ModeFormulaire.ajouter) {
         await insertLivre(db, data);
-        toastSuccess(`${data.titre} a été ajouté à votre bibliothèque.`);
+        toastSuccess(
+          "Livre ajouté",
+          `${data.titre} a été ajouté à votre bibliothèque.`,
+        );
       } else {
         await updateLivre(db, { ...data, id: livreInitial?.id });
-        toastSuccess(`${data.titre} a été modifié.`);
+        toastSuccess(
+          "Livre modifié",
+          `Les informations de ${data.titre} ont été modifiées.`,
+        );
       }
 
       Keyboard.dismiss();
