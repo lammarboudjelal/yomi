@@ -1,11 +1,9 @@
-import { useState } from "react";
 import {
   View,
   Text,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from "react-native";
 import { Livre } from "../../models/Livre";
 import CustomTextInput from "./fields/CustomTextInput";
@@ -29,6 +27,11 @@ import { useForm, Controller } from "react-hook-form";
 import { isValidDate } from "../../utils/validationDate";
 import { ModeFormulaire } from "../../utils/modeFormulaire";
 import { toastError, toastSuccess } from "../../utils/toast";
+import {
+  getDefaultValues,
+  optionsEtatLecture,
+  optionsTypeLivre,
+} from "../../utils/formulaireLivreHelpers";
 
 function SectionTitre({ titre }: { titre: string }) {
   return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
@@ -54,40 +57,10 @@ export default function FormulaireLivre({
     formState: { errors },
   } = useForm<Livre>({
     mode: "onChange",
-    defaultValues: {
-      couverture: livreInitial?.couverture ?? null,
-      titre: livreInitial?.titre ?? "",
-      isbn: livreInitial?.isbn ?? "",
-      nombre_pages: livreInitial?.nombre_pages ?? null,
-      auteurs: livreInitial?.auteurs ?? [],
-      genres: livreInitial?.genres ?? [],
-      edition: livreInitial?.edition ?? "",
-      date_publication: livreInitial?.date_publication ?? "",
-      type: livreInitial?.type ?? TypeLivre.broche,
-      resume: livreInitial?.resume ?? "",
-      statut_possession:
-        livreInitial?.statut_possession ?? StatutPossession.achete,
-      prix: livreInitial?.prix ?? null,
-      date_pret: livreInitial?.date_pret ?? "",
-      preteur: livreInitial?.preteur ?? "",
-      etat_lecture: livreInitial?.etat_lecture ?? EtatLecture.aLire,
-      date_debut_lecture: livreInitial?.date_debut_lecture ?? "",
-      date_fin_lecture: livreInitial?.date_fin_lecture ?? "",
-      note: livreInitial?.note ?? 0,
-      avis: livreInitial?.avis ?? "",
-    },
+    defaultValues: getDefaultValues(livreInitial),
   });
 
   const statutPossession = watch("statut_possession");
-
-  const optionsEtatLecture = Object.values(EtatLecture).map((val) => ({
-    label: val,
-    value: val,
-  }));
-  const optionsTypeLivre = Object.values(TypeLivre).map((val) => ({
-    label: val,
-    value: val,
-  }));
 
   const onSubmit = async (data: Livre) => {
     try {
@@ -112,7 +85,7 @@ export default function FormulaireLivre({
     }
   };
 
-  const renderSectionInformationsDeBase = (
+  const sectionInformationsDeBase = (
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de base" />
 
@@ -159,7 +132,7 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionInformationsDePublication = (
+  const sectionInformationsDePublication = (
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de publication" />
 
@@ -203,7 +176,7 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionResume = (
+  const sectionResume = (
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Résumé" />
 
@@ -222,7 +195,7 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionInformationsAchatEmprunt = (
+  const sectionInformationsAchatEmprunt = (
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations d'achat/d'emprunt" />
 
@@ -234,7 +207,7 @@ export default function FormulaireLivre({
         )}
       />
 
-      {statutPossession === "acheté" && (
+      {statutPossession === StatutPossession.achete && (
         <Controller
           control={control}
           name="prix"
@@ -249,7 +222,7 @@ export default function FormulaireLivre({
         />
       )}
 
-      {statutPossession === "emprunté" && (
+      {statutPossession === StatutPossession.emprunte && (
         <>
           <Controller
             control={control}
@@ -284,7 +257,7 @@ export default function FormulaireLivre({
     </View>
   );
 
-  const renderSectionInformationsDeLecture = (
+  const sectionInformationsDeLecture = (
     <View style={{ gap: 15 }}>
       <SectionTitre titre="Informations de lecture" />
 
@@ -381,10 +354,7 @@ export default function FormulaireLivre({
           keyboardShouldPersistTaps="handled"
         >
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            {mode === ModeFormulaire.ajouter
-              ? ModeFormulaire.ajouter
-              : ModeFormulaire.modifier}{" "}
-            un livre
+            {mode} un livre
           </Text>
 
           <Controller
@@ -399,7 +369,7 @@ export default function FormulaireLivre({
             )}
           />
 
-          {renderSectionInformationsDeBase}
+          {sectionInformationsDeBase}
 
           <Controller
             control={control}
@@ -425,10 +395,10 @@ export default function FormulaireLivre({
             )}
           />
 
-          {renderSectionInformationsDePublication}
-          {renderSectionResume}
-          {renderSectionInformationsAchatEmprunt}
-          {renderSectionInformationsDeLecture}
+          {sectionInformationsDePublication}
+          {sectionResume}
+          {sectionInformationsAchatEmprunt}
+          {sectionInformationsDeLecture}
         </ScrollView>
       </KeyboardAvoidingView>
     </>
