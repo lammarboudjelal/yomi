@@ -10,8 +10,6 @@ import CustomTextInput from "./fields/CustomTextInput";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CustomNumberInput from "./fields/CustomNumberInput";
 import CustomRanking from "./fields/CustomRanking";
-import { TypeLivre } from "../../models/TypeLivre";
-import { EtatLecture } from "../../models/EtatLecture";
 import CustomSelect from "./fields/CustomSelect";
 import { StatutPossession } from "../../models/StatutPosession";
 import CustomRadioStatus from "./fields/CustomRadioStatus";
