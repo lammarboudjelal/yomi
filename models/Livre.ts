@@ -24,3 +24,5 @@ export interface Livre {
   auteurs: string[];
   genres: string[];
 }
+
+export type LivreFormulaire = Omit<Livre, "id" | "date_ajout">;

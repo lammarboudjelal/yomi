@@ -19,8 +19,8 @@ export default function CouvertureLivre({
   const getSource = () => {
     if (!couverture) return null;
 
-    // Image ajoutée depuis la galerie
-    if (couverture.startsWith("file://")) {
+    // Image ajoutée depuis la galerie ou en ligne
+    if (couverture.startsWith("file://") || couverture.startsWith("https")) {
       return { uri: couverture };
     }
 

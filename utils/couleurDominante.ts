@@ -7,8 +7,8 @@ const couleurParDefaut = "#A0A0A0";
 async function normaliserSourceImage(
   couverture: string,
 ): Promise<string | null> {
-  if (couverture.startsWith("file://")) {
-    return couverture;
+  if (!couverture) {
+    return null;
   }
 
   if (imagesLocales[couverture]) {
@@ -16,7 +16,7 @@ async function normaliserSourceImage(
     return asset.uri;
   }
 
-  return null;
+  return couverture;
 }
 
 function hexVersRgb(couleur: string) {

@@ -10,9 +10,15 @@ import { StatutPossession } from "../../models/StatutPosession";
 
 type BoutonCarteLivreProps = {
   livre: Livre;
+  mode?: "bibliotheque" | "recherche";
+  onPress?: () => void;
 };
 
-export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
+export default function BoutonCarteLivre({
+  livre,
+  mode = "bibliotheque",
+  onPress,
+}: BoutonCarteLivreProps) {
   const navigation = useNavigation<any>();
 
   const iconeStatut =
@@ -22,8 +28,10 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate(Routes.livreDetail, { livreId: livre.id })
+      onPress={
+        onPress
+          ? onPress
+          : () => navigation.navigate(Routes.livreDetail, { livreId: livre.id })
       }
       style={{
         backgroundColor: "white",
@@ -80,11 +88,13 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
           </View>
 
           {/* État de lecture */}
-          <EtiquetteEtatLecture etat={livre.etat_lecture} />
+          {mode !== "recherche" && (
+            <EtiquetteEtatLecture etat={livre.etat_lecture} />
+          )}
         </View>
 
         {/* Genre(s) */}
-        {livre.genres && livre.genres.length > 0 && (
+        {mode !== "recherche" && livre.genres && livre.genres.length > 0 && (
           <Text
             style={{ fontSize: 12, textTransform: "capitalize" }}
             numberOfLines={1}
@@ -94,16 +104,18 @@ export default function BoutonCarteLivre({ livre }: BoutonCarteLivreProps) {
         )}
 
         {/* Note et statut (achat ou emprunt) */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <CustomRanking note={livre.note} />
+        {mode !== "recherche" && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <CustomRanking note={livre.note} />
 
-          <FontAwesome5 name={iconeStatut as any} size={20} color="#C2C2C2" />
-        </View>
+            <FontAwesome5 name={iconeStatut as any} size={20} color="#C2C2C2" />
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
