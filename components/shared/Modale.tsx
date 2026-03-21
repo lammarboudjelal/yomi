@@ -41,7 +41,7 @@ export default function Modale({
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           paddingHorizontal: 20,
-          paddingBottom: insets.bottom + 40,
+          paddingBottom: insets.bottom,
         }}
       >
         {title && (

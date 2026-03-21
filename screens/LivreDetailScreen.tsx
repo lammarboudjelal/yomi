@@ -6,6 +6,14 @@ import {
 import { View, Text, ScrollView, ActivityIndicator, Alert } from "react-native";
 import { RootStackParamList } from "../navigation/types";
 import { useCallback, useEffect, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSQLiteContext } from "expo-sqlite";
+import { MaterialIcons } from "@expo/vector-icons";
+import { EtatLecture } from "../models/EtatLecture";
+import { ModeFormulaire } from "../utils/modeFormulaire";
+import { Routes } from "../navigation/routes";
+import { toastError, toastSuccess } from "../utils/toast";
+import ModaleNoteAvis from "../components/livreDetail/ModaleNoteAvis";
 import { Livre } from "../models/Livre";
 import {
   deleteLivre,
@@ -17,17 +25,10 @@ import CarteNoteAvis from "../components/livreDetail/CarteNoteAvis";
 import SectionAccordion from "../components/livreDetail/SectionAccordion";
 import BoutonRetour from "../components/navigation/BoutonRetour";
 import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { recupererCouleurDominante } from "../utils/couleurDominante";
-import { StatutPossession } from "../models/StatutPosession";
-import { useSQLiteContext } from "expo-sqlite";
 import BoutonOptions from "../components/livreDetail/BoutonOptions";
 import Modale from "../components/shared/Modale";
-import { MaterialIcons } from "@expo/vector-icons";
-import { EtatLecture } from "../models/EtatLecture";
-import { ModeFormulaire } from "../utils/modeFormulaire";
-import { Routes } from "../navigation/routes";
-import { toastError, toastSuccess } from "../utils/toast";
+import { recupererCouleurDominante } from "../utils/couleurDominante";
+import { StatutPossession } from "../models/StatutPosession";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -43,13 +44,15 @@ const LigneInfo = ({ label, value }: { label: string; value: any }) => (
 
 export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   const { livreId } = route.params;
+  const db = useSQLiteContext();
+  const navigation = useNavigation<any>();
+  const insets = useSafeAreaInsets();
+
   const [livre, setLivre] = useState<Livre | null>(null);
   const [loading, setLoading] = useState(true);
   const [couleurFond, setCouleurFond] = useState("#A0A0A0");
-  const insets = useSafeAreaInsets();
-  const db = useSQLiteContext();
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation<any>();
+  const [modalNoteVisible, setModalNoteVisible] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -131,6 +134,28 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
     );
   };
 
+  const handleSaveNoteAvis = async (note: number, avis: string) => {
+    if (!livre) return;
+
+    const livreModifie = {
+      ...livre,
+      note,
+      avis,
+    };
+
+    try {
+      await updateLivre(db, livreModifie);
+      setLivre(livreModifie);
+
+      toastSuccess(
+        "Note et avis modifiés",
+        "La note et l'avis associés au livre ont été modifiés.",
+      );
+    } catch {
+      toastError("Erreur", "Impossible de modifier la note et l'avis.");
+    }
+  };
+
   if (!livre) {
     return (
       <>
@@ -173,6 +198,13 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
         ]}
       />
 
+      <ModaleNoteAvis
+        visible={modalNoteVisible}
+        livre={livre}
+        onClose={() => setModalNoteVisible(false)}
+        onSave={handleSaveNoteAvis}
+      />
+
       <ScrollView>
         <HeaderDetailLivre couverture={livre.couverture} />
 
@@ -191,7 +223,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
             onChangeEtatLecture={handleChangeEtatLecture}
           />
 
-          <CarteNoteAvis livre={livre} />
+          <CarteNoteAvis
+            livre={livre}
+            onPress={() => setModalNoteVisible(true)}
+          />
 
           <View style={{ marginBottom: insets.bottom }}>
             <SectionAccordion titre="Résumé">
