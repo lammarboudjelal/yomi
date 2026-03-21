@@ -26,7 +26,7 @@ import SectionAccordion from "../components/livreDetail/SectionAccordion";
 import BoutonRetour from "../components/navigation/BoutonRetour";
 import HeaderDetailLivre from "../components/livreDetail/HeaderDetailLivre";
 import BoutonOptions from "../components/livreDetail/BoutonOptions";
-import Modale from "../components/shared/Modale";
+import Modale from "../components/shared/ModaleActions";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
 import { StatutPossession } from "../models/StatutPosession";
 
@@ -51,8 +51,8 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   const [livre, setLivre] = useState<Livre | null>(null);
   const [loading, setLoading] = useState(true);
   const [couleurFond, setCouleurFond] = useState("#A0A0A0");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalNoteVisible, setModalNoteVisible] = useState(false);
+  const [modaleActionsVisible, setModaleActionsVisible] = useState(false);
+  const [modaleNoteVisible, setModaleNoteVisible] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -173,12 +173,12 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
     <View style={{ flex: 1, backgroundColor: couleurFond }}>
       <BoutonRetour />
 
-      <BoutonOptions onPress={() => setModalVisible(true)} />
+      <BoutonOptions onPress={() => setModaleActionsVisible(true)} />
 
       <Modale
-        visible={modalVisible}
+        visible={modaleActionsVisible}
         title="Actions sur le livre"
-        onClose={() => setModalVisible(false)}
+        onClose={() => setModaleActionsVisible(false)}
         actions={[
           {
             label: "Modifier le livre",
@@ -199,9 +199,9 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
       />
 
       <ModaleNoteAvis
-        visible={modalNoteVisible}
+        visible={modaleNoteVisible}
         livre={livre}
-        onClose={() => setModalNoteVisible(false)}
+        onClose={() => setModaleNoteVisible(false)}
         onSave={handleSaveNoteAvis}
       />
 
@@ -225,7 +225,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
           <CarteNoteAvis
             livre={livre}
-            onPress={() => setModalNoteVisible(true)}
+            onPress={() => setModaleNoteVisible(true)}
           />
 
           <View style={{ marginBottom: insets.bottom }}>

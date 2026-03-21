@@ -23,7 +23,7 @@ export default function ModaleNoteAvis({
   const [note, setNote] = useState(0);
   const [avis, setAvis] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
