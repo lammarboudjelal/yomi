@@ -62,14 +62,14 @@ export default function FormulaireLivre({
 
   const onSubmit = async (data: Livre) => {
     try {
-      if (mode === ModeFormulaire.ajouter) {
+      if (mode === ModeFormulaire.ajouter && !livreInitial?.id) {
         await insertLivre(db, data);
         toastSuccess(
           "Livre ajouté",
           `${data.titre} a été ajouté à votre bibliothèque.`,
         );
       } else {
-        await updateLivre(db, { ...data, id: livreInitial?.id });
+        await updateLivre(db, { ...data, id: livreInitial!.id });
         toastSuccess(
           "Livre modifié",
           `Les informations de ${data.titre} ont été modifiées.`,
@@ -108,7 +108,7 @@ export default function FormulaireLivre({
         render={({ field: { onChange, value } }) => (
           <CustomTextInput
             label="ISBN"
-            valeur={value}
+            valeur={value ?? ""}
             placeholder="ISBN"
             onChange={onChange}
           />
@@ -138,7 +138,11 @@ export default function FormulaireLivre({
         control={control}
         name="edition"
         render={({ field: { onChange, value } }) => (
-          <CustomTextInput label="Édition" valeur={value} onChange={onChange} />
+          <CustomTextInput
+            label="Édition"
+            valeur={value ?? ""}
+            onChange={onChange}
+          />
         )}
       />
 
@@ -147,12 +151,12 @@ export default function FormulaireLivre({
         name="date_publication"
         rules={{
           validate: (value) =>
-            isValidDate(value) || "Veuillez saisir une date valide.",
+            isValidDate(value ?? "") || "Veuillez saisir une date valide.",
         }}
         render={({ field: { onChange, value } }) => (
           <CustomDateField
             label="Date de publication"
-            valeur={value}
+            valeur={value ?? ""}
             onChange={onChange}
             erreur={errors.date_publication?.message}
           />
@@ -183,7 +187,7 @@ export default function FormulaireLivre({
         name="resume"
         render={({ field: { onChange, value } }) => (
           <CustomTextInput
-            valeur={value}
+            valeur={value ?? ""}
             placeholder="Résumé"
             multiline
             onChange={onChange}
@@ -228,7 +232,7 @@ export default function FormulaireLivre({
             render={({ field: { onChange, value } }) => (
               <CustomTextInput
                 label="Prêteur"
-                valeur={value}
+                valeur={value ?? ""}
                 onChange={onChange}
               />
             )}
@@ -239,12 +243,12 @@ export default function FormulaireLivre({
             name="date_pret"
             rules={{
               validate: (value) =>
-                isValidDate(value) || "Veuillez saisir une date valide.",
+                isValidDate(value ?? "") || "Veuillez saisir une date valide.",
             }}
             render={({ field: { onChange, value } }) => (
               <CustomDateField
                 label="Date d'emprunt"
-                valeur={value}
+                valeur={value ?? ""}
                 onChange={onChange}
                 erreur={errors.date_pret?.message}
               />
@@ -277,12 +281,12 @@ export default function FormulaireLivre({
         name="date_debut_lecture"
         rules={{
           validate: (value) =>
-            isValidDate(value) || "Veuillez saisir une date valide.",
+            isValidDate(value ?? "") || "Veuillez saisir une date valide.",
         }}
         render={({ field: { onChange, value } }) => (
           <CustomDateField
             label="Date de début de lecture"
-            valeur={value}
+            valeur={value ?? ""}
             onChange={onChange}
             erreur={errors.date_debut_lecture?.message}
           />
@@ -294,12 +298,12 @@ export default function FormulaireLivre({
         name="date_fin_lecture"
         rules={{
           validate: (value) =>
-            isValidDate(value) || "Veuillez saisir une date valide.",
+            isValidDate(value ?? "") || "Veuillez saisir une date valide.",
         }}
         render={({ field: { onChange, value } }) => (
           <CustomDateField
             label="Date de fin de lecture"
-            valeur={value}
+            valeur={value ?? ""}
             onChange={onChange}
             erreur={errors.date_fin_lecture?.message}
           />
@@ -325,7 +329,7 @@ export default function FormulaireLivre({
         render={({ field: { onChange, value } }) => (
           <CustomTextInput
             label="Avis"
-            valeur={value}
+            valeur={value ?? ""}
             placeholder="Avis"
             multiline
             onChange={onChange}
@@ -361,7 +365,7 @@ export default function FormulaireLivre({
             render={({ field: { onChange, value } }) => (
               <CustomImagePicker
                 label="Couverture"
-                valeur={value}
+                valeur={value ?? ""}
                 onChange={onChange}
               />
             )}
