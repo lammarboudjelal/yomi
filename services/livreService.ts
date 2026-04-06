@@ -334,3 +334,15 @@ export const getStatistiquesLecture = async (db: SQLiteDatabase) => {
     lu: result?.lu ?? 0,
   };
 };
+
+export const getLivresByEtatLecture = async (
+  db: SQLiteDatabase,
+  etat: string,
+): Promise<Livre[]> => {
+  const lignes = await db.getAllAsync<any>(
+    `${BASE_SELECT} WHERE l.etat_lecture = ? ORDER BY l.date_ajout DESC`,
+    etat,
+  );
+
+  return construireLivresDepuisLignes(lignes);
+};

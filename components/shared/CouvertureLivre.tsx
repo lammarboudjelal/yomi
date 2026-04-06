@@ -7,12 +7,14 @@ type CouvertureLivreProps = {
   couverture?: string | null;
   width?: number;
   height?: number;
+  rounded?: boolean;
 };
 
 export default function CouvertureLivre({
   couverture,
   width = 70,
   height = 100,
+  rounded = true,
 }: CouvertureLivreProps) {
   const [erreurImage, setErreurImage] = useState(false);
 
@@ -42,7 +44,7 @@ export default function CouvertureLivre({
         style={{
           width: width,
           height: height,
-          borderRadius: 5,
+          borderRadius: rounded ? 5 : 0,
         }}
       />
     );
@@ -53,7 +55,7 @@ export default function CouvertureLivre({
       style={{
         width: width,
         height: height,
-        borderRadius: 5,
+        borderRadius: rounded ? 5 : 0,
         backgroundColor: "#E0E0E0",
         justifyContent: "center",
         alignItems: "center",
