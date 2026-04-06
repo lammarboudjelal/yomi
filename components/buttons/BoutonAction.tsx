@@ -1,7 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity } from "react-native";
-import { Routes } from "../../navigation/routes";
-import { ModeFormulaire } from "../../utils/modeFormulaire";
 
 type BoutonActionProps = {
   label: string;

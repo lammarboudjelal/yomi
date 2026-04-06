@@ -82,7 +82,7 @@ export default function AjouterLivreScreen() {
 
       <BoutonAction
         label="Saisir manuellement"
-        icon={<Entypo name="keyboard" size={16} color="#705C5C" />}
+        icon={<Entypo name="keyboard" size={24} color="#705C5C" />}
         onPress={() =>
           navigation.navigate(Routes.formulaireLivre, {
             mode: ModeFormulaire.ajouter,
