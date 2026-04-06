@@ -13,4 +13,5 @@ export type RootStackParamList = {
 export type RootTabParamList = {
   Bibliotheque: undefined;
   AjouterLivre: undefined;
+  Accueil: undefined;
 };

@@ -4,6 +4,7 @@ import { Routes } from "../../navigation/routes";
 import { Entypo } from "@expo/vector-icons";
 import BibliothequeScreen from "../../screens/BibliothequeScreen";
 import AjouterLivreScreen from "../../screens/AjouterLivreScreen";
+import AccueilScreen from "../../screens/AccueilScreen";
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -33,12 +34,22 @@ export default function BarreNavigation() {
             iconName = "book";
           } else if (route.name === Routes.ajouterLivre) {
             iconName = "add-to-list";
+          } else if (route.name === Routes.accueil) {
+            iconName = "home";
           }
 
           return <Entypo name={iconName} size={26} color={color} />;
         },
       })}
     >
+      <Tab.Screen
+        name={Routes.accueil}
+        component={AccueilScreen}
+        options={{
+          tabBarLabel: "Accueil",
+        }}
+      />
+
       <Tab.Screen
         name={Routes.ajouterLivre}
         component={AjouterLivreScreen}
