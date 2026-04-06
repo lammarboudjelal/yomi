@@ -1,12 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-  FlatList,
-} from "react-native";
+import { View, Text, ActivityIndicator, FlatList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Routes } from "../navigation/routes";
 import { ModeFormulaire } from "../utils/modeFormulaire";
@@ -16,35 +10,7 @@ import { mapGoogleBookToLivre } from "../utils/googleBooksMapper";
 import { rechercherLivres } from "../services/googleBooksService";
 import BoutonCarteLivre from "../components/buttons/BoutonCarteLivre";
 import BarreRecherche from "../components/shared/BarreRecherche";
-
-function BoutonSaisieManuelle() {
-  const navigation = useNavigation<any>();
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate(Routes.formulaireLivre, {
-          mode: ModeFormulaire.ajouter,
-        })
-      }
-      style={{
-        backgroundColor: "white",
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 6,
-        borderRadius: 5,
-        padding: 15,
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 15,
-      }}
-    >
-      <Entypo name="keyboard" size={16} color="#705C5C" />
-
-      <Text style={{ fontSize: 16, fontWeight: 600 }}>Saisir manuellement</Text>
-    </TouchableOpacity>
-  );
-}
+import BoutonAction from "../components/buttons/BoutonAction";
 
 export default function AjouterLivreScreen() {
   const insets = useSafeAreaInsets();
@@ -114,7 +80,15 @@ export default function AjouterLivreScreen() {
     >
       <Text style={{ fontSize: 25, fontWeight: "bold" }}>Ajouter un livre</Text>
 
-      <BoutonSaisieManuelle />
+      <BoutonAction
+        label="Saisir manuellement"
+        icon={<Entypo name="keyboard" size={16} color="#705C5C" />}
+        onPress={() =>
+          navigation.navigate(Routes.formulaireLivre, {
+            mode: ModeFormulaire.ajouter,
+          })
+        }
+      />
 
       <BarreRecherche
         valeur={query}
