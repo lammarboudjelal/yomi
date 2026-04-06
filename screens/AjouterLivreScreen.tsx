@@ -14,7 +14,7 @@ import { useState } from "react";
 import { LivreFormulaire } from "../models/Livre";
 import { mapGoogleBookToLivre } from "../utils/googleBooksMapper";
 import { rechercherLivres } from "../services/googleBooksService";
-import BoutonCarteLivre from "../components/boutonLivre/BoutonCarteLivre";
+import BoutonCarteLivre from "../components/buttons/BoutonCarteLivre";
 import BarreRecherche from "../components/shared/BarreRecherche";
 
 function BoutonSaisieManuelle() {

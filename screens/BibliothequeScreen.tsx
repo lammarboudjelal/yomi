@@ -4,7 +4,7 @@ import {
   getStatistiquesLecture,
   getTousLesLivres,
 } from "../services/livreService";
-import BoutonCarteLivre from "../components/boutonLivre/BoutonCarteLivre";
+import BoutonCarteLivre from "../components/buttons/BoutonCarteLivre";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
