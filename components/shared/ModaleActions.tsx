@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors, styles } from "../../theme/styles";
 
 type ActionItem = {
   label: string;
@@ -46,14 +47,15 @@ export default function Modale({
       >
         {title && (
           <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "bold",
-              textAlign: "center",
-              paddingVertical: 20,
-              borderBottomWidth: 2,
-              borderColor: "#DBC2A9",
-            }}
+            style={[
+              styles.h3,
+              {
+                textAlign: "center",
+                paddingVertical: 20,
+                borderBottomWidth: 2,
+                borderColor: colors.fieldBorder,
+              },
+            ]}
           >
             {title}
           </Text>
@@ -71,7 +73,7 @@ export default function Modale({
               alignItems: "center",
               gap: 10,
               borderBottomWidth: 1,
-              borderColor: "#DBC2A9",
+              borderColor: colors.fieldBorder,
               paddingVertical: 20,
             }}
           >

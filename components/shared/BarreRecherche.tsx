@@ -1,5 +1,6 @@
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { colors } from "../../theme/styles";
 
 type BarreRechercheProps = {
   valeur: string;
@@ -22,13 +23,13 @@ export default function BarreRecherche({
         flexDirection: "row",
         alignItems: "center",
         borderWidth: 1,
-        borderColor: "#DBC2A9",
+        borderColor: colors.fieldBorder,
         borderRadius: 5,
         backgroundColor: "white",
         paddingHorizontal: 10,
       }}
     >
-      <FontAwesome name="search" size={16} color="#705C5C" />
+      <FontAwesome name="search" size={16} color={colors.action} />
 
       <TextInput
         value={valeur}
@@ -44,7 +45,7 @@ export default function BarreRecherche({
 
       {valeur.length > 0 && (
         <TouchableOpacity onPress={onClear}>
-          <Text style={{ color: "#705C5C", fontWeight: 600 }}>Annuler</Text>
+          <Text style={{ color: colors.action, fontWeight: 600 }}>Annuler</Text>
         </TouchableOpacity>
       )}
     </View>

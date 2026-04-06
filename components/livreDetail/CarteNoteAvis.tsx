@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import CustomRanking from "../formulaire/fields/CustomRanking";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Livre } from "../../models/Livre";
+import { colors } from "../../theme/styles";
 
 type CarteNoteAvisProps = {
   livre: Livre;
@@ -27,7 +28,7 @@ export default function CarteNoteAvis({ livre, onPress }: CarteNoteAvisProps) {
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <CustomRanking note={livre.note} />
 
-          <MaterialIcons name="edit-note" size={24} color="#705C5C" />
+          <MaterialIcons name="edit-note" size={24} color={colors.action} />
         </View>
 
         <Text numberOfLines={1}>

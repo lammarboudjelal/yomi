@@ -5,13 +5,14 @@ import {
   getTousLesLivres,
 } from "../services/livreService";
 import BoutonCarteLivre from "../components/buttons/BoutonCarteLivre";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
+import { colors, styles } from "../theme/styles";
+import CustomSafeAreaView from "../components/shared/CustomSafeAreaView";
 
 const Statistique = ({ label, value }: { label: string; value: number }) => (
   <View style={{ gap: 5, alignItems: "center" }}>
-    <Text style={{ fontWeight: 500, fontSize: 12, color: "#705C5C" }}>
+    <Text style={{ fontWeight: 500, fontSize: 12, color: colors.action }}>
       {label}
     </Text>
     <Text style={{ fontWeight: 500, fontSize: 16 }}>{value}</Text>
@@ -47,7 +48,6 @@ export default function BibliothequeScreen() {
     aLire: 0,
     lu: 0,
   });
-  const insets = useSafeAreaInsets();
   const db = useSQLiteContext();
 
   useFocusEffect(
@@ -65,15 +65,8 @@ export default function BibliothequeScreen() {
   );
 
   return (
-    <View
-      style={{
-        flex: 1,
-        gap: 20,
-        paddingTop: insets.top + 10,
-        paddingHorizontal: 20,
-      }}
-    >
-      <Text style={{ fontSize: 25, fontWeight: "bold" }}>Bibliothèque</Text>
+    <CustomSafeAreaView>
+      <Text style={styles.h1}>Bibliothèque</Text>
 
       <FlatList
         data={livres}
@@ -88,6 +81,6 @@ export default function BibliothequeScreen() {
           />
         }
       />
-    </View>
+    </CustomSafeAreaView>
   );
 }

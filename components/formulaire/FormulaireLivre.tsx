@@ -30,9 +30,10 @@ import {
   optionsEtatLecture,
   optionsTypeLivre,
 } from "../../utils/formulaireLivreHelpers";
+import { styles } from "../../theme/styles";
 
 function SectionTitre({ titre }: { titre: string }) {
-  return <Text style={{ fontWeight: "600", fontSize: 16 }}>{titre}</Text>;
+  return <Text style={styles.h4}>{titre}</Text>;
 }
 
 type FormulaireLivreProps = {
@@ -355,9 +356,7 @@ export default function FormulaireLivre({
           }}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            {mode} un livre
-          </Text>
+          <Text style={styles.h2}>{mode} un livre</Text>
 
           <Controller
             control={control}

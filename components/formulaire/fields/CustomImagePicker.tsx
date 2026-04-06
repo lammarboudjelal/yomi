@@ -3,6 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { File, Paths } from "expo-file-system";
 import { imagesLocales } from "../../../utils/imagesLocales";
+import { colors } from "../../../theme/styles";
 
 type CustomImagePickerProps = {
   label?: string;
@@ -65,8 +66,8 @@ export default function CustomImagePicker({
             gap: 20,
           }}
         >
-          <MaterialIcons name="add-a-photo" size={30} color="#705C5C" />
-          <Text style={{ color: "#705C5C", textAlign: "center" }}>
+          <MaterialIcons name="add-a-photo" size={30} color={colors.action} />
+          <Text style={{ color: colors.action, textAlign: "center" }}>
             Ajouter une couverture
           </Text>
         </TouchableOpacity>
@@ -90,9 +91,9 @@ export default function CustomImagePicker({
               gap: 6,
             }}
           >
-            <MaterialIcons name="delete" size={20} color="#bf0603" />
+            <MaterialIcons name="delete" size={20} color={colors.error} />
 
-            <Text style={{ color: "#bf0603" }}>Supprimer</Text>
+            <Text style={{ color: colors.error }}>Supprimer</Text>
           </TouchableOpacity>
         </View>
       )}

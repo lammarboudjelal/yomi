@@ -1,4 +1,5 @@
 import { View, Text, TextInput } from "react-native";
+import { styles } from "../../../theme/styles";
 
 type CustomNumberInputProps = {
   label: string;
@@ -20,7 +21,7 @@ export default function CustomNumberInput({
 
   return (
     <View style={{ gap: 5 }}>
-      <Text style={{ fontWeight: 500, fontSize: 12 }}>{label}</Text>
+      <Text style={styles.formLabel}>{label}</Text>
 
       <TextInput
         value={valeur}

@@ -1,5 +1,6 @@
 import { TouchableOpacity, View, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { colors, styles } from "../../../theme/styles";
 
 type CustomRankingProps = {
   note?: number;
@@ -16,9 +17,7 @@ export default function CustomRanking({
 }: CustomRankingProps) {
   return (
     <View style={{ gap: 5 }}>
-      {label ? (
-        <Text style={{ fontWeight: "500", fontSize: 12 }}>{label}</Text>
-      ) : null}
+      {label ? <Text style={styles.formLabel}>{label}</Text> : null}
 
       <View style={{ flexDirection: "row", gap: 1 }}>
         {[1, 2, 3, 4, 5].map((etoile) => {
@@ -26,7 +25,7 @@ export default function CustomRanking({
             <MaterialIcons
               name={etoile <= note ? "star" : "star-border"}
               size={24}
-              color="#F2B705"
+              color={colors.ranking}
               key={etoile}
             />
           );

@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { styles } from "../../theme/styles";
 
 type BoutonEnregistrerProps = {
   onPress: () => void;
@@ -39,7 +40,7 @@ export default function BoutonEnregistrer({ onPress }: BoutonEnregistrerProps) {
       >
         <MaterialIcons name="check" size={24} color="black" />
 
-        <Text style={{ fontWeight: "600", fontSize: 16 }}>Enregistrer</Text>
+        <Text style={styles.h4}>Enregistrer</Text>
       </TouchableOpacity>
     </View>
   );

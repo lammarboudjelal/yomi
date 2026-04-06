@@ -6,6 +6,7 @@ import CustomRanking from "../formulaire/fields/CustomRanking";
 import { Livre } from "../../models/Livre";
 import { ActivityIndicator } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { colors, styles } from "../../theme/styles";
 
 type Props = {
   visible: boolean;
@@ -75,14 +76,15 @@ export default function ModaleNoteAvis({
         }}
       >
         <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            textAlign: "center",
-            paddingVertical: 20,
-            borderBottomWidth: 2,
-            borderColor: "#DBC2A9",
-          }}
+          style={[
+            styles.h3,
+            {
+              textAlign: "center",
+              paddingVertical: 20,
+              borderBottomWidth: 2,
+              borderColor: colors.fieldBorder,
+            },
+          ]}
         >
           Modifier note et avis
         </Text>
@@ -105,7 +107,7 @@ export default function ModaleNoteAvis({
               borderRadius: 5,
               alignItems: "center",
               borderWidth: 1,
-              borderColor: "#705C5C",
+              borderColor: colors.action,
             }}
           >
             <Text>Annuler</Text>
@@ -119,7 +121,7 @@ export default function ModaleNoteAvis({
               padding: 15,
               borderRadius: 5,
               alignItems: "center",
-              backgroundColor: !isModified ? "#C4C4C4" : "#705C5C",
+              backgroundColor: !isModified ? colors.default : colors.action,
             }}
           >
             {loading ? (

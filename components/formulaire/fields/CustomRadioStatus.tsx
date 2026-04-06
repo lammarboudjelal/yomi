@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { StatutPossession } from "../../../models/StatutPosession";
+import { colors } from "../../../theme/styles";
 
 type CustomRadioStatusProps = {
   valeur: string;
@@ -26,8 +27,9 @@ export default function CustomRadioStatus({
               height: 20,
               borderRadius: 9,
               borderWidth: 2,
-              borderColor: "#705C5C",
-              backgroundColor: valeur === statut ? "#705C5C" : "transparent",
+              borderColor: colors.action,
+              backgroundColor:
+                valeur === statut ? colors.action : "transparent",
             }}
           />
 

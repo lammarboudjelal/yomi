@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput } from "react-native";
+import { colors, styles } from "../../../theme/styles";
 
 type CustomDateFieldProps = {
   label?: string;
@@ -33,9 +34,7 @@ export default function CustomDateField({
 
   return (
     <View style={{ gap: 5 }}>
-      {label && (
-        <Text style={{ fontWeight: "500", fontSize: 12 }}>{label}</Text>
-      )}
+      {label && <Text style={styles.formLabel}>{label}</Text>}
 
       <TextInput
         value={valeur}
@@ -46,7 +45,7 @@ export default function CustomDateField({
         maxLength={10}
         style={{
           borderWidth: 1,
-          borderColor: erreur ? "#bf0603" : "#DBC2A9",
+          borderColor: erreur ? colors.error : "#DBC2A9",
           backgroundColor: "white",
           borderRadius: 5,
           padding: 10,
@@ -55,7 +54,7 @@ export default function CustomDateField({
       />
 
       {erreur && (
-        <Text style={{ color: "#bf0603", fontSize: 12 }}>{erreur}</Text>
+        <Text style={{ color: colors.error, fontSize: 12 }}>{erreur}</Text>
       )}
     </View>
   );

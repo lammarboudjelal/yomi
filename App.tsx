@@ -4,7 +4,7 @@ import { migrerBaseSiNecessaire } from "./data/schema";
 import { insererDonneesDeTestSiVide } from "./data/seed";
 import LivreDetailScreen from "./screens/LivreDetailScreen";
 import { RootStackParamList } from "./navigation/types";
-import { navigationTheme } from "./theme/theme";
+import { navigationTheme } from "./theme/navigationTheme";
 import { Routes } from "./navigation/routes";
 import BarreNavigation from "./components/navigation/BarreNavigation";
 import FormulaireLivreScreen from "./screens/FormulaireLivreScreen";

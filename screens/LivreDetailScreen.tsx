@@ -29,6 +29,7 @@ import BoutonOptions from "../components/livreDetail/BoutonOptions";
 import Modale from "../components/shared/ModaleActions";
 import { recupererCouleurDominante } from "../utils/couleurDominante";
 import { StatutPossession } from "../models/StatutPosession";
+import { colors } from "../theme/styles";
 
 type LivreDetailRouteProp = RouteProp<RootStackParamList, "LivreDetail">;
 
@@ -50,7 +51,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
   const [livre, setLivre] = useState<Livre | null>(null);
   const [loading, setLoading] = useState(true);
-  const [couleurFond, setCouleurFond] = useState("#A0A0A0");
+  const [couleurFond, setCouleurFond] = useState(colors.default);
   const [modaleActionsVisible, setModaleActionsVisible] = useState(false);
   const [modaleNoteVisible, setModaleNoteVisible] = useState(false);
 
@@ -71,7 +72,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
     if (!livre) return;
 
     const chargerCouleur = async () => {
-      const couleur = await recupererCouleurDominante(livre.couverture);
+      const couleur = await recupererCouleurDominante(livre.couverture ?? "");
       setCouleurFond(couleur);
     };
 
@@ -182,7 +183,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
         actions={[
           {
             label: "Modifier le livre",
-            icon: <MaterialIcons name="edit" size={24} color={"#705C5C"} />,
+            icon: <MaterialIcons name="edit" size={24} color={colors.action} />,
             onPress: () =>
               navigation.navigate(Routes.formulaireLivre, {
                 mode: ModeFormulaire.modifier,
@@ -191,7 +192,9 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
           },
           {
             label: "Supprimer le livre",
-            icon: <MaterialIcons name="delete" size={24} color="#705C5C" />,
+            icon: (
+              <MaterialIcons name="delete" size={24} color={colors.action} />
+            ),
             destructive: true,
             onPress: handleDelete,
           },
@@ -206,7 +209,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
       />
 
       <ScrollView>
-        <HeaderDetailLivre couverture={livre.couverture} />
+        <HeaderDetailLivre couverture={livre.couverture ?? ""} />
 
         <View
           style={{

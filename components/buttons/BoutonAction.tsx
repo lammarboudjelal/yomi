@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity } from "react-native";
+import { styles } from "../../theme/styles";
 
 type BoutonActionProps = {
   label: string;
@@ -31,7 +32,7 @@ export default function BoutonAction({
     >
       {icon}
 
-      <Text style={{ fontSize: 16, fontWeight: 600 }}>{label}</Text>
+      <Text style={styles.h4}>{label}</Text>
     </TouchableOpacity>
   );
 }

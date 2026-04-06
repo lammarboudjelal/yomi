@@ -1,5 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { colors, styles } from "../../../theme/styles";
 
 type MultipleValueTextFieldProps = {
   label: string;
@@ -35,10 +36,10 @@ export default function MultipleValueTextField({
           alignItems: "center",
         }}
       >
-        <Text style={{ fontWeight: "600", fontSize: 16 }}>{label}</Text>
+        <Text style={styles.h4}>{label}</Text>
 
         <TouchableOpacity onPress={addValue}>
-          <Entypo name="plus" size={24} color="#705C5C" />
+          <Entypo name="plus" size={24} color={colors.action} />
         </TouchableOpacity>
       </View>
 
@@ -55,11 +56,11 @@ export default function MultipleValueTextField({
             value={valeur}
             onChangeText={(text) => editValue(index, text)}
             placeholder="Nomination"
-            placeholderTextColor="#A1A1AA"
+            placeholderTextColor={colors.default}
             style={{
               flex: 1,
               borderWidth: 1,
-              borderColor: "#DBC2A9",
+              borderColor: colors.fieldBorder,
               backgroundColor: "white",
               borderRadius: 5,
               padding: 10,
@@ -67,7 +68,7 @@ export default function MultipleValueTextField({
           />
 
           <TouchableOpacity onPress={() => deleteValue(index)}>
-            <Entypo name="minus" size={24} color="#705C5C" />
+            <Entypo name="minus" size={24} color={colors.action} />
           </TouchableOpacity>
         </View>
       ))}

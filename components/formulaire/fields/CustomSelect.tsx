@@ -1,6 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
+import { colors, styles } from "../../../theme/styles";
 
 type Option = {
   label: string;
@@ -24,7 +25,7 @@ export default function CustomSelect({
 
   return (
     <View style={{ gap: 10 }}>
-      <Text style={{ fontWeight: "500", fontSize: 12 }}>{label}</Text>
+      <Text style={styles.formLabel}>{label}</Text>
 
       <SelectDropdown
         data={options}
@@ -33,7 +34,7 @@ export default function CustomSelect({
           <View
             style={{
               borderWidth: 1,
-              borderColor: "#DBC2A9",
+              borderColor: colors.fieldBorder,
               backgroundColor: "white",
               borderRadius: 5,
               paddingHorizontal: 12,
@@ -50,7 +51,7 @@ export default function CustomSelect({
             <MaterialIcons
               name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"}
               size={22}
-              color="#705C5C"
+              color={colors.action}
             />
           </View>
         )}

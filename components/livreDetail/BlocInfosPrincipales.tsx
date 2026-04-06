@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import { Livre } from "../../models/Livre";
 import EtatLectureEditable from "./EtatLectureEditable";
 import { EtatLecture } from "../../models/EtatLecture";
+import { styles } from "../../theme/styles";
 
 type BlocInfosPrincipalesProps = {
   livre: Livre;
@@ -16,9 +17,7 @@ export default function BlocInfosPrincipales({
     <View style={{ alignItems: "center", gap: 20, paddingHorizontal: 20 }}>
       {/* Titre et auteur(s) */}
       <View style={{ alignItems: "center", gap: 10 }}>
-        <Text style={{ fontSize: 20, fontWeight: "600", textAlign: "center" }}>
-          {livre.titre}
-        </Text>
+        <Text style={[styles.h2, { textAlign: "center" }]}>{livre.titre}</Text>
 
         {livre.auteurs && livre.auteurs.length > 0 && (
           <Text style={{ textTransform: "capitalize" }}>

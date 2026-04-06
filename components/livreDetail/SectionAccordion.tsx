@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import Collapsible from "react-native-collapsible";
+import { colors } from "../../theme/styles";
 
 type SectionAccordionProps = {
   titre: string;
@@ -21,10 +22,11 @@ export default function SectionAccordion({
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
+          alignItems: "center",
           paddingVertical: 15,
           paddingHorizontal: 20,
           borderBottomWidth: 1,
-          borderBottomColor: "#DBC2A9",
+          borderBottomColor: colors.fieldBorder,
           borderColor: "white",
           backgroundColor: "white",
         }}
@@ -44,7 +46,7 @@ export default function SectionAccordion({
             paddingHorizontal: 20,
             backgroundColor: "white",
             borderBottomWidth: 1,
-            borderBottomColor: "#DBC2A9",
+            borderBottomColor: colors.fieldBorder,
             gap: 10,
           }}
         >

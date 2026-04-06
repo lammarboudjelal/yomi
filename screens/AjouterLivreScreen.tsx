@@ -1,7 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, ActivityIndicator, FlatList } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Text, ActivityIndicator, FlatList } from "react-native";
 import { Routes } from "../navigation/routes";
 import { ModeFormulaire } from "../utils/modeFormulaire";
 import { useState } from "react";
@@ -11,9 +10,10 @@ import { rechercherLivres } from "../services/googleBooksService";
 import BoutonCarteLivre from "../components/buttons/BoutonCarteLivre";
 import BarreRecherche from "../components/shared/BarreRecherche";
 import BoutonAction from "../components/buttons/BoutonAction";
+import { colors, styles } from "../theme/styles";
+import CustomSafeAreaView from "../components/shared/CustomSafeAreaView";
 
 export default function AjouterLivreScreen() {
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation<any>();
 
   const [query, setQuery] = useState("");
@@ -70,19 +70,12 @@ export default function AjouterLivreScreen() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        gap: 20,
-        paddingTop: insets.top + 10,
-        paddingHorizontal: 20,
-      }}
-    >
-      <Text style={{ fontSize: 25, fontWeight: "bold" }}>Ajouter un livre</Text>
+    <CustomSafeAreaView>
+      <Text style={styles.h1}>Ajouter un livre</Text>
 
       <BoutonAction
         label="Saisir manuellement"
-        icon={<Entypo name="keyboard" size={24} color="#705C5C" />}
+        icon={<Entypo name="keyboard" size={24} color={colors.action} />}
         onPress={() =>
           navigation.navigate(Routes.formulaireLivre, {
             mode: ModeFormulaire.ajouter,
@@ -115,6 +108,6 @@ export default function AjouterLivreScreen() {
           />
         )}
       />
-    </View>
+    </CustomSafeAreaView>
   );
 }
