@@ -4,7 +4,7 @@ import { imagesLocales } from "../../utils/imagesLocales";
 import { useState } from "react";
 
 type CouvertureLivreProps = {
-  couverture?: string;
+  couverture?: string | null;
   width?: number;
   height?: number;
 };
