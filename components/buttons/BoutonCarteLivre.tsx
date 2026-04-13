@@ -1,0 +1,122 @@
+import { Text, View, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import CustomRanking from "../formulaire/fields/CustomRanking";
+import EtiquetteEtatLecture from "../shared/EtiquetteEtatLecture";
+import { FontAwesome5 } from "@expo/vector-icons";
+import CouvertureLivre from "../shared/CouvertureLivre";
+import { Livre } from "../../models/Livre";
+import { Routes } from "../../navigation/routes";
+import { StatutPossession } from "../../models/StatutPosession";
+
+type BoutonCarteLivreProps = {
+  livre: Livre;
+  mode?: "bibliotheque" | "recherche";
+  onPress?: () => void;
+};
+
+export default function BoutonCarteLivre({
+  livre,
+  mode = "bibliotheque",
+  onPress,
+}: BoutonCarteLivreProps) {
+  const navigation = useNavigation<any>();
+
+  const iconeStatut =
+    livre.statut_possession === StatutPossession.achete
+      ? "shopping-basket"
+      : "exchange-alt";
+
+  return (
+    <TouchableOpacity
+      onPress={
+        onPress
+          ? onPress
+          : () => navigation.navigate(Routes.livreDetail, { livreId: livre.id })
+      }
+      style={{
+        backgroundColor: "white",
+        borderRadius: 5,
+        padding: 10,
+        flexDirection: "row",
+        gap: 10,
+
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 6,
+
+        marginBottom: 16,
+      }}
+    >
+      {/* Image */}
+      <CouvertureLivre couverture={livre.couverture} />
+
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "space-between",
+          gap: 10,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+          }}
+        >
+          {/* Titre et auteur(s) */}
+          <View
+            style={{
+              flex: 1,
+              gap: 5,
+              marginRight: 10,
+            }}
+          >
+            <Text style={{ fontSize: 14, fontWeight: 700 }} numberOfLines={1}>
+              {livre.titre}
+            </Text>
+
+            {livre.auteurs && livre.auteurs.length > 0 && (
+              <Text
+                style={{ fontSize: 12, textTransform: "capitalize" }}
+                numberOfLines={1}
+              >
+                {livre.auteurs.join(", ")}
+              </Text>
+            )}
+          </View>
+
+          {/* État de lecture */}
+          {mode !== "recherche" && (
+            <EtiquetteEtatLecture etat={livre.etat_lecture} />
+          )}
+        </View>
+
+        {/* Genre(s) */}
+        {mode !== "recherche" && livre.genres && livre.genres.length > 0 && (
+          <Text
+            style={{ fontSize: 12, textTransform: "capitalize" }}
+            numberOfLines={1}
+          >
+            {livre.genres.join(", ")}
+          </Text>
+        )}
+
+        {/* Note et statut (achat ou emprunt) */}
+        {mode !== "recherche" && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <CustomRanking note={livre.note} />
+
+            <FontAwesome5 name={iconeStatut as any} size={20} color="#C2C2C2" />
+          </View>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+}
