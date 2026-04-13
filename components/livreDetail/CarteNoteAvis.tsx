@@ -32,7 +32,7 @@ export default function CarteNoteAvis({ livre, onPress }: CarteNoteAvisProps) {
         </View>
 
         <Text numberOfLines={1}>
-          {livre.avis ?? "Modifier la note et l’avis"}
+          {livre.avis || "Modifier la note et l’avis"}
         </Text>
       </View>
     </TouchableOpacity>
