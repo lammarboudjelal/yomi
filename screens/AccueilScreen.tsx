@@ -32,7 +32,7 @@ export default function AccueilScreen() {
   }, [db]);
 
   return (
-    <CustomSafeAreaView>
+    <CustomSafeAreaView scrollable={true}>
       <Text style={styles.h1}>Bonjour :)</Text>
 
       <BoutonAction
@@ -45,13 +45,14 @@ export default function AccueilScreen() {
         <Text style={styles.h3}>Lecture du moment</Text>
 
         <FlatList
+          scrollEnabled={false}
           data={livresEnCours}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <BoutonCarteLivre livre={item} />}
         />
       </View>
 
-      <View style={{ display: "flex", gap: 15 }}>
+      <View style={{ display: "flex", gap: 15, paddingBottom: 20 }}>
         <Text style={styles.h3}>Prochaines lectures</Text>
 
         <FlatList
