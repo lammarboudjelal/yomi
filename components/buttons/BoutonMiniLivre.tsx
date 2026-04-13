@@ -26,13 +26,15 @@ export default function BoutonMiniLivre({ livre }: BoutonMiniLivreProps) {
         navigation.navigate(Routes.livreDetail, { livreId: livre.id })
       }
     >
-      <View>
+      <View style={{}}>
         <View
           style={{
             flexDirection: "row",
             overflow: "hidden",
             borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
+            borderTopWidth: 1, 
+            borderRightWidth: 1,
+            borderColor: COLORS.primary,
           }}
         >
           <View
