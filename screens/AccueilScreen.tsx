@@ -2,10 +2,10 @@ import { FlatList, Text, View } from "react-native";
 import BoutonAction from "../components/buttons/BoutonAction";
 import { Routes } from "../navigation/routes";
 import { Entypo } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { colors, styles } from "../theme/styles";
 import CustomSafeAreaView from "../components/shared/CustomSafeAreaView";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { getLivresByEtatLecture } from "../services/livreService";
 import { useSQLiteContext } from "expo-sqlite";
 import { Livre } from "../models/Livre";
@@ -19,17 +19,19 @@ export default function AccueilScreen() {
   const [livresEnCours, setLivresEnCours] = useState<Livre[]>([]);
   const [livresALire, setLivresALire] = useState<Livre[]>([]);
 
-  useEffect(() => {
-    const chargerDonnees = async () => {
-      const enCours = await getLivresByEtatLecture(db, "en cours");
-      const aLire = await getLivresByEtatLecture(db, "à lire");
+  useFocusEffect(
+    useCallback(() => {
+      const chargerDonnees = async () => {
+        const enCours = await getLivresByEtatLecture(db, "en cours");
+        const aLire = await getLivresByEtatLecture(db, "à lire");
 
-      setLivresEnCours(enCours);
-      setLivresALire(aLire);
-    };
+        setLivresEnCours(enCours);
+        setLivresALire(aLire);
+      };
 
-    chargerDonnees();
-  }, [db]);
+      chargerDonnees();
+    }, []),
+  );
 
   return (
     <CustomSafeAreaView scrollable={true}>

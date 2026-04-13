@@ -32,7 +32,7 @@ export default function BoutonMiniLivre({ livre }: BoutonMiniLivreProps) {
             flexDirection: "row",
             overflow: "hidden",
             borderTopLeftRadius: 8,
-            borderTopWidth: 1, 
+            borderTopWidth: 1,
             borderRightWidth: 1,
             borderColor: COLORS.primary,
           }}
