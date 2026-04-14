@@ -98,6 +98,8 @@ export default function AjouterLivreScreen() {
       )}
 
       <FlatList
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         data={resultats}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
