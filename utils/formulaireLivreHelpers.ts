@@ -3,6 +3,13 @@ import { Livre } from "../models/Livre";
 import { StatutPossession } from "../models/StatutPosession";
 import { TypeLivre } from "../models/TypeLivre";
 
+/**
+ * Retourne les valeurs par défaut du formulaire d'ajout/modification d'un livre.
+ *
+ * Deux cas :
+ * - Ajout (création) → valeurs initiales définies
+ * - Modification → on pré-remplit avec le livre existant
+ */
 export function getDefaultValues(livreInitial?: Livre) {
   if (!livreInitial)
     return {
@@ -14,6 +21,7 @@ export function getDefaultValues(livreInitial?: Livre) {
       note: 0,
     };
 
+  // Mode édition → on reprend les valeurs existantes
   return { ...livreInitial };
 }
 

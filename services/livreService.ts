@@ -13,6 +13,9 @@ const BASE_SELECT = `
   LEFT JOIN genre g ON g.id = lg.genre_id
 `;
 
+/**
+ * Transforme les lignes SQL (avec jointures) en objets Livre structurés.
+ */
 function construireLivresDepuisLignes(lignes: any[]): Livre[] {
   const livres = new Map<number, Livre>();
 
@@ -60,6 +63,16 @@ function construireLivresDepuisLignes(lignes: any[]): Livre[] {
   return Array.from(livres.values());
 }
 
+/**
+ * Récupère tous les livres avec leurs relations (auteurs, genres).
+ *
+ * Tri personnalisé :
+ * 1. en cours
+ * 2. à lire
+ * 3. abandonné
+ * 4. lu
+ * Puis par date d'ajout (desc)
+ */
 export const getTousLesLivres = async (
   db: SQLiteDatabase,
 ): Promise<Livre[]> => {
@@ -96,6 +109,9 @@ export const getLivreParId = async (
   return construireLivresDepuisLignes(lignes)[0];
 };
 
+/**
+ * Récupère un auteur existant ou le crée s'il n'existe pas (pour éviter les doublons).
+ */
 const getOrCreateAuteur = async (
   db: SQLiteDatabase,
   nomination: string,
@@ -117,6 +133,9 @@ const getOrCreateAuteur = async (
   return result.lastInsertRowId!;
 };
 
+/**
+ * Récupère un genre existant ou le crée s'il n'existe pas (pour éviter les doublons).
+ */
 const getOrCreateGenre = async (
   db: SQLiteDatabase,
   nom: string,
@@ -138,6 +157,9 @@ const getOrCreateGenre = async (
   return result.lastInsertRowId!;
 };
 
+/**
+ * Lie un livre à ses auteurs (table pivot).
+ */
 async function lierAuteurs(
   db: SQLiteDatabase,
   livreId: number,
@@ -154,6 +176,9 @@ async function lierAuteurs(
   }
 }
 
+/**
+ * Lie un livre à ses genres (table pivot).
+ */
 async function lierGenres(
   db: SQLiteDatabase,
   livreId: number,
@@ -170,11 +195,23 @@ async function lierGenres(
   }
 }
 
+/**
+ * Supprime toutes les relations d'un livre (utile pour update et delete).
+ */
 async function supprimerRelationsLivre(db: SQLiteDatabase, livreId: number) {
   await db.runAsync("DELETE FROM livre_auteur WHERE livre_id = ?", livreId);
   await db.runAsync("DELETE FROM livre_genre WHERE livre_id = ?", livreId);
 }
 
+/**
+ * Ajuste automatiquement les dates de lecture
+ * en fonction de l'état du livre.
+ *
+ * Règles métier :
+ * - à lire → aucune date
+ * - en cours → date début si absente
+ * - lu / abandonné → date début + fin
+ */
 function ajusterDatesLecture(livre: Livre): Livre {
   const maintenant = new Date().toLocaleDateString();
 
@@ -203,6 +240,9 @@ function ajusterDatesLecture(livre: Livre): Livre {
   return livre;
 }
 
+/**
+ * Ajoute un livre à la bdd et ses relations.
+ */
 export const insertLivre = async (
   db: SQLiteDatabase,
   livre: Livre,
@@ -247,6 +287,12 @@ export const insertLivre = async (
   });
 };
 
+/**
+ * Met à jour un livre :
+ * - update des champs
+ * - suppression des anciennes relations
+ * - recréation des relations
+ */
 export const updateLivre = async (
   db: SQLiteDatabase,
   livre: Livre,
@@ -305,6 +351,9 @@ export const updateLivre = async (
   });
 };
 
+/**
+ * Supprime un livre et ses relations de la bdd.
+ */
 export const deleteLivre = async (
   db: SQLiteDatabase,
   livreId: number,
@@ -315,6 +364,12 @@ export const deleteLivre = async (
   });
 };
 
+/** 
+ * Retourne des statistiques globales :
+ * - total de livres
+ * - nombre à lire
+ * - nombre lus
+ */
 export const getStatistiquesLecture = async (db: SQLiteDatabase) => {
   const result = await db.getFirstAsync<{
     total: number;
@@ -335,6 +390,9 @@ export const getStatistiquesLecture = async (db: SQLiteDatabase) => {
   };
 };
 
+/**
+ * Retourne les livres d'un état de lecture donné. 
+ */
 export const getLivresByEtatLecture = async (
   db: SQLiteDatabase,
   etat: string,
