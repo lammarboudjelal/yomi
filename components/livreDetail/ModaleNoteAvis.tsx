@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import Modal from "react-native-modal";
 import CustomTextInput from "../formulaire/fields/CustomTextInput";
 import CustomRanking from "../formulaire/fields/CustomRanking";
@@ -65,75 +71,79 @@ export default function ModaleNoteAvis({
       onBackButtonPress={handleClose}
       style={{ justifyContent: "flex-end", margin: 0 }}
     >
-      <View
-        style={{
-          backgroundColor: "white",
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          paddingHorizontal: 20,
-          paddingBottom: insets.bottom,
-          gap: 20,
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Text
-          style={[
-            styles.h3,
-            {
-              textAlign: "center",
-              paddingVertical: 20,
-              borderBottomWidth: 2,
-              borderColor: colors.fieldBorder,
-            },
-          ]}
+        <View
+          style={{
+            backgroundColor: "white",
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            paddingHorizontal: 20,
+            paddingBottom: insets.bottom,
+            gap: 20,
+          }}
         >
-          Modifier note et avis
-        </Text>
-
-        <CustomRanking label="Note" note={note} editable onChange={setNote} />
-
-        <CustomTextInput
-          label="Avis"
-          valeur={avis}
-          onChange={setAvis}
-          multiline
-        />
-
-        <View style={{ flexDirection: "row", gap: 10 }}>
-          <TouchableOpacity
-            onPress={handleClose}
-            style={{
-              flex: 1,
-              padding: 15,
-              borderRadius: 5,
-              alignItems: "center",
-              borderWidth: 1,
-              borderColor: colors.action,
-            }}
+          <Text
+            style={[
+              styles.h3,
+              {
+                textAlign: "center",
+                paddingVertical: 20,
+                borderBottomWidth: 2,
+                borderColor: colors.fieldBorder,
+              },
+            ]}
           >
-            <Text>Annuler</Text>
-          </TouchableOpacity>
+            Modifier note et avis
+          </Text>
 
-          <TouchableOpacity
-            disabled={!isModified || loading}
-            onPress={handleSave}
-            style={{
-              flex: 1,
-              padding: 15,
-              borderRadius: 5,
-              alignItems: "center",
-              backgroundColor: !isModified ? colors.default : colors.action,
-            }}
-          >
-            {loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={{ color: "white", fontWeight: 600 }}>
-                Enregistrer
-              </Text>
-            )}
-          </TouchableOpacity>
+          <CustomRanking label="Note" note={note} editable onChange={setNote} />
+
+          <CustomTextInput
+            label="Avis"
+            valeur={avis}
+            onChange={setAvis}
+            multiline
+          />
+
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <TouchableOpacity
+              onPress={handleClose}
+              style={{
+                flex: 1,
+                padding: 15,
+                borderRadius: 5,
+                alignItems: "center",
+                borderWidth: 1,
+                borderColor: colors.action,
+              }}
+            >
+              <Text>Annuler</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              disabled={!isModified || loading}
+              onPress={handleSave}
+              style={{
+                flex: 1,
+                padding: 15,
+                borderRadius: 5,
+                alignItems: "center",
+                backgroundColor: !isModified ? colors.default : colors.action,
+              }}
+            >
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text style={{ color: "white", fontWeight: 600 }}>
+                  Enregistrer
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }

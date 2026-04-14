@@ -263,7 +263,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
             {livre.statut_possession === StatutPossession.achete && (
               <SectionAccordion titre="Informations d’achat">
-                <LigneInfo label="Prix" value={livre.prix ? `${livre.prix} €` : "-"} />
+                <LigneInfo
+                  label="Prix"
+                  value={livre.prix ? `${livre.prix} €` : "-"}
+                />
               </SectionAccordion>
             )}
 
