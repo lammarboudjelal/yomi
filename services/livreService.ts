@@ -364,7 +364,7 @@ export const deleteLivre = async (
   });
 };
 
-/** 
+/**
  * Retourne des statistiques globales :
  * - total de livres
  * - nombre à lire
@@ -391,7 +391,7 @@ export const getStatistiquesLecture = async (db: SQLiteDatabase) => {
 };
 
 /**
- * Retourne les livres d'un état de lecture donné. 
+ * Retourne les livres d'un état de lecture donné.
  */
 export const getLivresByEtatLecture = async (
   db: SQLiteDatabase,
