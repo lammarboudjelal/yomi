@@ -11,6 +11,7 @@ import FormulaireLivreScreen from "./screens/FormulaireLivreScreen";
 import { SQLiteProvider } from "expo-sqlite";
 import Toast from "react-native-toast-message";
 import { toastConfig } from "./utils/toastConfig";
+import ScanISBNScreen from "./screens/ScanISBNScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -41,6 +42,7 @@ export default function App() {
             name={Routes.formulaireLivre}
             component={FormulaireLivreScreen}
           />
+          <Stack.Screen name={Routes.scanISBN} component={ScanISBNScreen} />
         </Stack.Navigator>
       </NavigationContainer>
 

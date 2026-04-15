@@ -83,6 +83,12 @@ export default function AjouterLivreScreen() {
         }
       />
 
+      <BoutonAction
+        label="Scanner un code-barres"
+        icon={<Entypo name="camera" size={24} color={colors.action} />}
+        onPress={() => navigation.navigate(Routes.scanISBN)}
+      />
+
       <BarreRecherche
         valeur={query}
         onChange={setQuery}
