@@ -243,15 +243,11 @@ function ajusterDatesLecture(livre: Livre): Livre {
 /**
  * Ajoute un livre à la bdd et ses relations.
  */
-export const insertLivre = async (
-  db: SQLiteDatabase,
-  livre: Livre,
-): Promise<void> => {
+export const insertLivre = async (db: SQLiteDatabase, livre: Livre) => {
   livre = ajusterDatesLecture(livre);
 
-  await db.withTransactionAsync(async () => {
-    const result = await db.runAsync(
-      `
+  const result = await db.runAsync(
+    `
       INSERT INTO livre (
         titre, isbn, resume, nombre_pages, edition,
         date_publication, couverture, type,
@@ -261,30 +257,31 @@ export const insertLivre = async (
       )
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,
-      livre.titre,
-      livre.isbn,
-      livre.resume,
-      livre.nombre_pages,
-      livre.edition,
-      livre.date_publication,
-      livre.couverture,
-      livre.type,
-      livre.etat_lecture,
-      livre.note,
-      livre.avis,
-      livre.date_debut_lecture,
-      livre.date_fin_lecture,
-      livre.statut_possession,
-      livre.date_pret,
-      livre.preteur,
-      livre.prix,
-    );
+    livre.titre,
+    livre.isbn,
+    livre.resume,
+    livre.nombre_pages,
+    livre.edition,
+    livre.date_publication,
+    livre.couverture,
+    livre.type,
+    livre.etat_lecture,
+    livre.note,
+    livre.avis,
+    livre.date_debut_lecture,
+    livre.date_fin_lecture,
+    livre.statut_possession,
+    livre.date_pret,
+    livre.preteur,
+    livre.prix,
+  );
 
-    const livreId = result.lastInsertRowId!;
+  const livreId = result.lastInsertRowId!;
 
-    await lierAuteurs(db, livreId, livre.auteurs);
-    await lierGenres(db, livreId, livre.genres);
-  });
+  await lierAuteurs(db, livreId, livre.auteurs);
+  await lierGenres(db, livreId, livre.genres);
+
+  return livreId;
 };
 
 /**

@@ -1,8 +1,8 @@
 export const Routes = {
-  bibliotheque: "Bibliotheque",
-  livreDetail: "LivreDetail",
-  ajouterLivre: "AjouterLivre",
-  formulaireLivre: "FormulaireLivre",
-  accueil: "Accueil",
-  scanISBN: "ScanISBN",
+  bibliotheque: "bibliotheque",
+  livreDetail: "livreDetail",
+  ajouterLivre: "ajouterLivre",
+  formulaireLivre: "formulaireLivre",
+  accueil: "accueil",
+  scanISBN: "scanISBN",
 } as const;

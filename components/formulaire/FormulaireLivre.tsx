@@ -31,6 +31,7 @@ import {
   optionsTypeLivre,
 } from "../../utils/formulaireLivreHelpers";
 import { styles } from "../../theme/styles";
+import { Routes } from "../../navigation/routes";
 
 function SectionTitre({ titre }: { titre: string }) {
   return <Text style={styles.h4}>{titre}</Text>;
@@ -62,23 +63,24 @@ export default function FormulaireLivre({
   const statutPossession = watch("statut_possession");
 
   const onSubmit = async (data: Livre) => {
+    Keyboard.dismiss();
+
     try {
       if (mode === ModeFormulaire.ajouter && !livreInitial?.id) {
-        await insertLivre(db, data);
+        const livreId = await insertLivre(db, data);
         toastSuccess(
           "Livre ajouté",
           `${data.titre} a été ajouté à votre bibliothèque.`,
         );
+        navigation.replace(Routes.livreDetail, { livreId: livreId });
       } else {
         await updateLivre(db, { ...data, id: livreInitial!.id });
         toastSuccess(
           "Livre modifié",
           `Les informations de ${data.titre} ont été modifiées.`,
         );
+        navigation.goBack();
       }
-
-      Keyboard.dismiss();
-      navigation.goBack();
     } catch (error) {
       toastError("Une erreur est survenue.");
     }

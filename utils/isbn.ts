@@ -12,7 +12,7 @@ export function formatISBN13(isbn: string): string {
 
   if (clean.length !== 13) return isbn;
 
-  // ISBN-13 = 5 parties et 13 chiffres : 
+  // ISBN-13 = 5 parties et 13 chiffres :
   // 1. Préfixe (3 chiffres, "978" étant réservé à la codification des livres)
   // 2. Zone géographique (1 chiffre, ex. : "2" pour la france)
   // 3. Identifiant éditeur

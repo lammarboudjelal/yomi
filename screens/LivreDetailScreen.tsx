@@ -172,7 +172,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
   return (
     <View style={{ flex: 1, backgroundColor: couleurFond }}>
-      <BoutonRetour />
+      <BoutonRetour goBackToBibliotheque={true} />
 
       <BoutonOptions onPress={() => setIsModaleActionsVisible(true)} />
 
