@@ -7,7 +7,6 @@ import { mapGoogleBookToLivre } from "../utils/googleBooksMapper";
 import { Routes } from "../navigation/routes";
 import { ModeFormulaire } from "../utils/modeFormulaire";
 import BoutonRetour from "../components/navigation/BoutonRetour";
-import { toastError } from "../utils/toast";
 import { formatISBN13 } from "../utils/isbn";
 
 export default function ScanISBNScreen() {
