@@ -69,6 +69,7 @@ export default function ModaleNoteAvis({
       isVisible={visible}
       onBackdropPress={handleClose}
       onBackButtonPress={handleClose}
+      backdropOpacity={0.4}
       style={{ justifyContent: "flex-end", margin: 0 }}
     >
       <KeyboardAvoidingView
