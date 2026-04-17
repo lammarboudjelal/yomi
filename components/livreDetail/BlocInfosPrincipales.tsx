@@ -49,7 +49,7 @@ export default function BlocInfosPrincipales({
         }}
       >
         {/* Pages */}
-        <View style={{ alignItems: "center", width: "30%" }}>
+        <View style={{ alignItems: "center", width: "28%" }}>
           <Text>{livre.nombre_pages || "-"} pages</Text>
         </View>
 
@@ -63,7 +63,7 @@ export default function BlocInfosPrincipales({
         />
 
         {/* Etat */}
-        <View style={{ alignItems: "center", width: "40%" }}>
+        <View style={{ alignItems: "center", width: "44%" }}>
           <EtatLectureEditable
             valeur={livre.etat_lecture}
             onChange={onChangeEtatLecture}
@@ -80,7 +80,7 @@ export default function BlocInfosPrincipales({
         />
 
         {/* Statut */}
-        <View style={{ alignItems: "center", width: "30%" }}>
+        <View style={{ alignItems: "center", width: "28%" }}>
           <Text style={{ textTransform: "capitalize" }}>
             {livre.statut_possession}
           </Text>
