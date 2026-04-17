@@ -14,17 +14,9 @@ export default function BoutonRetour({
   const navigation = useNavigation<any>();
   const insets = useSafeAreaInsets();
 
-  const handlePress = () => {
-    if (goBackRoute)
-      navigation.navigate("MainTabs", {
-        screen: "bibliotheque",
-      });
-    else navigation.goBack();
-  };
-
   return (
     <TouchableOpacity
-      onPress={handlePress}
+      onPress={() => navigation.goBack()}
       style={{
         position: "absolute",
         zIndex: 100,

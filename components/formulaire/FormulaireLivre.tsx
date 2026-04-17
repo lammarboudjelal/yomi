@@ -72,7 +72,21 @@ export default function FormulaireLivre({
           "Livre ajouté",
           `${data.titre} a été ajouté à votre bibliothèque.`,
         );
-        navigation.replace(Routes.livreDetail, { livreId: livreId });
+        navigation.reset({
+          index: 1,
+          routes: [
+            {
+              name: "MainTabs",
+              params: {
+                screen: Routes.bibliotheque,
+              },
+            },
+            {
+              name: Routes.livreDetail,
+              params: { livreId },
+            },
+          ],
+        });
       } else {
         await updateLivre(db, { ...data, id: livreInitial!.id });
         toastSuccess(
