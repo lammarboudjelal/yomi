@@ -36,7 +36,10 @@ export default function ScanISBNScreen() {
       const items = await rechercherLivres(isbn);
 
       if (!items || items.length === 0) {
-        Alert.alert("Erreur", "ISBN non reconnu");
+        Alert.alert(
+          "ISBN non reconnu",
+          "Cet ISBN n’a pas été reconnu par le service. Vous pouvez essayer de retrouver le livre en effectuant une recherche par titre.",
+        );
         setIsScanned(false);
         isProcessing.current = false;
         return;
