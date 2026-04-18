@@ -13,6 +13,8 @@ L’application permet de constituer une bibliothèque personnelle de livres, su
 - [Fonctionnalités](#fonctionnalités)
 - [Technologies utilisées](#technologies-utilisées)
 - [Installation du projet](#installation-du-projet)
+  - [Tester l'application sur iPhone (via Xcode)](#tester-lapplication-sur-iphone-via-xcode)
+  - [Générer un fichier d'installation Android (APK)](#générer-un-fichier-dinstallation-android-apk)
 - [Structure du projet](#structure-du-projet)
 - [Gestion des versions](#gestion-des-versions)
 - [Auteur](#auteur)
@@ -141,7 +143,7 @@ Cette commande génère les dossiers ios/ et android/ nécessaires au fonctionne
 npx expo run:ios
 ```
 
-Cette commande compile l'application et la lance sur le simulateur iOS.
+Cette commande compile l'application et la lance sur le simulateur iOS par défaut.
 
 **Android**
 
@@ -150,6 +152,35 @@ npx expo run:android
 ```
 
 Cette commande compile l'application et la lance sur le simulateur Android.
+
+## Tester l'application sur iPhone (via Xcode)
+
+Première connexion au téléphone : 
+1. Ouvrir le projet /ios dans Xcode (depuis un terminal positionné dans le dossier /yomi): `open ios/*.xcworkspace`.
+2. Dans Xcode, sélectionner un simulateur ou iPhone physique connecté à l'ordinateur via USB.
+3. Cliquer sur le bouton Run.
+L'application est alors compilée et installée directement sur l'iPhone.
+
+Remarques : 
+- L'application fonctionnera sur l'iPhone uniquement si le serveur est actif (commande `npx expo start` ou `npx expo run:ios`), de la même façon que le simulateur.
+- L'ordinateur et le téléphone doivent être connecté au même réseau.
+- Le téléphone n'a pas besoin d'être branché à l'ordinateur à chaque utilisation, mais le processus (étapes 1 à 3) devra être réitéré à chaque ajout d'un module natif au projet (modification du dossier ios suite à la commande `npx expo prebuild`).
+
+## Générer un fichier d'installation Android (APK)
+
+Il est possible de générer un fichier APK pour installer l’application sur un appareil Android sans passer par le Play Store.
+
+Création du fichier d'installation : 
+1. Installer Expo Application Services (EAS) : `npm install -g eas-cli`.
+2. Se connecter : `eas login`.
+3. Configurer le build : `eas build:configure`.
+4. Lancer la génération de l’APK : `eas build -p android --profile preview`.
+5. À la fin du build, un lien de téléchargement est fourni. Il permet de télécharger l'APK et d'installer directement sur un téléphone Android.
+
+Installation sur téléphone : 
+1. Copier le fichier sur le téléphone.
+2. Autoriser les sources inconnues si nécessaire.
+3. Ouvrir le fichier APK pour installer l’application.
 
 ---
 
