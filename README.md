@@ -33,9 +33,11 @@ L’application permet de constituer une bibliothèque personnelle de livres, su
 
 # Documentation
 
-- [Maquettes]()
-- [Spécification fonctionnelle]()
-- [Planning]()
+- [Rapport final](https://drive.google.com/file/d/1uP7rHFRXNepwnaPSMefHyrPnXcsRmrRr/view?usp=sharing)
+- [Cahier des charges](https://drive.google.com/file/d/1l0xru0b_vl8ZbOkqdJK3dp9isZeCUSbG/view?usp=sharing)
+- [Spécification fonctionnelle](https://drive.google.com/file/d/1l0xru0b_vl8ZbOkqdJK3dp9isZeCUSbG/view?usp=sharing)
+- [Maquettes](https://www.figma.com/proto/IZeWe597zCMAprx6XSRdwI/Yomi?node-id=18-2&starting-point-node-id=18%3A2&t=izvc2JHXONO2cVvh-1)
+- [Planning](https://docs.google.com/spreadsheets/d/19n26xBEaovF23KpefiXbrd_Vhiw966mgzjUsBCvYHSY/edit?usp=sharing)
 
 ---
 
@@ -59,6 +61,7 @@ L’application permet de constituer une bibliothèque personnelle de livres, su
 - formulaire d’ajout d’un nouveau livre
 - choix d’une couverture
 - stockage dans la base de données locale
+- ajout via recherche API (manuelle ou scan code-barres/ISBN)
 
 ### Suivi de lecture
 
@@ -70,6 +73,9 @@ L’application permet de constituer une bibliothèque personnelle de livres, su
   - ajout
   - modification
   - suppression
+- boîte de dialogue (Alert) après : 
+  - scan d'ISBN inconnu par l'API
+  - demande de confirmation d'une suppression de livre 
 
 ---
 
@@ -208,6 +214,8 @@ src/
  │
  ├── models
  |
+ ├── theme
+ |
  └── App.tsx
 ```
 
@@ -220,6 +228,7 @@ Organisation générale :
 - navigation : configuration de React Navigation
 - utils : fonctions utilitaires
 - models : types et modèles de données
+- theme : définition du style de l'app
 
 ---
 
@@ -229,6 +238,7 @@ Le projet utilise Git avec la stratégie suivante :
 
 - main : branche stable
 - dev : branche de développement
+- docs : mise à jour de la documentation
 
 Les nouvelles fonctionnalités sont développées sur dev puis intégrées dans main lors des releases.
 
