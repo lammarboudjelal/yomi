@@ -37,7 +37,7 @@ export default function EtiquetteEtatLecture({
           shadowOpacity: 0.15,
           shadowRadius: 3,
           elevation: 2,
-          width: 105,
+          width: "80%",
         }),
       }}
     >

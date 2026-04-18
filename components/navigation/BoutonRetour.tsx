@@ -2,8 +2,15 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Routes } from "../../navigation/routes";
 
-export default function BoutonRetour() {
+type BoutonRetourProps = {
+  goBackToBibliotheque?: boolean;
+};
+
+export default function BoutonRetour({
+  goBackToBibliotheque: goBackRoute,
+}: BoutonRetourProps) {
   const navigation = useNavigation<any>();
   const insets = useSafeAreaInsets();
 

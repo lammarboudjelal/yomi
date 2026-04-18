@@ -8,11 +8,27 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.yomi"
+      "bundleIdentifier": "com.anonymous.yomi",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.anonymous.yomi"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7a58ed7e-536a-4b07-90ca-f75218cfb91a"
+      }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "barcodeScannerEnabled": true
+        }
+      ]
+    ]
   },
   "plugins": ["expo-sqlite"]
 }

@@ -8,6 +8,7 @@ export type RootStackParamList = {
     mode: ModeFormulaire;
     livreInitial?: Livre;
   };
+  ScanISBN: undefined;
 };
 
 export type RootTabParamList = {

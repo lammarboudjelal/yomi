@@ -50,18 +50,18 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
   const insets = useSafeAreaInsets();
 
   const [livre, setLivre] = useState<Livre | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [couleurFond, setCouleurFond] = useState(colors.default);
-  const [modaleActionsVisible, setModaleActionsVisible] = useState(false);
-  const [modaleNoteVisible, setModaleNoteVisible] = useState(false);
+  const [isModaleActionsVisible, setIsModaleActionsVisible] = useState(false);
+  const [isModaleNoteVisible, setIsModaleNoteVisible] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
       const chargerLivre = async () => {
-        setLoading(true);
+        setIsLoading(true);
         const data = await getLivreParId(db, livreId);
         setLivre(data);
-        setLoading(false);
+        setIsLoading(false);
       };
 
       chargerLivre();
@@ -79,7 +79,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
     chargerCouleur();
   }, [livre]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />
@@ -172,14 +172,14 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
   return (
     <View style={{ flex: 1, backgroundColor: couleurFond }}>
-      <BoutonRetour />
+      <BoutonRetour goBackToBibliotheque={true} />
 
-      <BoutonOptions onPress={() => setModaleActionsVisible(true)} />
+      <BoutonOptions onPress={() => setIsModaleActionsVisible(true)} />
 
       <Modale
-        visible={modaleActionsVisible}
+        visible={isModaleActionsVisible}
         title="Actions sur le livre"
-        onClose={() => setModaleActionsVisible(false)}
+        onClose={() => setIsModaleActionsVisible(false)}
         actions={[
           {
             label: "Modifier le livre",
@@ -202,9 +202,9 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
       />
 
       <ModaleNoteAvis
-        visible={modaleNoteVisible}
+        visible={isModaleNoteVisible}
         livre={livre}
-        onClose={() => setModaleNoteVisible(false)}
+        onClose={() => setIsModaleNoteVisible(false)}
         onSave={handleSaveNoteAvis}
       />
 
@@ -228,7 +228,7 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
           <CarteNoteAvis
             livre={livre}
-            onPress={() => setModaleNoteVisible(true)}
+            onPress={() => setIsModaleNoteVisible(true)}
           />
 
           <View style={{ marginBottom: insets.bottom }}>
@@ -263,7 +263,10 @@ export default function LivreDetailScreen({ route }: LivreDetailScreenProps) {
 
             {livre.statut_possession === StatutPossession.achete && (
               <SectionAccordion titre="Informations d’achat">
-                <LigneInfo label="Prix" value={livre.prix || "-" + " €"} />
+                <LigneInfo
+                  label="Prix"
+                  value={livre.prix ? `${livre.prix} €` : "-"}
+                />
               </SectionAccordion>
             )}
 

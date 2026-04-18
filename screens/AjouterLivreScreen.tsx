@@ -18,13 +18,13 @@ export default function AjouterLivreScreen() {
 
   const [query, setQuery] = useState("");
   const [resultats, setResultats] = useState<LivreFormulaire[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [messageErreur, setMessageErreur] = useState<string | null>(null);
 
   const lancerRecherche = async () => {
     if (!query.trim()) return;
 
-    setLoading(true);
+    setIsLoading(true);
     setMessageErreur(null);
 
     try {
@@ -52,7 +52,7 @@ export default function AjouterLivreScreen() {
         );
       }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -83,6 +83,12 @@ export default function AjouterLivreScreen() {
         }
       />
 
+      <BoutonAction
+        label="Scanner un code-barres"
+        icon={<Entypo name="camera" size={24} color={colors.action} />}
+        onPress={() => navigation.navigate(Routes.scanISBN)}
+      />
+
       <BarreRecherche
         valeur={query}
         onChange={setQuery}
@@ -91,13 +97,15 @@ export default function AjouterLivreScreen() {
         placeholder="Titre, auteur ou ISBN"
       />
 
-      {loading && <ActivityIndicator size="large" />}
+      {isLoading && <ActivityIndicator size="large" />}
 
       {messageErreur && (
         <Text style={{ textAlign: "center" }}>{messageErreur}</Text>
       )}
 
       <FlatList
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         data={resultats}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (

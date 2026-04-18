@@ -3,6 +3,13 @@ import { LivreFormulaire } from "../models/Livre";
 import { StatutPossession } from "../models/StatutPosession";
 import { TypeLivre } from "../models/TypeLivre";
 
+/**
+ * Convertit une date Google Books (YYYY-MM-DD) en format français (DD/MM/YYYY).
+ *
+ * Gère les cas incomplets :
+ * - YYYY → 01/01/YYYY
+ * - YYYY-MM → 01/MM/YYYY
+ */
 function formatDateFrancais(date?: string): string {
   if (!date) return "";
 
@@ -25,6 +32,12 @@ function formatDateFrancais(date?: string): string {
   return "";
 }
 
+/**
+ * Transforme un objet Google Books API en objet LirvreFormulaire utilisable dans l'app.
+ *
+ * Permet de gérer les valeurs manquants, adapter les noms de
+ * champs, et pré-remplir avec des valeurs par défaut.
+ */
 export function mapGoogleBookToLivre(item: any): LivreFormulaire {
   const info = item.volumeInfo;
 

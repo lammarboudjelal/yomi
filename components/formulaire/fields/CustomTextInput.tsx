@@ -35,6 +35,7 @@ export default function CustomTextInput({
           borderRadius: 5,
           padding: 10,
           minHeight: multiline ? 100 : 45,
+          maxHeight: multiline ? 150 : 45,
           textAlignVertical: multiline ? "top" : "center",
         }}
       />
